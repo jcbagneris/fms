@@ -1,0 +1,10 @@
+--- # Experiment
+
+world:
+      classname: NullWorld
+
+agents:
+    - classname: StupidTrader
+      number: 1000
+      money: 500000
+      stocks: 1000

@@ -1,0 +1,13 @@
+--- # Experiment
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: AsynchronousRandom
+
+agents:
+    - classname: StupidTrader
+      number: 1000
+      money: 500000
+      stocks: 1000

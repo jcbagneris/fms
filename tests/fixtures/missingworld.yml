@@ -1,0 +1,12 @@
+--- # Experiment
+
+engines:
+    - classname: AsynchronousRandom
+      market:
+          classname: DummyMarket
+
+agents:
+    - classname: StupidTrader
+      number: 1000
+      money: 500000
+      stocks: 1000

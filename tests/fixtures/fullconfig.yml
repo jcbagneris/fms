@@ -1,0 +1,21 @@
+--- # Experiment
+name: Test Experiment
+randomseed: 12345678
+outputfilename: dummyoutput.csv
+orderslogfilename: dummyoutput.log
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: AsynchronousRandom
+      daylength: 10
+      days: 2
+      market:
+          classname: DummyMarket
+
+agents:
+    - classname: StupidTrader
+      number: 1000
+      money: 500000
+      stocks: 1000

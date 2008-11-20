@@ -1,0 +1,11 @@
+--- # Experiment
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: AsynchronousRandom
+      market:
+          classname: DummyMarket
+
+agents: foo

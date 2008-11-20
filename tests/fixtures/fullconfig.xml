@@ -1,0 +1,28 @@
+        <experiments>
+          <experiment>
+            <randomSeed>12345678</randomSeed>
+            <name>Test Experiment</name>
+            <outputFilename>dummyoutput.csv</outputFilename>
+            <ordersLogFilename>dummyoutput.log</ordersLogFilename>
+            <dayLength>10</dayLength>
+            <numberDays>2</numberDays>
+            <simulationEngine>
+                <className>AsynchronousRandom</className>
+            </simulationEngine>
+            <world>
+                <className>NullWorld</className>
+            </world>
+            <market>
+                <className>DummyMarket</className>
+            </market>
+            <agents>
+                <agent>
+                    <className>StupidTrader</className>
+                    <number>1000</number>
+                    <initialMoney>500000</initialMoney>
+                    <initialStocks>1000</initialStocks>
+                </agent>
+            </agents>    
+          </experiment>
+        </experiments>
+

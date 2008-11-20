@@ -1,0 +1,22 @@
+        <experiments>
+          <experiment>
+            <simulationEngine>
+                <className>AsynchronousRandom</className>
+            </simulationEngine>
+            <world>
+                <className>NullWorld</className>
+            </world>
+            <market>
+                <className>DummyMarket</className>
+            </market>
+            <agents>
+                <agent>
+                    <className>StupidTrader</className>
+                    <number>1000</number>
+                    <initialMoney>500000</initialMoney>
+                    <initialStocks>1000</initialStocks>
+                </agent>
+            </agents>    
+          </experiment>
+        </experiments>
+
