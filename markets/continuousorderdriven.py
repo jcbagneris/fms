@@ -236,8 +236,6 @@ class ContinuousOrderDriven(markets.Market):
         - transaction (int) : transaction counter
         """
         markets.Market.__init__(self, parameters)
-        self.buybook = []
-        self.sellbook = []
         self.lastprice = None
         self.transaction = 0
         self.time = -1

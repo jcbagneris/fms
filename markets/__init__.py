@@ -18,6 +18,8 @@ class Market:
             self.outputfile = parameters.outputfile
         else:
             self.outputfile = sys.stdout 
+        self.sellbook = []
+        self.buybook = []
 
     def __str__(self):
         return "%s market %s" % (self.__class__, id(self))
