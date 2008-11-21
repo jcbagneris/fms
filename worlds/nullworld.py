@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 A minimal and over simplistic world class
 """
@@ -7,16 +7,16 @@ from fms import worlds
 
 class NullWorld(worlds.World):
     """
-    Minimal world class, does not provide any information
+    Minimal world class
     """
     def __init__(self, parameters=None):
-        pass
+        worlds.World.__init__(self)
 
     def state(self):
         """
-        Nullworld does not return any information
+        Nullworld only returns last market info (dict)
         """
-        return None
+        return self.lastmarketinfo
 
 if __name__ == '__main__':
     print NullWorld()
