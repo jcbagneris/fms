@@ -1,3 +1,4 @@
 *.pyc
+*.py.swp
 tags
 ex_rsync.txt
