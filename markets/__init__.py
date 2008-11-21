@@ -51,10 +51,8 @@ class Market:
         Returns market current state, as dict
         """
         if self.__class__.__name__ == 'Market':
-            # returns impossible values to test desireWrapper
-            infodict = {'selllimit':-1,
-                        'buylimit':-2,
-                        'lastprice':-3,
+            infodict = {'sellbook': [[-1]],
+                        'buybook': [[-2]],
                         'lasttransaction':0}
             return infodict
         else:
@@ -74,10 +72,10 @@ class Market:
             order['direction'] = raw_order['direction']
             if order['direction'] == BUY:
                 order['price'] = raw_order.get('price', 
-                        self.info()['selllimit'])
+                        self.info()['sellbook'][0][0])
             else:
                 order['price'] = raw_order.get('price', 
-                        self.info()['buylimit'])
+                        self.info()['buybook'][-1][0])
             order['quantity'] = raw_order.get('quantity', 1)
             return order
         else:

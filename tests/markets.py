@@ -14,14 +14,14 @@ class MarketTests(unittest.TestCase):
     """
     Tests for Market abstract class
     """
-    def testIsValidMethodNotImplemented(self):
+    def test_is_valid_not_implemented(self):
         """
         Market.is_valid() method should be implemented in subclasses
         """
         market = Market(None)
         self.assertRaises(NotImplementedError, market.is_valid, None, None)
 
-    def testInfoMethodNotImplemented(self):
+    def test_info_not_implemented(self):
         """
         Market.info() method should be implemented in subclasses
         """
@@ -34,7 +34,7 @@ class MarketTests(unittest.TestCase):
         market = SubMarket(None)
         self.assertRaises(NotImplementedError, market.info)
 
-    def testRecordOrderMethodNotImplemented(self):
+    def test_record_order_not_implemented(self):
         """
         Market.record_order() method should be implemented in subclass
         """
@@ -42,7 +42,7 @@ class MarketTests(unittest.TestCase):
         self.assertRaises(NotImplementedError, 
                 market.record_order, None, None)
 
-    def testOutputFileDefaultValue(self):
+    def test_output_file_default_value(self):
         """
         Outputfile default value is sys.stdout
         """
