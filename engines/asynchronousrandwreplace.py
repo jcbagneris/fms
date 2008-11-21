@@ -31,6 +31,8 @@ class AsynchronousRandWReplace(Engine):
            engines, possibly opening them with knowledge of previous one
            state (books, last transaction...)
         """
+        market.sellbook = world.state()['sellbook']
+        market.buybook = world.state()['buybook']
         transactions = market.info()['lasttransaction']
         while transactions < self.days*self.daylength: 
             agt = random.randint(0, len(agents)-1)
@@ -43,6 +45,8 @@ class AsynchronousRandWReplace(Engine):
                 market.record_order(agents[agt], order)
                 market.do_clearing()
                 transactions = market.info()['lasttransaction']
+                world.lastmarketinfo.update(
+                        {'sellbook':market.sellbook, 'buybook':market.buybook})
 
 if __name__ == '__main__':
     print AsynchronousRandWReplace()
