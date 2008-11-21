@@ -61,8 +61,10 @@ class MarketTests(unittest.TestCase):
         If no price is given, price is best limit
         """
         market = Market(None)
-        self.assertEqual(market.sanitize_order({'direction':BUY})['price'], -1)
-        self.assertEqual(market.sanitize_order({'direction':SELL})['price'], -2)
+        self.assertEqual(market.sanitize_order(
+            {'direction':BUY})['price'], 'unset sellbook')
+        self.assertEqual(market.sanitize_order(
+            {'direction':SELL})['price'], 'unset buybook')
 
     def test_sanitize_order_price(self):
         """

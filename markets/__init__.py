@@ -51,8 +51,8 @@ class Market:
         Returns market current state, as dict
         """
         if self.__class__.__name__ == 'Market':
-            infodict = {'sellbook': [[-1]],
-                        'buybook': [[-2]],
+            infodict = {'sellbook': [['unset sellbook']],
+                        'buybook': [['unset buybook']],
                         'lasttransaction':0}
             return infodict
         else:
