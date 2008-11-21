@@ -259,15 +259,15 @@ class ContinuousOrderDriven(markets.Market):
         - curtime (int): current time
         """
         if self.sellbook:
-            selllimit = self.sellbook[0]
+            sellbook = self.sellbook
         else:
-            selllimit = None
+            sellbook = [['unset sellbook']]
         if self.buybook:
-            buylimit = self.buybook[-1]
+            buybook = self.buybook
         else:
-            buylimit = None
-        infodict = {'selllimit': selllimit,
-                    'buylimit': buylimit,
+            buybook = [['unset buybook']]
+        infodict = {'sellbook': sellbook,
+                    'buybook': buybook,
                     'lastprice': self.lastprice,
                     'lasttransaction': self.transaction,
                     'curtime': self.time}
