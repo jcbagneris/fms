@@ -153,6 +153,7 @@ def main():
     if command == 'run':
         logger.info("All is set, running simulation")
         for e in engineslist:
+            logger.info("Running %s" % e['instance'])
             e['instance'].run(world, agentslist, e['market']['instance'])
         logger.info("Done.")
 
