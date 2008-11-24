@@ -85,7 +85,7 @@ def set_agents(params):
             agentslist.append(getattr(agentmodule, a['classname'])(a))
         logger.info("Created  %d instances of agent %s" % 
                 (a['number'], agentslist[-1].__class__))
-        return agentslist
+    return agentslist
 
 def set_engines(params):
     """
@@ -102,7 +102,7 @@ def set_engines(params):
         engineslist.append(e)
         logger.info("Created engine-market  %s - %s" % 
                 (e['instance'], e['market']['instance']))
-        return engineslist
+    return engineslist
 
 
 def main():
