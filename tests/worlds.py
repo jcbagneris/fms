@@ -11,7 +11,7 @@ class WorldTests(unittest.TestCase):
     """
     Tests for Worlds abstract class
     """
-    def testStateMethodIsImplemented(self):
+    def test_state_method_is_implemented(self):
         """
         World.state() method should be implemented in subclasses
         """
