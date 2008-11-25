@@ -12,28 +12,28 @@ class AgentTests(unittest.TestCase):
     """
     Tests for Agent abstract class
     """
-    def testMoneyAttributeExists(self):
+    def test_money_attribute_exists(self):
         """
         Agent should fail on __init__ if it does not have a money attribute
         """
         params = {'stocks':300}
         self.assertRaises(MissingParameter, Agent, params)
 
-    def testMoneyAttributeType(self):
+    def test_money_attribute_type(self):
         """
         Agent.money should be an int or a float
         """
         params = {'money':'blah', 'stocks':1000}
         self.assertRaises(ValueError, Agent, params)
 
-    def testStocksAttributeExists(self):
+    def test_stocks_attribute_exists(self):
         """
         Agent should fail on __init__ if it does not have a stocks attribute
         """
         params = {'money':1000}
         self.assertRaises(MissingParameter, Agent, params)
 
-    def testStocksAttributeType(self):
+    def test_stocks_attribute_type(self):
         """
         Agent.stocks should be an int
         """
@@ -42,7 +42,7 @@ class AgentTests(unittest.TestCase):
         params = {'money':200, 'stocks':'blah'}
         self.assertRaises(ValueError, Agent, params)
 
-    def testActMethodNotImplemented(self):
+    def test_act_method_not_implemented(self):
         """
         Agent.act() method should be implemented in subclasses
         """
@@ -50,7 +50,7 @@ class AgentTests(unittest.TestCase):
         smith = Agent(params)
         self.assertRaises(NotImplementedError, smith.act)
 
-    def testRecordMethod(self):
+    def test_record_method(self):
         """
         Agent.record() should update Agent.money and Agent.stocks
         """
