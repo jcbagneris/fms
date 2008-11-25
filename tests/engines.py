@@ -11,7 +11,7 @@ class EngineTests(unittest.TestCase):
     """
     Tests for Engine abstract class
     """
-    def testRunMethodIsImplemented(self):
+    def test_run_method_is_implemented(self):
         """
         Engine.run() method should be implemented in subclasses
         """
