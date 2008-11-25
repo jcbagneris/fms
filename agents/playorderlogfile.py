@@ -21,16 +21,23 @@ class PlayOrderLogFile(agents.Agent):
     Traceback (most recent call last):
         ...
     MissingParameter: orderlogfilename
+
+    Note that this agent is a Borg : all instances share the
+    same state, such as to read one line of the order logfile
+    at a time, whichever instance of the agent acts.
     """
-    
+    __shared_state = {}
+
     def __init__(self, params):
+        self.__dict__ = self.__shared_state
         agents.Agent.__init__(self, params)
-        try:
-            filename = self.args[0]
-        except (AttributeError, IndexError):
-            raise MissingParameter, 'filename'
-        del self.args
-        self.logfile = open(filename, 'r')
+        if not 'logfile' in self.__dict__:
+            try:
+                filename = self.args[0]
+            except (AttributeError, IndexError):
+                raise MissingParameter, 'filename'
+            del self.args
+            self.logfile = open(filename, 'r')
 
     def act(self):
         """
