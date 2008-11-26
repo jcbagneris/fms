@@ -30,7 +30,7 @@ class AsynchronousRandWReplace(Engine):
     def run(self, world, agents, market):
         """
         Sample agents (with replacement) and let them speak on market.   
-        As market is asynchronous, as soon as an agent speaks, doClearing
+        As market is asynchronous, as soon as an agent speaks, do_clearing
         is called to execute any possible transaction immediately.
         """
         market.sellbook = world.state()['sellbook']
