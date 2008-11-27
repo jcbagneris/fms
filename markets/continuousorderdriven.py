@@ -228,9 +228,7 @@ class ContinuousOrderDriven(markets.Market):
         Class constructor.
         Gets parameters from config, pass it to superclass.
         Adds :
-        - buybook, sellbook (list) : store unexecuted orders
         - lastprice (float) : last transaction price, see info()
-        - time (int) : time ticker
         - transaction (int) : transaction counter
         """
         markets.Market.__init__(self, parameters)
