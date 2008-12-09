@@ -1,0 +1,41 @@
+.\" Process this file with
+.\" groff -man -Tascii foo.1
+.\"
+.TH FMS 1 "2008-12-08" "FMS Development Team" "Financial Market Simulator"
+.SH NAME
+fms \- a financial market simulator
+.SH SYNOPSIS
+.B simulation.py [options] [command] [
+.I experiment-config-file
+.B ]
+.SH DESCRIPTION
+.B fms
+is an agent-based market simulator. The main program,
+.B  simulation.py
+can read and validate an "experiment" config file, and/or
+run it, outputting transactions data on 
+.I stdout
+or in a .csv file.
+.SH OPTIONS
+.IP "-h, --help"
+Show help message and quit.
+.IP "-L level, --loglevel level"
+Set logging level to
+.I level.
+This overrides the -v option.
+.IP "-v, --verbose"
+Set logging level to 'info'.
+Overrided by -L or --loglevel option.
+.SH COMMANDS
+.IP "check"
+Checks validity of 
+.I experiment-config-file
+by trying to instanciate all classes : world, engines, markets and agents.
+.IP "run"
+Run experiment from
+.I experiment-config-file
+.SH BUGS
+Probably many.
+.SH AUTHOR
+Jean-Charles Bagneris <jcb at bagneris dot net>
+
