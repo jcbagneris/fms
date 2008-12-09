@@ -68,7 +68,7 @@ def set_world(params):
     Import world class and instanciate world
     """
     logger = logging.getLogger('fms')
-    worldmodule = import_class('worlds', params['world']['classname'])
+    worldmodule = import_class('fms.worlds', params['world']['classname'])
     world = getattr(worldmodule, params['world']['classname'])(params)
     logger.info("Created world %s" % world)
     return world
@@ -80,7 +80,7 @@ def set_agents(params):
     logger = logging.getLogger('fms')
     agentslist = []
     for a in params['agents']:
-        agentmodule = import_class('agents', a['classname'])
+        agentmodule = import_class('fms.agents', a['classname'])
         for i in range(a['number']):
             agentslist.append(getattr(agentmodule, a['classname'])(a))
         logger.info("Created  %d instances of agent %s" % 
@@ -94,10 +94,10 @@ def set_engines(params):
     logger = logging.getLogger('fms')
     engineslist = []
     for (offset, e) in enumerate(params['engines']):
-        marketmodule = import_class('markets', e['market']['classname'])
+        marketmodule = import_class('fms.markets', e['market']['classname'])
         e['market']['instance'] = getattr(marketmodule, 
                 e['market']['classname'])(params)
-        enginemodule = import_class('engines', e['classname'])
+        enginemodule = import_class('fms.engines', e['classname'])
         e['instance'] = getattr(enginemodule, e['classname'])(params, offset)
         engineslist.append(e)
         logger.info("Created engine-market  %s - %s" % 
