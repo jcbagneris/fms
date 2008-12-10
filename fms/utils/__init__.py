@@ -354,3 +354,6 @@ class YamlParamsParser(_ParamsParser):
         self.printfileheaders()
         logger.info("Config file %s parsed." % yamlfilename)
 
+
+def get_version():
+    return '0.1.0'
