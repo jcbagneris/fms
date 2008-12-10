@@ -5,7 +5,7 @@ Financial Market Simulator
 """
 
 __author__ = "Jean-Charles Bagneris <jcb@bagneris.net>"
-__license__ = "GNU GPL v2"
+__license__ = "BSD"
 
 import sys
 import os.path
