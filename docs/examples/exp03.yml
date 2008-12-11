@@ -1,0 +1,43 @@
+--- # Experiment 03
+# This file is part of FMS, a Financial Market Simulator
+#
+# This experiment simulates a synchronous market,
+# driven by order books, with a final 'fixing' clearing.
+# The fixing price is chosen to maximize the volume of transactions
+# at this price.
+# The orders are read from a file (using again the PlayOrderLogFile agent),
+# allowing to calculate the fixing price in advance, to check for the
+# market class accuracy.
+#
+# Experiment steps : 
+# - the engine chooses an agent randomly (with replacement)
+# - the agent reads an order from the logfile
+# - the order goes in the buy or sellbook, depending on direction
+#
+# These steps are run 'daylength' times (12 if you use this file unmodified).
+# Once these steps are completed, the clearing method of the market is called,
+# the fixing price is calculated and all possible transactions at this price
+# output to the 'outputfilename'.
+#
+# Run with :
+# $ fms.py run exp03.yml
+# should produce 1 file :
+# - exp03.csv the resulting transactions file 
+#
+outputfilename: exp03.csv
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: SynchronousRandWReplace
+      daylength: 12
+      market:
+          classname: HighestQtyFixing 
+
+agents:
+    - classname: PlayOrderLogFile
+      number: 3
+      money: 100000
+      stocks: 1000
+      args: ['exp03.log']

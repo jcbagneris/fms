@@ -1,0 +1,36 @@
+--- # Experiment 02
+# This file is part of FMS, a Financial Market Simulator
+#
+# This experiment is a special case, useful for testing purposes.
+# The agent class is reading the successive orders from an orders logfile,
+# as produced by more classical experiments. Thus, this is some kind of
+# "replay an experiment" trick.
+# The number of agents is not significant, since the agent class used
+# here is a Borg : whichever the number of instances, they share the same
+# environment, thus reading the logfile one line at a time, as expected.
+#
+# Run with :
+# $ fms.py run exp02.yml
+# should produce 1 file :
+# - exp02.csv the resulting transactions file 
+# This file should be identical to exp01.csv, resulting from the
+# exp01.yml experiment.
+#
+outputfilename: exp02.csv
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: AsynchronousRandWReplace
+      daylength: 20
+      market:
+          classname: ContinuousOrderDriven
+
+agents:
+    - classname: PlayOrderLogFile
+      number: 10
+      money: 100000
+      stocks: 1000
+      # the only arg is the orders logfile to read
+      args: ['exp01.log']
