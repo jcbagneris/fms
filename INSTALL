@@ -1,5 +1,13 @@
 Thanks for downloading FMS.
 
+Requirements
+============
+
+- A working installation of the Python language (http://www.python.org), version
+  should be 2.3 or greater.
+- The PyYaml library (http://pyyaml.org/) is necessary to read configuration
+  files.
+
 Installing FMS
 ==============
 
