@@ -1,0 +1,32 @@
+Thanks for downloading FMS.
+
+Installing FMS
+==============
+
+To install it, make sure you have Python 2.3 or greater installed. Then run
+this command (as root) from a command prompt:
+
+    python setup.py install
+
+
+As an alternative, you may just copy or link the fms directory in your
+Python's installation site-packages directory.
+
+In addition, you may move the 'fms.py' script somewhere on your path.
+
+To check that anything went well, cd to the tests directory and run:
+
+	./runalltests.py
+
+Uninstalling FMS
+================
+
+If you need/want to uninstall FMS, cd to your Python's installation
+site-packages directory, and remove fms directory and egg-info file :
+
+	rm -r fms*
+
+Then remove the fms.py script from where it was installed, probably /usr/bin 
+or /usr/local/bin on Unix. 
+
+You're done. Thanks for giving FMS a try !
