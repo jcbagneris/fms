@@ -1,0 +1,127 @@
+.. _index:
+
+==============================================
+FMS, an agent based Financial Market Simulator
+==============================================
+
+FMS is (c) 2008,2009 Jean-Charles Bagneris. See the LICENSE file in the
+distribution bundles for redistribution information and usual disclaimer.
+
+What is FMS ?
+=============
+
+FMS is an agent-based financial market simulator. The intended audience is
+financial markets researchers and experimentators, looking to simulate various
+agents behaviours on different types of markets through the resulting
+transactions on a fictitious asset. Agents, markets and the environment (the
+"world") are Python classes, derived from abstract ones provided with FMS.
+
+As the resulting output (the transactions) is in comma separated values format,
+it is easy to use it as an input for whichever processing needed (produce
+graphics, import in spreadsheet, crunch in various statistical procedures, ...)
+
+FMS is a command line application, configured through very simple flat files. As
+you may write your own agents, markets, engines and world classes, it is as
+customizable as it could be. But you do not have to be a programmer to use it:
+FMS is provided with a comprehensive set of classes ready to use, and there is
+more to come.
+
+If you program your own classes, remember these may be of interest for others:
+feel free to drop me an email and to contribute (see `How could I contribute ?`_
+below).
+
+What FMS is not
+===============
+
+FMS is a simulation tool intended for research only. Thus, FMS is NOT (and will
+not be in the foreseeable future):
+
+- a game,
+- a portfolio management simulation or helper,
+- a learning tool intended for classroom use [1]_,
+- a shiny GUI application, providing with coloured graphics and multiple drop
+  down menus, smileys and icons,
+- a coffee-machine.
+
+.. [1] Although FMS intention is not primarily pedagogical, it *might* be useful 
+    in classroom environment with PhD students, for an example.
+
+Rationale and history
+=====================
+
+FMS was primarily developed for my own research projects. The idea came from many
+other agent based simulation programs, but the design was especially inspired by
+Julien Derveeuw thesis (in french) : Derveeuw J., Simulation multi-agents de
+marchés financiers, Université des Sciences et Technologies de Lille, 2008 (see
+http://cisco.univ-lille1.fr/papers/ for more information). 
+
+FMS is slightly different than Derveeuw's platform in some ways, mainly because
+FMS can simulate a multi-stages market, e.g. with a pre-opening period where
+orders accumulate, then a fixing, then a continuous order driven market,
+starting with the remaining orders after fixing. In addition, FMS is fully
+open-source (as far as I know, Derveeuw's platform is freely usable, but sources
+are not available) and written in Python_, which (in my opinion) is easier to
+learn than Java for researcher whose primary concern is finance, not computer
+programming.
+
+.. _Python: http://www.python.org/
+
+Quick start
+===========
+
+To use FMS, you first need to download and install it on your system
+(obviously). See the :ref:`installation documentation <install>` and do not
+forget to run the tests once you are done.
+
+Then, you should describe an experiment for FMS to run. Experiments are
+described in config file in the YAML_ format, which is hopefully rather easy to
+read and write. 
+
+Once you have written an experiment configuration file, you simply run fms on
+it. FMS will output transaction data on the console or in a comma separated
+value file, depending on the configuration.
+
+.. _YAML: http://www.yaml.org/
+
+Extending FMS
+=============
+
+If you read all this, then you certainly have a good reason to use FMS. If the
+world, engines, markets and agent classes included in FMS do not meet your
+needs, then you may either write yours, or even (politely) require us to write
+it for you. Of course, your problem has to be interesting enough for us to do
+this, and the resulting classes would be part of FMS next release. By the way,
+if you write yourself an interesting class for FMS, please submit it for
+inclusion (you would of course be credited for your work).
+
+How could I contribute ?
+========================
+
+Report bugs, write new classes, translate documentation, write documentation and
+additional example, request new features, use FMS and let people know you use
+it. Think of other ways to contribute. Thank you :)
+
+The FMS sources repository is available for cloning on assembla.com_. To clone
+it, you need `the git VCS`_ on your computer. Then run::
+
+    git clone git://git.assembla.com/fmsdev.git
+
+.. _the git VCS: http://git.or.cz
+.. _assembla.com: http://www.assembla.com
+
+Documentation contents
+======================
+
+.. toctree::
+   :maxdepth: 2
+
+   install
+   config
+
+Index, tables and search
+========================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

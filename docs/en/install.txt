@@ -1,0 +1,86 @@
+.. _install:
+
+=============================
+FMS download and installation
+=============================
+
+Downloading FMS
+===============
+
+FMS packages are available in various formats, suitable for different operating
+systems. Download links :
+
+* ``tar.gz`` package : http://bagneris.net/contents/dld/fms-0.1.0.tar.gz 
+
+* ``zip`` package : http://bagneris.net/contents/dld/fms-0.1.0.zip
+
+* Windows installer : http://bagneris.net/contents/dld/fms-0.1.0.win32.exe
+
+In addition, you may clone the source repository of FMS. As it is managed with
+`the git VCS`_, you need first to install it, then to get the repository run::
+
+    git clone git://git.assembla.com/fmsdev.git
+
+If you develop new classes or squash bugs, consider sending a patch, or asking
+for pull access on the repository.
+
+.. _the git VCS: http://git.or.cz
+
+Installing FMS
+==============
+
+Requirements
+------------
+
+- A working installation of the Python language (http://www.python.org), version
+  should be 2.3 or greater.
+
+- The PyYaml library (http://pyyaml.org/) is necessary to read configuration
+  files.
+
+Linux and BSD distributions
+---------------------------
+
+Get the source package (see `downloading FMS`_ above), uncompress it wherever
+you think is a suitable place (``usr/local/src/`` might seem a clever choice,
+though). 
+
+``cd`` to the newly created directory.  Then run this command (as root) from a
+command prompt::
+
+    python setup.py install
+
+
+As an alternative, you may just copy or link the ``fms`` directory in your
+Python's installation ``site-packages`` directory.
+
+In addition, you may move the ``fms.py`` script somewhere on your path.
+
+To check that anything went well, ``cd`` to the tests directory and run::
+
+	./runalltests.py
+
+Windows
+-------
+
+Ah. You mean you're doing research on a Windows computer. Some like it hot, so
+to speak (ok, sorry about that, forget it, I had a rather busy day).
+
+Your best bet is probably to get the Windows FMS installer (see `downloading
+FMS`_ above) and put it somewhere on the desktop, then double-click on it
+(shudder) and give sensible answers on the traditional questions about where you
+would like it to be installed.
+
+Uninstalling FMS
+================
+
+If you need/want to uninstall FMS, ``cd`` to your Python's installation
+``site-packages`` directory, and remove fms directory and egg-info file::
+
+	rm -r fms*
+
+Then remove the ``fms.py`` script from where it was installed, probably
+``/usr/bin/`` or ``/usr/local/bin/`` on Unix. 
+
+You're done. Thanks for giving FMS a try !
+
