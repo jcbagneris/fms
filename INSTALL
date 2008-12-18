@@ -22,9 +22,11 @@ Python's installation site-packages directory.
 
 In addition, you may move the 'fms.py' script somewhere on your path.
 
+See the docs/ directory for more detailed installation steps.
+
 To check that anything went well, cd to the tests directory and run:
 
-	./runalltests.py
+	python runalltests.py
 
 Uninstalling FMS
 ================
