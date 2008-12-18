@@ -112,7 +112,7 @@ class HighestQtyFixing(markets.Market):
         """
         fixdict = {}
         cumul = 0
-        for price, time, qty, agent in self.buybook[::-1]:
+        for price, time, qty, agent in reversed(self.buybook):
             cumul += qty
             fixdict.setdefault(price, [0,0])[0] = cumul
         cumul = 0
