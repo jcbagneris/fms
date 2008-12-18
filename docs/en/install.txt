@@ -63,8 +63,9 @@ To check that anything went well, ``cd`` to the tests directory and run::
 Windows
 -------
 
-Ah. You mean you're doing research on a Windows computer. Some like it hot, so
-to speak (ok, sorry about that, forget it, I had a rather busy day).
+Ah. Windows. As I do not use it, I tried to do my best to provide with a usable
+package. Hopefully some colleague of mine will give me a chance to test the
+installation on his computer, and I will post more detailed instructions here.
 
 Your best bet is probably to get the Windows FMS installer (see `downloading
 FMS`_ above) and put it somewhere on the desktop, then double-click on it
