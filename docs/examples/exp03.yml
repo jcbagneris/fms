@@ -20,8 +20,8 @@
 # output to the 'outputfilename'.
 #
 # Run with :
-# $ fms.py run exp03.yml
-# should produce 1 file :
+# $ startfms.py run exp03.yml
+# This should produce 1 file :
 # - exp03.csv the resulting transactions file 
 #
 outputfilename: exp03.csv

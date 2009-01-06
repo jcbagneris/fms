@@ -12,8 +12,8 @@
 # These steps are run 'daylength' times (20 if you use this file unmodified).
 #
 # Run with :
-# $ fms.py run exp01.yml
-# should produce 2 files :
+# $ python startfms.py run exp01.yml
+# This should produce 2 files :
 # - exp01.log is the logfile of the successive orders placed by the agents
 #   this file might be "replayed" later by a special agent, see exp02.yml
 # - exp01.csv is the resulting transactions file 

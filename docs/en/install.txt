@@ -54,7 +54,7 @@ command prompt::
 As an alternative, you may just copy or link the ``fms`` directory in your
 Python's installation ``site-packages`` directory.
 
-In addition, you may move the ``fms.py`` script somewhere on your path.
+In addition, you may move the ``startfms.py`` script somewhere on your path.
 
 To check that anything went well, ``cd`` to the tests directory and run::
 
@@ -63,38 +63,30 @@ To check that anything went well, ``cd`` to the tests directory and run::
 Windows
 -------
 
-Ah. Windows. As I do not use it, I tried to do my best to provide a usable
-package.
+First, make sure you installed Python and YAML (see requirements_ above).
 
-Your best bet is probably to get the Windows FMS installer (see `downloading
-FMS`_ above) and put it somewhere on the desktop, then double-click on it
-(shudder) and give sensible answers on the traditional questions about where you
-would like it to be installed.
+Get the Windows FMS installer (see `downloading FMS`_ above) and put it
+somewhere on the desktop, then double-click on it. Leave the default answers to
+all the questions (or be prepared to remember what you did, to swear, and to
+cry... That is, unless you really know what you are doing, of course). 
 
-Then you may run FMS from IDLE or from the command line.
-
-Running FMS from IDLE
-~~~~~~~~~~~~~~~~~~~~~
-
-IDLE stands for Integrated DeveLopment Environment, and is mainly used on
-Windows systems. Once Python is installed on your system, IDLE might be started
-from the Python submenu in the main menu.
-
-Although it is meant as a development environment, IDLE is able to run scripts
-(passing options and arguments to them). See IDLE documentation for detailed
-information on how to run scripts from IDLE.
+Then you may run FMS from IDLE or from the command line. The command line is
+the prefered way to run FMS.
 
 Running FMS from the command line
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you prefer to run FMS from the command line, then cd to FMS's installation
-directory and try::
+If you choosed to run FMS from the command line, then get a command prompt, cd
+to FMS's installation directory [*]_ and try::
 
-    python fms.py
+    python startfms.py
+
+(To get a command prompt, go to ``Start`` then ``Run`` and type in ``cmd`` in
+the box).
 
 If all goes well, you should get this output::
 
-    Usage: fms.py [options] [command] simulationconffile
+    Usage: startfms.py [options] [command] simulationconffile
 
     runs a Financial Market Simulator simulation
 
@@ -117,10 +109,21 @@ On Windows machines, the Python installation is usually placed in
 To add this directory to your path, you can type the following command into the
 command prompt in a DOS box::
 
-    set path=%path%;C:\python26
+    set path=%path%;C:\Python26
 
 
 .. _Python tutorial: http://docs.python.org/tutorial/index.html
+
+Running FMS from IDLE
+~~~~~~~~~~~~~~~~~~~~~
+
+IDLE stands for Integrated DeveLopment Environment, and is mainly used on
+Windows systems. Once Python is installed on your system, IDLE might be started
+from the Python submenu in the main menu.
+
+Although it is meant as a development environment, IDLE is able to run scripts
+(passing options and arguments to them). See IDLE documentation for detailed
+information on how to run scripts from IDLE.
 
 Uninstalling FMS
 ================
@@ -130,7 +133,7 @@ If you need/want to uninstall FMS, ``cd`` to your Python's installation
 
 	rm -r fms*
 
-Then remove the ``fms.py`` script from where it was installed, probably
+Then remove the ``startfms.py`` script from where it was installed, probably
 ``/usr/bin/`` or ``/usr/local/bin/`` on Unix. 
 
 On Windows, if you used the binary installer, you may uninstall FMS directly

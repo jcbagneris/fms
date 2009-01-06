@@ -125,7 +125,7 @@ files in ``docs/examples`` to begin with.
 
 Choose one of the examples, cd to the config file directory and run::
 
-	fms.py -v check <config file name>
+	startfms.py -v check <config file name>
 
 The ``check`` command is some sort of dry-run : it will perform anything except
 running the experiment itself. Thus, it will try to find, import and instanciate
@@ -133,7 +133,7 @@ all the classes in your config file, which is probably the best way to check it.
 The -v option is the verbose one, hopefully outputting clever error messages if
 something went wrong. If it went ok, then run::
 
-	fms.py -v run <config file name>
+	startfms.py -v run <config file name>
 
 This will really run the experiment, outputting transaction data either on the
 console or in a comma separated value file, depending on your configuration

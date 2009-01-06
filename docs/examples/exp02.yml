@@ -10,8 +10,8 @@
 # environment, thus reading the logfile one line at a time, as expected.
 #
 # Run with :
-# $ fms.py run exp02.yml
-# should produce 1 file :
+# $ startfms.py run exp02.yml
+# This should produce 1 file :
 # - exp02.csv the resulting transactions file 
 # This file should be identical to exp01.csv, resulting from the
 # exp01.yml experiment.
