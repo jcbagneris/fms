@@ -7,7 +7,6 @@ Various utilities
 import sys
 import logging
 import yaml
-from lxml import etree
 from fms.utils.exceptions import MissingParameter
 
 logger = logging.getLogger('fms.utils')
@@ -104,6 +103,13 @@ class XmlParamsParser(_ParamsParser):
     config files. The use of YAML config files is encouraged,
     as they give more flexibility.
     """
+
+    try:
+        from lxml import etree
+    except ImportError:
+        logger.critical("Please install the lxml module to use XML config files.")
+        logger.critical("See http://codespeak.net/lxml/ for installation.")
+        sys.exit(2)
 
     def __init__(self, xmlfilename):
         """
