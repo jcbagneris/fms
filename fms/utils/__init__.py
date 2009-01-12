@@ -104,17 +104,18 @@ class XmlParamsParser(_ParamsParser):
     as they give more flexibility.
     """
 
-    try:
-        from lxml import etree
-    except ImportError:
-        logger.critical("Please install the lxml module to use XML config files.")
-        logger.critical("See http://codespeak.net/lxml/ for installation.")
-        sys.exit(2)
-
     def __init__(self, xmlfilename):
         """
         Constructor. Reads XML config file.
         """
+        try:
+            from lxml import etree
+        except ImportError:
+            logger.critical(
+                    "Please install the lxml module to use XML config files.")
+            logger.critical("See http://codespeak.net/lxml/ for installation.")
+            sys.exit(2)
+
         _ParamsParser.__init__(self, xmlfilename)
         
         config = etree.parse(xmlfilename).getroot()

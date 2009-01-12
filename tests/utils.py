@@ -7,7 +7,7 @@ Tests for utils module.
 import unittest
 import sys
 from StringIO import StringIO
-from fms.utils import XmlParamsParser, YamlParamsParser
+from fms.utils import YamlParamsParser, XmlParamsParser
 from fms.utils.exceptions import MissingParameter
 
 class YamlParserTests(unittest.TestCase):
@@ -441,7 +441,6 @@ class XmlParserTests(unittest.TestCase):
         """
         xmlparamsfile = StringIO(self.missingagent)
         self.assertRaises(MissingParameter, XmlParamsParser, xmlparamsfile)
-
 
 if __name__ == "__main__":
     unittest.main()
