@@ -85,6 +85,18 @@ experiment to help you make sense out of it.
 Configuring an experiment
 =========================
 
+To keep your system clean, start by creating a new directory for your
+experiments somewhere in your ``home`` directory (the ``My documents`` directory
+if you use Windows).
+
+If you use Linux or a BSD, make sure that the ``startfms.py`` script is on your
+path, or symlink or copy it in the newly created "experiments" directory.
+
+If you use Windows, copy the ``startfms.py`` (it is very small, so copying it is
+not a problem) in the newly created "experiments" directory. Remember that
+``startfms.py`` is located in your Python installation ``Scripts`` directory,
+something like ``C:\Python26\Scripts\``.
+
 Open your favorite text editor, and copy the text below::
 
     --- # My first experiment
@@ -105,7 +117,13 @@ Open your favorite text editor, and copy the text below::
           stocks: 1000
           args: [1000, 100]
 
-Then save it under the name "exp1.yml" or whatever name you may think of (and remember), provided you keep the ".yml" extension. This extension is necessary because it tells FMS that the configuration file is a YAML_ one. YAML (Yet Another Markup Language) is nothing more than some kind of syntax, and this one was designed to be as human friendly as possible, so don't be scared even if you have no previous experience of manually written config files.
+Then save it in the "experiments" directory under the name "exp1.yml" or
+whatever name you may think of (and remember), provided you keep the ".yml"
+extension. This extension is necessary because it tells FMS that the
+configuration file is a YAML_ one. YAML (Yet Another Markup Language) is nothing
+more than some kind of syntax, and this one was designed to be as human friendly
+as possible, so don't be scared even if you have no previous experience of
+manually written config files.
 
 .. _YAML: http://www.yaml.org/
 
@@ -244,27 +262,26 @@ Check that all is ready
 -----------------------
 
 Your experiment is configured, it is now time to check that everything is ok.
-Again, cd to the directory where you installed FMS and run::
+Again, cd to the "experiment" directory and run::
 
-    python startfms.py -v check /path/to/the/config/file.yml
+    python startfms.py -v check name-of-the-config-file.yml
 
-(Replace ``/path/to/the/config/file`` with the path to your config file,you see
-?)
+(Replace ``name-of-the-config-file`` with the name of  your config file).
 
 The ``-v`` option stands for "verbose", as we want FMS to tell us everything it
 does. The output should be::
 
-    INFO - fms.utils - Reading config file /path/to/the/config/file.yml
-    INFO - fms.utils - == /path/to/the/config/file.yml experiment ==
+    INFO - fms.utils - Reading config file name-of-the-config-file.yml
+    INFO - fms.utils - == name-of-the-config-file.yml experiment ==
     INFO - fms.utils - Output file : sys.stdout
     INFO - fms.utils - World : NullWorld
     INFO - fms.utils - Engines : 
     INFO - fms.utils -  AsynchronousRandWReplace : 1 days of 20 instants on ContinuousOrderDriven market
     INFO - fms.utils - Agents :
     INFO - fms.utils -  1000 ZeroIntelligenceTrader with $10000.00 and 1000 stocks, [1000, 100]
-    # /home/jcb/essais/foo.yml experiment
+    # name-of-the-config-file.yml experiment
     time;transaction;price;volume
-    INFO - fms.utils - Config file /home/jcb/essais/foo.yml parsed.
+    INFO - fms.utils - Config file name-of-the-config-file.yml parsed.
     INFO - fms - Created world fms.worlds.nullworld.NullWorld world 162324140
     INFO - fms - Created engine-market  fms.engines.asynchronousrandwreplace.AsynchronousRandWReplace engine 162308012 - fms.markets.continuousorderdriven.ContinuousOrderDriven market 162320972
     INFO - fms - Created  1000 instances of agent fms.agents.zerointelligencetrader.ZeroIntelligenceTrader
@@ -273,11 +290,11 @@ As expected because we choose the "verbose" option, the output is copious.
 Actually, all the lines starting with ``INFO`` would not be here without the
 ``-v``. Try it::
 
-    python startfms.py -v check /path/to/the/config/file.yml
+    python startfms.py -v check name-of-the-config-file.yml
 
 You should get::
 
-    # /home/jcb/essais/foo.yml experiment
+    # name-of-the-config-file.yml experiment
     time;transaction;price;volume
 
 This is the only "real" output, that is, the header of the transaction file,
@@ -303,7 +320,7 @@ Edit the configuration file again, and change the fourth line so that the
 Save, and run the check again (you know how to do this, don't you ?). The output
 (without the verbose option) should be::
 
-    # /home/jcb/essais/foo.yml experiment
+    # name-of-the-config-file.yml experiment
     time;transaction;price;volume
     CRITICAL - fms - Unknown fms.worlds class: OtherWorld
 
@@ -327,7 +344,7 @@ Save, check. You should get something like::
         sys.exit(main())
       File "startfms.py", line 147, in main
         params = YamlParamsParser(simconffile)
-      File "/home/jcb/work/recherche/travaux/simul/fms-dev/fms/utils/__init__.py", line 336, in __init__
+      File "fms/utils/__init__.py", line 336, in __init__
         raise MissingParameter, 'world classname'
     fms.utils.exceptions.MissingParameter: world classname
 
@@ -356,11 +373,11 @@ Now that we checked that the experiment configuration file is correct, we may
 run the experiment for real. This is simply done by entering the ``run`` command
 instead of the ``check`` one we used so far::
 
-    python startfms.py run /path/to/the/config/file.yml
+    python startfms.py run name-of-the-config-file.yml
 
 Here is the output on my computer::
 
-    # /home/jcb/essais/foo.yml experiment
+    # name-of-the-config-file.yml experiment
     time;transaction;price;volume
     1;1;900.68;21
     5;2;216.18;14
@@ -414,7 +431,7 @@ Given the random value chosen, this resulted in the 10 transactions above.
 Naturally you will probably use far more data for your research, asking for many
 more turns. Notice that, in addition to ``daylength`` you may specify a ``days``
 object, that is the number of days of daylength you want to run. You would then
-get a days*daylength turns experiment. This allows for fine tuning the
+get a ``days * daylength`` turns experiment. This allows for fine tuning the
 experiment: some engines would for an example flush the order books at the end
 of any day, starting again with empty ones on the next day. 
 
@@ -433,7 +450,7 @@ another object's block)::
 
 Then run the experiment again::
 
-    python startfms.py run /path/to/the/config/file.yml
+    python startfms.py run name-of-the-config-file.yml
 
 You should get no output at all: we did not ask FMS to be verbose, and all the
 transaction data went to the ``experiment-one.csv`` file (in the current

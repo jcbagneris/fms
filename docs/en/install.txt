@@ -106,17 +106,26 @@ If it did not run as expected
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 On Windows machines, the Python installation is usually placed in
-``C:\Python26``, though you can change this when you’re running the installer.
-To add this directory to your path, you can type the following command into the
-command prompt in a DOS box::
+``C:\PythonXY``, where X and Y stand for the major and minor Python version
+number. For an example, the installation directory for Python 2.6 would be
+``C:\Python26``. To add this directory to your path, right-click on the `My
+computer` icon on your desktop, and go to `Properties`. In the pop-up dialogue
+window, click on the `Advanced` tab and then on the `Environment Variables`
+button.  In the new dialogue that pops up, click on the `Path` variable in the
+`System Variables` box then click the `Edit` button. 
 
-    set path=%path%;C:\Python26
+Then add the following at the end of the string in the `Variable value`
+textbox::
+
+    C:\Python26\;
+
+Do not forget the trailing backslash !
 
 Note that you should adapt to the version of python you installed, and to the path where you installed it. It might as well be::
 
-    set path=%path%;C:\Program Files\Python25
+    C:\Program Files\Python25\;
 
-Then, try::
+Then, start or go to a command prompt, and try::
 
     python
 
@@ -135,8 +144,6 @@ Then, at the Python prompt (the ``>>>``), try::
 The answer should be nothing, and you should be at the python prompt again. YAML
 is correctly installed as well. Enter ``exit()`` at the prompt to leave Python.
 You may now go back to the `running FMS from the command line`_ section.
-
-.. _Python tutorial: http://docs.python.org/tutorial/index.html
 
 Running FMS from IDLE
 ~~~~~~~~~~~~~~~~~~~~~
