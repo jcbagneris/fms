@@ -363,4 +363,4 @@ class YamlParamsParser(_ParamsParser):
 
 
 def get_version():
-    return '0.1.1'
+    return '0.1.2'
