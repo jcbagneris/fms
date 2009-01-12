@@ -1,0 +1,559 @@
+.. _tutorial:
+
+============
+FMS tutorial
+============
+
+.. note::
+
+    Make sure you installed FMS properly before following this tutorial, see
+    :ref:`install`.
+
+FMS is a command line application and as such, is rather self-documented. To get
+a summary of the various commands and options, cd to the directory where you
+installed FMS and simply run::
+
+    python startfms.py --help
+
+You should get something like::
+
+    Usage: startfms.py [options] [command] simulationconffile
+
+    runs a Financial Market Simulator simulation
+
+    Options:
+      -h, --help            show this help message and exit
+      -v, --verbose         Set logging level to 'info'. Overrided by --loglevel.
+      -L LEVEL, --loglevel=LEVEL
+                            Set logging level to LEVEL: debug, info, warning,
+                            error, critical.
+
+As you might see, you just used the first option, ``--help``.
+
+For further details about commands and options, an unix-style manpage is
+provided in the ``docs`` directory of your FMS installation.
+
+"Running" FMS means feeding it with information about which kind of agents (and
+how many of them) trade on which kind of market in which kind of world, for how
+many periods of time. In addition, the market may follow different rules of
+clearing, depending on the "period" of the day (pre-opening, fixing, continuous
+trading, etc.). Such a complete description is called an "experiment" and is
+conveniently stored in a flat file (see :ref:`config` for details about this
+file). Once FMS read and checked the configuration file, the experiment is run,
+producing transaction data (date, transaction number, price, volume) either on
+the console or in a file.
+
+Before going deeper in the nuts and bolts of FMS, you should understand what
+world, engines, markets and agents mean in FMS's vocabulary.
+
+The FMS model
+=============
+
+World
+-----
+
+This is a "global environment" class, providing agents with so called exogenous
+information on request. Such information might typically be the level of
+interest rates, or energy price, for an example. A ``NullWorld`` class is provided
+with FMS, it does not provide any special information.
+
+Engines/markets
+---------------
+
+The engines/markets tuples describe what you would simply call "the market" in
+the real world. Engines are the "traffic controlers" : they give speak to the
+agents in a (simulated) synchronous or asynchronous manner, choosing which
+agents speak and when at will. For an example, FMS provides with an
+AsynchronousRandWReplace engine class, which is asynchronous (market clearing is
+required as soon as an agent spoke) and chooses agents randomly, with
+replacement. Markets basically are responsible for recording the orders, and
+doing the clearing (for an example, auction style "fixing" clearing once in a
+while, or continuous book based clearing). FMS provides with two basic market
+classes, ``ContinuousOrderDriven`` and ``HighestQtyFixing``.
+
+Agents
+------
+
+Agents act when the engines give them speak. Acting is either do nothing, or
+place an order. Order should at least have a direction (buy or sell) but may in
+addition specify price and/or quantity. A ``ZeroIntelligenceTrader`` class is
+provided: this agent takes fully random decisions.
+
+As all this probably sounds rather theoretical at the moment, let's try a first
+experiment to help you make sense out of it.
+
+Configuring an experiment
+=========================
+
+Open your favorite text editor, and copy the text below::
+
+    --- # My first experiment
+
+    world:
+          classname: NullWorld
+
+    engines:
+        - classname: AsynchronousRandWReplace
+          market:
+              classname: ContinuousOrderDriven
+          daylength: 20
+
+    agents:
+        - classname: ZeroIntelligenceTrader
+          number: 1000
+          money: 10000
+          stocks: 1000
+          args: [1000, 100]
+
+Then save it under the name "exp1.yml" or whatever name you may think of (and remember), provided you keep the ".yml" extension. This extension is necessary because it tells FMS that the configuration file is a YAML_ one. YAML (Yet Another Markup Language) is nothing more than some kind of syntax, and this one was designed to be as human friendly as possible, so don't be scared even if you have no previous experience of manually written config files.
+
+.. _YAML: http://www.yaml.org/
+
+Before trying to run this first experiment, you deserve a few words of explanation.
+
+As said before, the full description of the experiment should be in the
+config file [1]_. Because you read carefully the previous section, you know that to define an experiment, you should (at least) provide:
+
+* a world class
+* an engine/market tuple
+* an agent class
+
+As you probably noticed, this is exactly what you just copied in the
+configuration file. As any YAML file, this file contains "documents". The
+three dashes on the first line mark the beginning of the only document in our
+configuration file::
+
+    --- # My first experiment
+
+Anything following the # on this line (and any other) is a comment.
+
+Then we describe three "objects": any non-indented line looking like::
+
+    object:
+
+starts the description of a new object. The idented lines below this one define
+this object's various attributes. We thus defined exactly three objects, namely
+``world``, ``engines`` and ``agents``. More objects are possible, see
+:ref:`config` to learn about those.
+
+As the three kind of objects we described here are the bare minimum to get a
+valid experiment, let's get acquainted with any of them.
+
+The ``world`` object and its attributes
+---------------------------------------
+
+The simple world we use in this experiment is fully described with these two
+lines::
+
+    world:
+          classname: NullWorld
+
+This means that the only necessary attribute for the ``world`` object is
+``classname``, that is the kind (class) of world you want to use in your
+experiment. Here, the ``classname`` is NullWorld, and actually you read above in
+`The FMS model`_ that FMS is provided with a very simple world class, which name
+is NullWorld.
+
+The term ``class`` is a technical one, refering to something very precise in the
+Python programming language. If you feel curious about that, get a command
+prompt and ``cd`` to the ``fms`` directory, which is probably in the
+``site-packages`` directory of your Python installation. In this ``fms``
+directory you see subdirectories, conveniently named ``worlds``, ``agents``,
+and so on. Now ``cd`` to the ``worlds`` directory: you should see a bunch of files, and among those, a ``nullworld.py`` file. This is where FMS will look for the NullWorld class when it will need it, i.e. when we will run our first experiment.
+
+Then we have a world, time to think about running a market. This is the
+engines' job.
+
+The ``engines`` object and its attributes
+-----------------------------------------
+
+As you read above, what we call a "market" in the real life is a tuple
+engine/market on FMS. This design decision helps following the "don't repeat
+yourself" programming rule, and should not bother you too much.
+
+Did you notice the plural in "engines" ? Yes, you may use more than one
+engine/market tuple for an experiment. This allows for an example to mimic some markets where a pre-opening period finishes with the determination of a fixing price, and then continuous trading. But you may of course imagine whatever combination fits your (research) needs.
+
+Here is the part of the config file related to engines and markets::
+
+    engines:
+        - classname: AsynchronousRandWReplace
+          market:
+              classname: ContinuousOrderDriven
+          daylength: 20
+
+As you may have more than one engine/market tuples, the class names of the
+engines is in a list. This is why the ``classname`` block is preceded by a dash.
+The dash says "this is an item in a list".
+
+So, we only have one engine here. What are the engine's attributes ? For the
+same reason why the ``world`` needed a ``classname`` attribute, so does the
+``engines``, and will the ``market`` and the ``agents``. The ``classname`` says
+"use this kind of engine". As any engine is associated with a market in a tuple,
+the ``classname`` attribute is followed by a ``market`` attribute. The market
+itself is an object, and (guess what) gets a ``classname`` attribute.
+
+Finally, this precise engine, which ``classname`` is
+``AsynchronousRandWReplace`` will run 20 times, as the ``daylength`` attribute
+value is 20. Note that this attribute is optional, but the default value is 1,
+which is not much. This attribute is not the number of transactions you will get
+in the output, but the number of times the engine will give speak to an agent.
+When an agent "speaks", she may decide to do nothing, or place an order which
+does not immediately trigger any transaction, depending on the market model.
+Thus, the number of times the engine give speak to the agents is not the number
+of transactions of the experiment.
+
+The ``agents`` object and its attributes
+-----------------------------------------
+
+The last object we put in the config file is the ``agents`` one. Its description
+is as follows::
+
+    agents:
+        - classname: ZeroIntelligenceTrader
+          number: 1000
+          money: 10000
+          stocks: 1000
+          args: [1000, 100]
+
+We have here the same kind of block structure than the one we had with
+``engines``. An experiment may use different kind of agents (random,
+fundamentalists, ...), thus the ``classname`` is preceded by a dash, telling us
+that other agent classes might follow in the configuration file.
+
+Here we use only one class of agents, namely ``ZeroIntelligenceTrader``. This
+agent always take random decisions. The attributes block starts with ``number``,
+which, as you guessed, gives the number of individual agents of that class you
+need.
+
+Then come ``money`` and ``stocks``, which describe the initial portfolio of the
+agent, in cash and stocks.
+
+``number``, ``money`` and ``stocks`` are compulsory attributes, whatever the
+agent class you choosed.
+
+The last attribute, ``args``, is a list of optional attributes, the meaning of
+which depends on the agent class. For the ``ZeroIntelligenceTrader`` class, the
+attributes are the maximum price and quantity an agent is allowed to use in an
+order, i.e. these are limits for the random process generating the orders. 
+
+Running the experiment
+======================
+
+Check that all is ready
+-----------------------
+
+Your experiment is configured, it is now time to check that everything is ok.
+Again, cd to the directory where you installed FMS and run::
+
+    python startfms.py -v check /path/to/the/config/file.yml
+
+(Replace ``/path/to/the/config/file`` with the path to your config file,you see
+?)
+
+The ``-v`` option stands for "verbose", as we want FMS to tell us everything it
+does. The output should be::
+
+    INFO - fms.utils - Reading config file /path/to/the/config/file.yml
+    INFO - fms.utils - == /path/to/the/config/file.yml experiment ==
+    INFO - fms.utils - Output file : sys.stdout
+    INFO - fms.utils - World : NullWorld
+    INFO - fms.utils - Engines : 
+    INFO - fms.utils -  AsynchronousRandWReplace : 1 days of 20 instants on ContinuousOrderDriven market
+    INFO - fms.utils - Agents :
+    INFO - fms.utils -  1000 ZeroIntelligenceTrader with $10000.00 and 1000 stocks, [1000, 100]
+    # /home/jcb/essais/foo.yml experiment
+    time;transaction;price;volume
+    INFO - fms.utils - Config file /home/jcb/essais/foo.yml parsed.
+    INFO - fms - Created world fms.worlds.nullworld.NullWorld world 162324140
+    INFO - fms - Created engine-market  fms.engines.asynchronousrandwreplace.AsynchronousRandWReplace engine 162308012 - fms.markets.continuousorderdriven.ContinuousOrderDriven market 162320972
+    INFO - fms - Created  1000 instances of agent fms.agents.zerointelligencetrader.ZeroIntelligenceTrader
+
+As expected because we choose the "verbose" option, the output is copious.
+Actually, all the lines starting with ``INFO`` would not be here without the
+``-v``. Try it::
+
+    python startfms.py -v check /path/to/the/config/file.yml
+
+You should get::
+
+    # /home/jcb/essais/foo.yml experiment
+    time;transaction;price;volume
+
+This is the only "real" output, that is, the header of the transaction file,
+because no actual transaction occured. That is because we used the ``check``
+command, which is a dry-run: it does everything a real run would do (including
+the output of a header, thus checking that writing on the output device, console
+or file, is possible), but stops just before starting the (first) engine.
+
+Read carefully the ``INFO`` lines in the output above: FMS first informs you that it reads your experiment configuration file. Then, it tells you what it understood from what you write there, one item at a time. You know when the file is completely parsed, and this is the moment FMS tries to create all the objects needed to complete your experiment. You can read about these operations too : what it created, and how many of these objects.
+
+Trying to fool the system
+-------------------------
+
+Ok, here all went well, we could run the experiment and see the output right
+now. But wait, what if we did a mistake in the configuration file ?
+
+Edit the configuration file again, and change the fourth line so that the
+``world`` block is now:: 
+
+    world:
+          classname: OtherWorld
+
+Save, and run the check again (you know how to do this, don't you ?). The output
+(without the verbose option) should be::
+
+    # /home/jcb/essais/foo.yml experiment
+    time;transaction;price;volume
+    CRITICAL - fms - Unknown fms.worlds class: OtherWorld
+
+FMS read the config file, output the result header, then tried to create an
+``OtherWorld`` world. As this class does not exist so far, it failed, and as a
+``world`` class is necessary for the experiment to run, this is a critical
+situation. FMS thus stops immediately, and informs you about this, even if you
+did not choose the verbose option.
+
+Let us try something nastier. Edit again the ``world`` block in the configuration file, correct the class name but change the attribute name::
+
+    world:
+          theclassname: NullWorld
+
+Save, check. You should get something like::
+
+    ERROR - fms.utils.exceptions - Missing parameter: world classname
+    None
+    Traceback (most recent call last):
+      File "startfms.py", line 161, in <module>
+        sys.exit(main())
+      File "startfms.py", line 147, in main
+        params = YamlParamsParser(simconffile)
+      File "/home/jcb/work/recherche/travaux/simul/fms-dev/fms/utils/__init__.py", line 336, in __init__
+        raise MissingParameter, 'world classname'
+    fms.utils.exceptions.MissingParameter: world classname
+
+Ouch, this looks scary. But look again and see the first line: FMS is kind
+enough to tell you something understandable before crashing::
+
+    ERROR - fms.utils.exceptions - Missing parameter: world classname
+
+And this exactly the problem. We created a ``theclassname`` attribute to the
+``world`` object, and there is nothing wrong with this (well, it is useless, but
+harmless too). But there is no ``classname`` attribute, and FMS needs a
+``world`` ``classname`` as a parameter for the experiment. The missing parameter
+triggers an error, and FMS reports about the error (and actually does not crash,
+but stops, outputting complete exception information in case someone needs it). 
+
+Now you learned that:
+
+* it is always a good idea to check an experiment file before using it
+* as far as possible, simple error messages will be output in case something
+  went wrong during the check.
+
+Outputting the transactions
+---------------------------
+
+Now that we checked that the experiment configuration file is correct, we may
+run the experiment for real. This is simply done by entering the ``run`` command
+instead of the ``check`` one we used so far::
+
+    python startfms.py run /path/to/the/config/file.yml
+
+Here is the output on my computer::
+
+    # /home/jcb/essais/foo.yml experiment
+    time;transaction;price;volume
+    1;1;900.68;21
+    5;2;216.18;14
+    5;3;643.92;61
+    8;4;137.74;26
+    8;5;218.66;51
+    9;6;218.66;62
+    14;7;218.13;25
+    15;8;218.13;28
+    16;9;218.13;27
+    17;10;218.13;35
+
+The output you get will probably be different: this is because this experiment
+uses a pseudo-random number generator, and we did not feed it with a seed. In
+this situation, the seed is "chosen" by the system, and the result is
+unpredictable, depending on the OS you use, the time you ran the experiment, and
+many other parameters. If you prefer to choose the seed yourself, you may add a
+``randomseed`` object to the configuration file, giving it whichever value you
+want (as usual, see :ref:`config` for a complete description of what you may put
+in the configuration file).
+
+Should you need details about the pseudo-random number generator, see the `Python
+language library documentation`_.
+
+.. _Python language library documentation: http://docs.python.org/library/random.html
+
+What did we get as an output ? Hopefully this is transaction data. Each line
+(except the two header ones, that is) describes a transaction as semicolon
+separated numerical values. As described on the second header line, you get:
+
+* the "time" the transaction occured (remember that we put a ``daylength`` value
+  of 20 "instants" in the config file)
+* the sequential id of the transaction
+* the price at which the transaction took place
+* the volume, i.e. the number of assets exchanged.
+
+Again, the experiment lasted 20 turns, that is the engine class gave speak to a
+randomly chosen agent 20 times before stopping. More precisely, what happened
+twenty times is:
+
+* the engine choosed an agent randomly among the 1000 that were created upon
+  initialization
+* as the agent class is purely random, the chosen agent put a random order (either
+  sell or buy, a price and a quantity)
+* the order was collected in the related book (sellbook or buybook)
+* the clearing method ran on the books, comparing the best limits and triggering
+  transactions if necessary
+
+Given the random value chosen, this resulted in the 10 transactions above.
+
+Naturally you will probably use far more data for your research, asking for many
+more turns. Notice that, in addition to ``daylength`` you may specify a ``days``
+object, that is the number of days of daylength you want to run. You would then
+get a days*daylength turns experiment. This allows for fine tuning the
+experiment: some engines would for an example flush the order books at the end
+of any day, starting again with empty ones on the next day. 
+
+Note that we did not ask FMS to be verbose here: this is because the output goes
+to the console (we did not put the name of an output file in the configuration),
+and I did not want to mix it with the information reported by FMS about what is
+going on when running the experiment. But as you will later use the transaction
+data to produce graphics or statistics or whatever you may imagine, it is
+convenient to store it in a file. The ``outputfilename`` object in the config file lets you give the name of the file storing the results of the experiment.
+
+Let us try it. Edit again the configuration file and add this line somewhere it
+would not interfere with the other parameters (i.e., not right in the middle of
+another object's block)::
+
+    outputfilename: experiment-one.csv
+
+Then run the experiment again::
+
+    python startfms.py run /path/to/the/config/file.yml
+
+You should get no output at all: we did not ask FMS to be verbose, and all the
+transaction data went to the ``experiment-one.csv`` file (in the current
+directory if you did not give a different path). Open this file with a text
+editor, and you should see the transaction data (a different set, because the
+random seed was different), each transaction described on a line exactly as it
+was output on the console in the previous run.
+
+Replaying an experiment
+-----------------------
+
+As we explained above, the transaction data on the second run is different from
+the one we got on the first run. This is because the randomly chosen random seed
+was different, thus resulting in a completely different sequence of orders.
+
+Nonetheless, it may sometimes prove useful to "replay" an experiment, that is,
+having the same agents put the same orders at the same time. I use it a lot for
+testing purposes, for an example.
+
+Because we used random agents in our experiment, this could be achieved
+by choosing the random seed ourselves, as a given random seed will always result
+in the same pseudo-random sequence of numbers. But this trick would not do for
+non-random agents. In addition, it might be useful to store the sequence of
+orders put by the agents, too. Thus, FMS is provided with the necessary set of
+tools to achieve both results:
+
+* store the orders sequence in a file
+* make it possible to "replay" the orders file.
+
+The first step is achieved by another configuration item, namely
+``orderslogfilename``. As with ``ouputfilename``, you simply provide a file
+name, and FMS will gently store the orders put by the agents in it.
+
+The second step involves using a special agent class, ``PlayOrderLogFile``:
+instead of speaking randomly, or being a fundamentalist, or whichever scheme we
+may imagine, this agent "reads" class the orders from the ``orderslogfilename``,
+in sequence. In addition, to make sure the sequence is correct whatever the
+number of instances of this agent you ask for, each instance will actually be
+the same agent [2]_ (thus "remembering" which line of the file it just read, for
+an example).
+
+To try this, we first need to play the experiment again, this time storing the
+orders the agents emitted. We will then replay the experiment and check that
+the output transactions are actually the same.
+
+Edit your config file again, and add an ``orderslogfilename`` item::
+
+    orderslogfilename: myorders.txt
+
+Run the experiment again, and check that there is a ``myorders.txt`` file in the
+current directory (or whichever path you choosed). Open this file with your
+editor and check its contents. You may notice that it contains exactly 20 order
+lines, as you asked for a ``daylength`` of 20. Close the file, and be careful
+not to change anything in it (do not save).
+
+Then, change the configuration file again. There is a little bit of work to do
+here (you might prefer to copy the original configuration file, and modify the
+copy): 
+
+* give a new name to the output file (in order to be able to compare it against
+  the one we just created)
+* delete the ``orderslogfilename`` line (as we already have the orders file)
+* change the agent class name to ``PlayOrderLogFile``
+* change the agent ``args`` parameter, deleting the numbers here and putting the
+  orders log file name instead: the agent has to know which file it is supposed
+  to play.
+  
+The resulting file contents should be like::
+
+    --- # My first experiment
+
+    world:
+          worldclassname: NullWorld
+          classname: NullWorld
+
+    engines:
+        - classname: AsynchronousRandWReplace
+          market:
+              classname: ContinuousOrderDriven
+          daylength: 20
+
+    agents:
+        - classname: PlayOrderLogFile
+          number: 1000
+          money: 10000
+          stocks: 1000
+          args: ['myorders.txt']
+
+    outputfilename: experiment-replayed.csv
+
+Then run the experiment against the new configuration file. If you did not
+choose to pass the ``verbose`` options, you should get no output. Compare the
+contents of the original output file (``experiment-one.csv``) with the one
+resulting from the replay of the experiment (``experiment-replayed.csv``). If
+all went well (and there is no reason it did not), they should be identical.
+If your system is an unix-based one, you may try::
+
+    diff experiment-one.csv experiment-replayed.csv
+
+As the ``diff`` comment produces no output at all [3]_, the two files contents are
+the same.
+
+A word of conclusion
+====================
+
+Congratulations ! You managed to go through this long tutorial, and are now
+ready to start playing with FMS on your own. Remember to read the rest of the
+documentation, it will help you master the fine-tuning aspects of FMS, getting
+the results you need for your research.
+
+Happy number crunching !
+
+---------------
+
+.. [1] A future release of FMS might allow to pass all the parameters as
+    options, for people loving long and convoluted command lines...
+
+.. [2] Technically, this kind of class is called a "Borg", after a fictional
+    pseudo-race of cyborgs depicted in the "Star Trek" series. The Borgs have some
+    kind of collective mind, as our agents share the same state.
+
+.. [3] Actually it may produce output if you changed the experiment
+    configuration file name, as it is used to produce the first line of header.
