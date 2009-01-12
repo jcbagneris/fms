@@ -101,13 +101,13 @@ Report bugs, write new classes, translate documentation, write documentation and
 additional example, request new features, use FMS and let people know you use
 it. Think of other ways to contribute. Thank you :)
 
-The FMS sources repository is available for cloning on assembla.com_. To clone
+The FMS sources repository is available for cloning on github_. To clone
 it, you need `the git VCS`_ on your computer. Then run::
 
-    git clone git://git.assembla.com/fmsdev.git
+    git clone git://github.com/jcbagneris/fms.git
 
 .. _the git VCS: http://git.or.cz
-.. _assembla.com: http://www.assembla.com
+.. _github: http://www.github.com
 
 Documentation contents
 ======================
@@ -116,6 +116,7 @@ Documentation contents
    :maxdepth: 2
 
    install
+   tutorial
    config
 
 Index, tables and search

@@ -11,7 +11,7 @@ Requirements
 Installing FMS
 ==============
 
-To install it, make sure you have Python 2.3 or greater installed. Then run
+To install it, make sure you have Python 2.4 or greater installed. Then run
 this command (as root) from a command prompt:
 
     python setup.py install
@@ -22,7 +22,8 @@ Python's installation site-packages directory.
 
 In addition, you may move the 'fms.py' script somewhere on your path.
 
-See the docs/ directory for more detailed installation steps.
+See the docs/ directory for more detailed installation steps, especially if you
+intend to run FMS on Windows.
 
 To check that anything went well, cd to the tests directory and run:
 

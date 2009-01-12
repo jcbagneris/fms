@@ -4,8 +4,8 @@
 FMS experiments configuration
 =============================
 
-FMS needs an experiment description to be able to run it. The experiment
-configuration file contains this description.
+FMS needs a detailed description of an experiment before being able able to run
+it. The experiment configuration file contains this description.
 
 The experiment configuration file name might be whatever you want (provided your
 operating system allows it) but should have an '.yml' extension for FMS to know
@@ -18,48 +18,12 @@ their required parameters: world, engines/markets, agents.
 
 .. _YAML: http://www.yaml.org/
 
-Before going deeper in the nuts and bolts of the configuration file, you should
-understand what world, engines, markets and agents mean in FMS's vocabulary.
-
-The FMS model
-=============
-
-World
------
-
-This is a "global environment" class, providing agents with so called exogenous
-information on request. Such information might typically be the level of
-interest rates, or energy price, for an example. A ``NullWorld`` class is provided
-with FMS, it does not provide any special information.
-
-Engines/markets
----------------
-
-The engines/markets tuples describe what you would simply call "the market" in
-the real world. Engines are the "traffic controlers" : they give speak to the
-agents in a (simulated) synchronous or asynchronous manner, choosing which
-agents speak and when at will. For an example, FMS provides with an
-AsynchronousRandWReplace engine class, which is asynchronous (market clearing is
-required as soon as an agent spoke) and chooses agents randomly, with
-replacement. Markets basically are responsible for recording the orders, and
-doing the clearing (for an example, auction style "fixing" clearing once in a
-while, or continuous book based clearing). FMS provides with two basic market
-classes, ``ContinuousOrderDriven`` and ``HighestQtyFixing``.
-
-Agents
-------
-
-Agents act when the engines give them speak. Acting is either do nothing, or
-place an order. Order should at least have a direction (buy or sell) but may in
-addition specify price and/or quantity. A ``ZeroIntelligenceTrader`` class is
-provided: this agent takes fully random decisions.
-
-
 Configuration file syntax
 =========================
 
-Configuration files are provides in the ``docs/examples/`` directory, it is
-strongly recommanded to study those before writing your own.
+Configuration files are provided in the ``docs/examples/`` directory, it is
+strongly recommanded to study those before writing your own (see `examples
+provided`_ below).
 
 A minimal configuration file might be::
 
@@ -219,3 +183,8 @@ agents
 
         Any arguments required by or optional to the agent class.
 
+Examples provided
+=================
+
+The ``docs/examples`` directory contains three example configuration files, all
+of which are heavily commented.
