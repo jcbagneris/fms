@@ -1,6 +1,6 @@
 include INSTALL
 include CHANGELOG
-Include README
+include README
 include LICENSE
 include MANIFEST.in
 recursive-include docs/en/man *
