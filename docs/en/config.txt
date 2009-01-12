@@ -21,9 +21,9 @@ their required parameters: world, engines/markets, agents.
 Configuration file syntax
 =========================
 
-Configuration files are provided in the ``docs/examples/`` directory, it is
-strongly recommanded to study those before writing your own (see `examples
-provided`_ below).
+Configuration files are provided in the ``examples`` directory, which is located
+in the main documentation directory [1]_. It is strongly recommanded to study
+those before writing your own (see `examples provided`_ below).
 
 A minimal configuration file might be::
 
@@ -186,5 +186,12 @@ agents
 Examples provided
 =================
 
-The ``docs/examples`` directory contains three example configuration files, all
-of which are heavily commented.
+The ``examples`` directory in the main documentation directory [1]_ contains three
+example configuration files, all of which are heavily commented.
+
+
+-----------------------
+
+.. [1] The main documentation directory is located in the ``docs`` directory of FMS
+    installation under Linux or BSD, and in the ``Doc\fms-documentation`` 
+    directory in the Python installation directory under Windows
