@@ -41,10 +41,10 @@ copyright = u'2008, Jean-Charles Bagneris'
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
-# The short X.Y version.
-version = '0.1'
 # The full version, including alpha/beta/rc tags.
-release = '0.1.0'
+release = __import__(os.path.join('fms','utils')).get_version()
+# The short X.Y version.
+version = release.rsplit('.',1)[0]
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
