@@ -7,3 +7,4 @@ recursive-include docs/en/man *
 recursive-include docs/en/html *
 recursive-include docs/examples *
 recursive-include tests *
+global-exclude *pyc
