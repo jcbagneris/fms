@@ -5,6 +5,7 @@ Various utilities
 """
 
 import sys
+import os
 import logging
 import yaml
 from fms.utils.exceptions import MissingParameter
@@ -362,5 +363,25 @@ class YamlParamsParser(_ParamsParser):
         logger.info("Config file %s parsed." % yamlfilename)
 
 
-def get_version():
-    return '0.1.2'
+def get_git_commit():
+    import fms
+    try:
+        fms_real_path = os.path.realpath(fms.__path__[0])
+        fms_real_path = fms_real_path.rsplit(os.sep, 1)[0]
+    except IOError:
+        return None
+    head_path = os.path.join(fms_real_path, '.git')
+    head = os.path.join(head_path, 'HEAD')
+    try:
+        commit_path = open(head, 'r').read().strip()
+    except IOError:
+        return None
+    commit_path = os.path.join(head_path, commit_path.split(' ')[1])
+    try:
+        commit = open(commit_path, 'r').read()
+    except IOError:
+        return None
+    return commit[:8]
+
+    
+
