@@ -12,6 +12,7 @@ import os.path
 import optparse
 import logging
 
+import fms
 from fms.utils import XmlParamsParser, YamlParamsParser
 
 def set_parser():
@@ -19,7 +20,7 @@ def set_parser():
     Create command line arguments and options parser
     """
     optp = optparse.OptionParser(
-        description='runs a Financial Market Simulator simulation',
+        description='run a Financial Market Simulator simulation',
         prog='%s' % sys.argv[0],
         usage="%prog [options] [command] simulationconffile",)
     optp.add_option('--version', action='store_true', 
@@ -121,12 +122,13 @@ def main():
     parser = set_parser()
     options, arguments = parser.parse_args()
 
+    version = fms.get_full_version()
     if options.version:
-        import fms
-        print "FMS v%s" % fms.get_full_version()
+        print "FMS v%s" % version
         return 0
 
     logger = set_logger(options)
+    logger.info("This is FMS v%s" % version)
 
     try:
         command = arguments[0]
