@@ -22,10 +22,12 @@ def set_parser():
         description='runs a Financial Market Simulator simulation',
         prog='%s' % sys.argv[0],
         usage="%prog [options] [command] simulationconffile",)
+    optp.add_option('--version', action='store_true', 
+        help="output FMS version and exit")
     optp.add_option('-v', '--verbose', action='store_true', 
-        help="Set logging level to 'info'. Overrided by --loglevel.")
+        help="set logging level to 'info', overrided by --loglevel")
     optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
-        help="Set logging level to LEVEL: debug, info, warning, error, critical.")
+        help="set logging level to LEVEL: debug, info, warning, error, critical")
     return optp
 
 def set_logger(options):
@@ -118,6 +120,11 @@ def main():
     """
     parser = set_parser()
     options, arguments = parser.parse_args()
+
+    if options.version:
+        import fms
+        print "FMS v%s" % fms.get_full_version()
+        return 0
 
     logger = set_logger(options)
 

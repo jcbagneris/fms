@@ -2,7 +2,7 @@ import os
 import os.path
 from distutils.core import setup
 
-version = __import__(os.path.join('fms','utils')).get_version()
+version = __import__('fms').VERSION
 
 long_description = """
 FMS, an agent-based financial market simulator.
