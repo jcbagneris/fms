@@ -7,7 +7,7 @@ Tests for utils module.
 import unittest
 import sys
 from StringIO import StringIO
-from fms.utils import YamlParamsParser, XmlParamsParser
+from fms.utils import YamlParamsParser, XmlParamsParser, CSVDELIMITERS
 from fms.utils.exceptions import MissingParameter
 
 class YamlParserTests(unittest.TestCase):
@@ -33,6 +33,14 @@ class YamlParserTests(unittest.TestCase):
         ymlparamsfile = '%s/fullconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
         self.assertEqual(params['name'], 'Test Experiment')
+
+    def testCsvDelimiteriDefaultValue(self):
+        """
+        csvdelimiter value is ';' if missing
+        """
+        ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
+        params = YamlParamsParser(ymlparamsfile)
+        self.assertEqual(params['csvdelimiter'], ';')
 
     def testRandomseedDefaultValue(self):
         """

@@ -16,6 +16,9 @@ logger = logging.getLogger('fms.utils')
 BUY = 0
 SELL = 1
 
+# csv delimiters
+CSVDELIMITERS = [';', ',', '\t', ' ', ':', '|', '-', '!', '/']
+
 class _ParamsParser(dict):
     """
     Common methods to all param parsers
@@ -321,8 +324,12 @@ class YamlParamsParser(_ParamsParser):
         if not 'randomseed' in self:
             self['randomseed'] = None
 
-        if not 'csvdelimiter' in self:
+        if 'csvdelimiter' in self:
+            if not self['csvdelimiter'] in CSVDELIMITERS:
+                self['csvdelimiter'] = ';'
+        else:
             self['csvdelimiter'] = ';'
+
 
         if 'outputfilename' in self:
             self['outputfilename'] = os.path.join(outputpath, 
