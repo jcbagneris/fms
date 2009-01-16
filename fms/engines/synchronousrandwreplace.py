@@ -45,8 +45,9 @@ class SynchronousRandWReplace(Engine):
             valid = market.is_valid(agents[agt], order)
             if valid:
                 if self.params.orderslogfile:
-                    print >> self.params.orderslogfile, \
-                            "%(direction)s;%(price).2f;%(quantity)d" % order
+                    self.output_order(order)
+#                    print >> self.params.orderslogfile, \
+#                            "%(direction)s;%(price).2f;%(quantity)d" % order
                 market.record_order(agents[agt], order, world.time)
                 world.lastmarketinfo.update(
                         {'sellbook':market.sellbook, 'buybook':market.buybook})
