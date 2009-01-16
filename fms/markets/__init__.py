@@ -83,3 +83,12 @@ class Market:
         else:
             raise MissingParameter, 'direction'
 
+    def output_transaction(self, time, price, quantity):
+        """
+        Output a transaction line
+        """
+        print >> self.outputfile, "%d;%d;%.2f;%d" % (time,
+                                                self.transaction,
+                                                price, 
+                                                quantity)
+
