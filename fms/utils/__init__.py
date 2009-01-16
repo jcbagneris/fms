@@ -376,6 +376,9 @@ class YamlParamsParser(_ParamsParser):
 
 
 def get_git_commit():
+    """
+    dirty hack to get last git commit hash, if any
+    """
     import fms
     try:
         fms_real_path = os.path.realpath(fms.__path__[0])
