@@ -321,6 +321,9 @@ class YamlParamsParser(_ParamsParser):
         if not 'randomseed' in self:
             self['randomseed'] = None
 
+        if not 'csvdelimiter' in self:
+            self['csvdelimiter'] = ';'
+
         if 'outputfilename' in self:
             self['outputfilename'] = os.path.join(outputpath, 
                     self['outputfilename'])
