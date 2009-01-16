@@ -29,6 +29,13 @@ for pull access on the repository.
 Installing FMS
 ==============
 
+.. warning:: 
+
+    If a previous version of FMS is installed on your system, *uninstall it*
+    prior to installing the new version. Really. I mean it. See
+    `Uninstalling FMS`_ below for detailed instructions about
+    uninstallation.
+
 Requirements
 ------------
 
@@ -183,6 +190,8 @@ You're done. Thanks for giving FMS a try !
 
 
 -------------------
+
+.. rubric:: Footnotes
 
 .. [1] Which should be the ``Scripts`` directory in you Python installation
     directory, i.e. ``C:\Python26\Scripts``
