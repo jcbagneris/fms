@@ -64,7 +64,7 @@ class YamlParserTests(unittest.TestCase):
         """
         ymlparamsfile = '%s/fullconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
-        testfile = open('dummyoutput.csv', 'r')
+        testfile = open('%s/dummyoutput.csv' % self.fixturesdir, 'r')
         firstline = testfile.readline()
         self.assertEqual(firstline, '# Test Experiment\n')
         testfile.close()
@@ -83,7 +83,7 @@ class YamlParserTests(unittest.TestCase):
         """
         ymlparamsfile = '%s/fullconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
-        testfile = open('dummyoutput.log', 'r')
+        testfile = open('%s/dummyoutput.log' % self.fixturesdir, 'r')
         firstline = testfile.readline()
         self.assertEqual(firstline, '# Test Experiment orders log\n')
         testfile.close()

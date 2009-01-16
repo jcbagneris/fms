@@ -307,8 +307,10 @@ class YamlParamsParser(_ParamsParser):
         try:
             yamlfile = open(yamlfilename, 'r')
             yamlconf = yaml.load(yamlfile)
+            outputpath = os.path.dirname(yamlfilename)
         except (IOError, TypeError):
             yamlconf = yaml.load(yamlfilename)
+            outputpath = None
 
         for key, value in yamlconf.items():
             self[key] = value
@@ -320,12 +322,16 @@ class YamlParamsParser(_ParamsParser):
             self['randomseed'] = None
 
         if 'outputfilename' in self:
+            self['outputfilename'] = os.path.join(outputpath, 
+                    self['outputfilename'])
             self.outputfile = open(self['outputfilename'], 'w')
         else:
             self['outputfilename'] = 'sys.stdout'
             self.outputfile = sys.stdout
 
         if 'orderslogfilename' in self:
+            self['orderslogfilename'] = os.path.join(outputpath,
+                    self['orderslogfilename'])
             self.orderslogfile = open(self['orderslogfilename'], 'w')
         else:
             self['orderslogfilename'] = None
