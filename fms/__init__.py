@@ -7,7 +7,7 @@ FMS core module.
 import sys
 import optparse
 
-VERSION = '0.1.2'
+VERSION = '0.1.3a1'
 
 def get_full_version():
     """
