@@ -389,5 +389,36 @@ def get_git_commit():
         return None
     return commit[:8]
 
-    
+def close_files(params):
+    """
+    Close all output files
+    """
+    if params['outputfilename'] != 'sys.stdout':
+        logger.info("Closing %s" % params['outputfilename'])
+        try:
+            params.outputfile.close()
+        except IOError:
+            pass
+    if params['orderslogfilename']:
+        logger.info("Closing %s" % params['orderslogfilename'])
+        try:
+            params.orderslogfile.close()
+        except IOError:
+            pass
 
+def delete_files(params):
+    """
+    Delete all outputfiles
+    """
+    if params['outputfilename'] != 'sys.stdout':
+        logger.info("Check only: deleting %s" % params['outputfilename'])
+        try:
+            os.unlink(params['outputfilename'])
+        except IOError:
+            pass
+    if params['orderslogfilename']:
+        logger.info("Check only: deleting %s" % params['orderslogfilename'])
+        try:
+            os.unlink(params['orderslogfilename'])
+        except IOError:
+            pass
