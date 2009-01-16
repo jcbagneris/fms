@@ -27,8 +27,8 @@ class ContinuousOrderDriven(markets.Market):
     the file/device where transactions should be output. If no
     filename is given in conf file, then output goes to sys.stdout:
     >>> market = ContinuousOrderDriven()
-    >>> print >> market.outputfile, "blah"
-    blah
+    >>> market.output_transaction(1, 10.0, 25)
+    1;0;10.00;25
 
     Any agent can place any order : the market itself does not enforce
     any condition on the orders.
