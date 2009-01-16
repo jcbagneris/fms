@@ -120,6 +120,10 @@ class XmlParamsParser(_ParamsParser):
         _ParamsParser.__init__(self, xmlfilename)
         
         config = etree.parse(xmlfilename).getroot()
+        try:
+            outputpath = os.path.dirname(xmlfilename)
+        except AttributeError:
+            outputpath = None
 
         experimentname = config.find(".//name")
         try:
@@ -129,7 +133,8 @@ class XmlParamsParser(_ParamsParser):
 
         outputfilename = config.find(".//outputFilename")
         try:
-            self['outputfilename'] = outputfilename.text
+            self['outputfilename'] = os.path.join(outputpath,
+                    outputfilename.text)
             self.outputfile = open(self['outputfilename'], 'w')
         except AttributeError:
             self['outputfilename'] = "sys.stdout"
@@ -137,7 +142,8 @@ class XmlParamsParser(_ParamsParser):
 
         orderslogfilename = config.find(".//ordersLogFilename")
         try:
-            self['orderslogfilename'] = orderslogfilename.text
+            self['orderslogfilename'] = os.path.join(outputpath,
+                    orderslogfilename.text)
             self.orderslogfile = open(self['orderslogfilename'], 'w')
         except AttributeError:
             self['orderslogfilename'] = None
