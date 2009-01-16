@@ -16,6 +16,9 @@ logger = logging.getLogger('fms.utils')
 BUY = 0
 SELL = 1
 
+# csv delimiters
+CSVDELIMITERS = [';', ',', '\t', ' ', ':', '|', '-', '!', '/']
+
 class _ParamsParser(dict):
     """
     Common methods to all param parsers
@@ -327,6 +330,13 @@ class YamlParamsParser(_ParamsParser):
         if not 'randomseed' in self:
             self['randomseed'] = None
 
+        if 'csvdelimiter' in self:
+            if not self['csvdelimiter'] in CSVDELIMITERS:
+                self['csvdelimiter'] = ';'
+        else:
+            self['csvdelimiter'] = ';'
+
+
         if 'outputfilename' in self:
             self['outputfilename'] = os.path.join(outputpath, 
                     self['outputfilename'])
@@ -398,5 +408,36 @@ def get_git_commit():
         return None
     return commit[:8]
 
-    
+def close_files(params):
+    """
+    Close all output files
+    """
+    if params['outputfilename'] != 'sys.stdout':
+        logger.info("Closing %s" % params['outputfilename'])
+        try:
+            params.outputfile.close()
+        except IOError:
+            pass
+    if params['orderslogfilename']:
+        logger.info("Closing %s" % params['orderslogfilename'])
+        try:
+            params.orderslogfile.close()
+        except IOError:
+            pass
 
+def delete_files(params):
+    """
+    Delete all outputfiles
+    """
+    if params['outputfilename'] != 'sys.stdout':
+        logger.info("Check only: deleting %s" % params['outputfilename'])
+        try:
+            os.unlink(params['outputfilename'])
+        except IOError:
+            pass
+    if params['orderslogfilename']:
+        logger.info("Check only: deleting %s" % params['orderslogfilename'])
+        try:
+            os.unlink(params['orderslogfilename'])
+        except IOError:
+            pass

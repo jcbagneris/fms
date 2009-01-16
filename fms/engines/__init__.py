@@ -34,3 +34,11 @@ class Engine:
           synchronous or asynchronous way.
         """
         raise NotImplementedError
+
+    def output_order(self, order):
+        """
+        Output an order in orderlogfile
+        """
+        mask = self.csvdelimiter.join(('%(direction)s',
+            '%(price).2f','%(quantity)d'))
+        print >> self.params.orderslogfile, mask % order

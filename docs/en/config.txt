@@ -93,6 +93,14 @@ randomseed
     this).  As this library accepts an optional seed parameter, you may specify
     it here.
 
+csvdelimiter
+    Delimiter used in the comma separated value files (optional)
+
+    The field delimiter in the various csv output files. This is optional, as
+    the default value is semicolon ``;`` and is automatically accepted by most
+    spreadsheets. Accepted values are semicolon ``;``, comma ``,``, tab, space,
+    colon ``:``, pipe ``|``, dash ``-``, exclamation mark ``!``, slash ``/``.  
+
 world
     World class information (required)
 

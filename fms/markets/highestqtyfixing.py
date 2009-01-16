@@ -31,9 +31,9 @@ class HighestQtyFixing(markets.Market):
     The class inherits at least one parameter from its superclass,
     the file/device where transactions should be output. If no
     filename is given in conf file, then output goes to sys.stdout:
-    >>> market = ContinuousOrderDriven()
-    >>> print >> market.outputfile, "blah"
-    blah
+    >>> market = HighestQtyFixing()
+    >>> market.output_transaction(1, 10.0, 25)
+    1;0;10.00;25
 
     Any agent can place any order : the market itself does not enforce
     any condition on the orders.
@@ -134,9 +134,7 @@ class HighestQtyFixing(markets.Market):
                 seller = self.sellbook[0][3]
                 buyer.record(BUY, executedprice, qty)
                 seller.record(SELL, executedprice, qty)
-                print >> self.outputfile, "%d;%d;%.2f;%d" % (time,
-                                                        self.transaction,
-                                                        executedprice, qty)
+                self.output_transaction(time, executedprice, qty)
                 if qty == self.buybook[-1][2]:
                     del self.buybook[-1]
                 else:

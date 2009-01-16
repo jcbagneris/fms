@@ -12,7 +12,7 @@ import os.path
 import logging
 
 import fms
-from fms.utils import XmlParamsParser, YamlParamsParser
+from fms.utils import XmlParamsParser, YamlParamsParser, close_files, delete_files
 
 def set_logger(options):
     """
@@ -148,6 +148,11 @@ def main():
             logger.info("Running %s" % e['instance'])
             e['instance'].run(world, agentslist, e['market']['instance'])
         logger.info("Done.")
+        close_files(params)
+
+    if command =='check':
+        close_files(params)
+        delete_files(params)
 
 if __name__ == "__main__":
     sys.exit(main())

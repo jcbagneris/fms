@@ -16,8 +16,10 @@ class Market:
     def __init__(self, parameters):
         if parameters:
             self.outputfile = parameters.outputfile
+            self.csvdelimiter = parameters['csvdelimiter']
         else:
             self.outputfile = sys.stdout 
+            self.csvdelimiter = ';'
         self.sellbook = []
         self.buybook = []
 
@@ -82,4 +84,14 @@ class Market:
             return order
         else:
             raise MissingParameter, 'direction'
+
+    def output_transaction(self, time, price, quantity):
+        """
+        Output a transaction line
+        """
+        mask = self.csvdelimiter.join(('%d','%d','%.2f','%d'))
+        print >> self.outputfile, mask % (time,
+                                        self.transaction,
+                                        price, 
+                                        quantity)
 
