@@ -16,37 +16,37 @@ class AgentTests(unittest.TestCase):
         """
         Agent should fail on __init__ if it does not have a money attribute
         """
-        params = {'stocks':300}
+        params = {'agents':[{'stocks':300}]}
         self.assertRaises(MissingParameter, Agent, params)
 
     def test_money_attribute_type(self):
         """
         Agent.money should be an int or a float
         """
-        params = {'money':'blah', 'stocks':1000}
+        params = {'agents':[{'money':'blah', 'stocks':1000}]}
         self.assertRaises(ValueError, Agent, params)
 
     def test_stocks_attribute_exists(self):
         """
         Agent should fail on __init__ if it does not have a stocks attribute
         """
-        params = {'money':1000}
+        params = {'agents':[{'money':1000}]}
         self.assertRaises(MissingParameter, Agent, params)
 
     def test_stocks_attribute_type(self):
         """
         Agent.stocks should be an int
         """
-        params = {'money':200, 'stocks':23.4}
+        params = {'agents':[{'money':200, 'stocks':23.4}]}
         self.assertRaises(NotAnInteger, Agent, params)
-        params = {'money':200, 'stocks':'blah'}
+        params = {'agents':[{'money':200, 'stocks':'blah'}]}
         self.assertRaises(ValueError, Agent, params)
 
     def test_act_method_not_implemented(self):
         """
         Agent.act() method should be implemented in subclasses
         """
-        params = {'money':200, 'stocks':15}
+        params = {'agents':[{'money':200, 'stocks':15}]}
         smith = Agent(params)
         self.assertRaises(NotImplementedError, smith.act)
 
@@ -54,7 +54,7 @@ class AgentTests(unittest.TestCase):
         """
         Agent.record() should update Agent.money and Agent.stocks
         """
-        params = {'stocks':300, 'money':600}
+        params = {'agents':[{'stocks':300, 'money':600}]}
         smith = Agent(params)
         # smith buys 20 at 2.5
         smith.record(0, 2.5, 20)

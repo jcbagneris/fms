@@ -28,9 +28,9 @@ class PlayOrderLogFile(agents.Agent):
     """
     __shared_state = {}
 
-    def __init__(self, params):
+    def __init__(self, params, offset=0):
         self.__dict__ = self.__shared_state
-        agents.Agent.__init__(self, params)
+        agents.Agent.__init__(self, params, offset)
         if not 'logfile' in self.__dict__:
             try:
                 filename = self.args[0]

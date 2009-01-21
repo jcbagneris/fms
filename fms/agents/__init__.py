@@ -27,7 +27,8 @@ class Agent:
     of agent given the operation to record.
     """
 
-    def __init__(self, params):
+    def __init__(self, params, offset=0):
+        params = params['agents'][offset]
         for key in ('money', 'stocks'):
             if not key in params:
                 raise MissingParameter, key

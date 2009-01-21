@@ -65,10 +65,10 @@ def set_agents(params):
     """
     logger = logging.getLogger('fms')
     agentslist = []
-    for a in params['agents']:
+    for (offset, a) in enumerate(params['agents']):
         agentmodule = import_class('fms.agents', a['classname'])
         for i in range(a['number']):
-            agentslist.append(getattr(agentmodule, a['classname'])(a))
+            agentslist.append(getattr(agentmodule, a['classname'])(params, offset))
         logger.info("Created  %d instances of agent %s" % 
                 (a['number'], agentslist[-1].__class__))
     return agentslist

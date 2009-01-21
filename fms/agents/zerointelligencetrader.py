@@ -54,8 +54,8 @@ class ZeroIntelligenceTrader(agents.Agent):
     Thus, shortselling is not allowed.
     """
     
-    def __init__(self, params):
-        agents.Agent.__init__(self, params)
+    def __init__(self, params, offset=0):
+        agents.Agent.__init__(self, params, offset)
         try:
             self.maxprice = self.args[0]
         except (AttributeError, IndexError):
