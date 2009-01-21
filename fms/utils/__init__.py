@@ -124,9 +124,9 @@ class XmlParamsParser(_ParamsParser):
         
         config = etree.parse(xmlfilename).getroot()
         try:
-            outputpath = os.path.dirname(xmlfilename)
+            self.exp_path = os.path.dirname(xmlfilename)
         except AttributeError:
-            outputpath = None
+            self.exp_path = None
 
         experimentname = config.find(".//name")
         try:
@@ -136,7 +136,7 @@ class XmlParamsParser(_ParamsParser):
 
         outputfilename = config.find(".//outputFilename")
         try:
-            self['outputfilename'] = os.path.join(outputpath,
+            self['outputfilename'] = os.path.join(self.exp_path,
                     outputfilename.text)
             self.outputfile = open(self['outputfilename'], 'w')
         except AttributeError:
@@ -145,7 +145,7 @@ class XmlParamsParser(_ParamsParser):
 
         orderslogfilename = config.find(".//ordersLogFilename")
         try:
-            self['orderslogfilename'] = os.path.join(outputpath,
+            self['orderslogfilename'] = os.path.join(self.exp_path,
                     orderslogfilename.text)
             self.orderslogfile = open(self['orderslogfilename'], 'w')
         except AttributeError:
@@ -316,10 +316,10 @@ class YamlParamsParser(_ParamsParser):
         try:
             yamlfile = open(yamlfilename, 'r')
             yamlconf = yaml.load(yamlfile)
-            outputpath = os.path.dirname(yamlfilename)
+            self.exp_path = os.path.dirname(yamlfilename)
         except (IOError, TypeError):
             yamlconf = yaml.load(yamlfilename)
-            outputpath = None
+            self.exp_path = None
 
         for key, value in yamlconf.items():
             self[key] = value
@@ -338,7 +338,7 @@ class YamlParamsParser(_ParamsParser):
 
 
         if 'outputfilename' in self:
-            self['outputfilename'] = os.path.join(outputpath, 
+            self['outputfilename'] = os.path.join(self.exp_path, 
                     self['outputfilename'])
             self.outputfile = open(self['outputfilename'], 'w')
         else:
@@ -346,7 +346,7 @@ class YamlParamsParser(_ParamsParser):
             self.outputfile = sys.stdout
 
         if 'orderslogfilename' in self:
-            self['orderslogfilename'] = os.path.join(outputpath,
+            self['orderslogfilename'] = os.path.join(self.exp_path,
                     self['orderslogfilename'])
             self.orderslogfile = open(self['orderslogfilename'], 'w')
         else:
