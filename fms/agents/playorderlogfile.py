@@ -4,6 +4,8 @@
 Module defining PlayOrderLogFile agent class.
 """
 
+import os.path
+
 from fms import agents
 from fms.utils.exceptions import MissingParameter
 
@@ -17,7 +19,7 @@ class PlayOrderLogFile(agents.Agent):
     If this parameter is missing, a MissingParameter
     exception is raised.
     >>> params = {'money':10000, 'stocks':200}
-    >>> agent = ZeroIntelligenceTrader(params)
+    >>> agent = PlayOrderLogFile(params)
     Traceback (most recent call last):
         ...
     MissingParameter: orderlogfilename
@@ -33,7 +35,7 @@ class PlayOrderLogFile(agents.Agent):
         agents.Agent.__init__(self, params, offset)
         if not 'logfile' in self.__dict__:
             try:
-                filename = self.args[0]
+                filename = os.path.join(params.exp_path, self.args[0])
             except (AttributeError, IndexError):
                 raise MissingParameter, 'filename'
             del self.args
