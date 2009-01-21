@@ -34,6 +34,13 @@ class Market:
         """
         raise NotImplementedError
 
+    def clear_books(self):
+        """
+        Reset books to empty state
+        """
+        self.sellbook = []
+        self.buybook = []
+
     def record_order(self, agent, order):
         """
         Records agent's order
