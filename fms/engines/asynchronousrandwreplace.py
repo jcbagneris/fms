@@ -37,21 +37,20 @@ class AsynchronousRandWReplace(Engine):
         logger.debug("Starting with sellbook %s" % market.sellbook)
         market.buybook = world.state()['buybook']
         logger.debug("Starting with buybook %s" % market.buybook)
-        now = world.time
-        while world.time < now + self.days*self.daylength: 
-            agt = random.randint(0, len(agents)-1)
-            order = agents[agt].act()
-            valid = market.is_valid(agents[agt], order)
-            if valid:
-                if self.params.orderslogfile:
-                    self.output_order(order)
-#                    print >> self.params.orderslogfile, \
-#                            "%(direction)s;%(price).2f;%(quantity)d" % order
-                market.record_order(agents[agt], order, world.time)
-                market.do_clearing(world.time)
-                world.lastmarketinfo.update(
-                        {'sellbook':market.sellbook, 'buybook':market.buybook})
-            world.time +=1
+        for day in range(self.days):
+            for time in range(self.daylength):
+                agt = random.randint(0, len(agents)-1)
+                order = agents[agt].act()
+                if market.is_valid(agents[agt], order):
+                    if self.params.orderslogfile:
+                        self.output_order(order)
+                    market.record_order(agents[agt], order, world.tick)
+                    market.do_clearing(world.tick)
+                    world.lastmarketinfo.update(
+                            {'sellbook':market.sellbook, 'buybook':market.buybook})
+                world.tick +=1
+            if self.clearbooksateod:
+                market.clear_books()
         logger.debug("Ending with sellbook %s" % market.sellbook)
         logger.debug("Ending with buybook %s" % market.buybook)
 

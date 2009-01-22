@@ -10,6 +10,7 @@ world:
 engines:
     - classname: AsynchronousRandom
       daylength: 10
+      clearbooksateod: False
       days: 2
       market:
           classname: DummyMarket

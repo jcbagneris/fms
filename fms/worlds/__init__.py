@@ -11,7 +11,8 @@ class World:
 
     def __init__(self):
         self.lastmarketinfo = {'sellbook':[], 'buybook':[]}
-        self.time = 0
+        self.tick = 0
+        self.day = 0
 
     def __str__(self):
         return "%s world %s" % (self.__class__, id(self))

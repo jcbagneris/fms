@@ -23,9 +23,9 @@ You should get something like::
 
     Options:
       -h, --help            show this help message and exit
-      -v, --verbose         Set logging level to 'info'. Overrided by --loglevel.
+      -v, --verbose         set logging level to 'info'. Overrided by --loglevel.
       -L LEVEL, --loglevel=LEVEL
-                            Set logging level to LEVEL: debug, info, warning,
+                            set logging level to LEVEL: debug, info, warning,
                             error, critical.
 
 As you might see, you just used the first option, ``--help``.
@@ -54,8 +54,10 @@ World
 
 This is a "global environment" class, providing agents with so called exogenous
 information on request. Such information might typically be the level of
-interest rates, or energy price, for an example. A ``NullWorld`` class is provided
-with FMS, it does not provide any special information.
+interest rates, or energy price, for an example. Any world class keeps track of time.
+
+A ``NullWorld`` class is provided with FMS, it does not provide any special
+information.
 
 Engines/markets
 ---------------
@@ -64,11 +66,11 @@ The engines/markets tuples describe what you would simply call "the market" in
 the real world. Engines are the "traffic controlers" : they give speak to the
 agents in a (simulated) synchronous or asynchronous manner, choosing which
 agents speak and when at will. For an example, FMS provides with an
-AsynchronousRandWReplace engine class, which is asynchronous (market clearing is
-required as soon as an agent spoke) and chooses agents randomly, with
-replacement. Markets basically are responsible for recording the orders, and
-doing the clearing (for an example, auction style "fixing" clearing once in a
-while, or continuous book based clearing). FMS provides with two basic market
+``AsynchronousRandWReplace`` engine class, which is asynchronous (market
+clearing is required as soon as an agent spoke) and chooses agents randomly,
+with replacement. Markets basically are responsible for recording the orders,
+and doing the clearing (for an example, auction style "fixing" clearing once in
+a while, or continuous book based clearing). FMS provides with two basic market
 classes, ``ContinuousOrderDriven`` and ``HighestQtyFixing``.
 
 Agents
@@ -217,7 +219,7 @@ value is 20. Note that this attribute is optional, but the default value is 1,
 which is not much. This attribute is not the number of transactions you will get
 in the output, but the number of times the engine will give speak to an agent.
 When an agent "speaks", she may decide to do nothing, or place an order which
-does not immediately trigger any transaction, depending on the market model.
+does not necessarily trigger a transaction, depending on the market model.
 Thus, the number of times the engine give speak to the agents is not the number
 of transactions of the experiment.
 
@@ -428,12 +430,13 @@ twenty times is:
 
 Given the random value chosen, this resulted in the 10 transactions above.
 
-Naturally you will probably use far more data for your research, asking for many
-more turns. Notice that, in addition to ``daylength`` you may specify a ``days``
-object, that is the number of days of daylength you want to run. You would then
-get a ``days * daylength`` turns experiment. This allows for fine tuning the
-experiment: some engines would for an example flush the order books at the end
-of any day, starting again with empty ones on the next day. 
+Naturally you will probably use far more data for your research, asking for
+many more turns. Notice that, in addition to ``daylength`` you may specify a
+``days`` object, that is the number of days of daylength you want to run. You
+would then get a ``days * daylength`` turns experiment. This allows for fine
+tuning the experiment: some engines would for an example flush the order books
+at the end of any day, starting again with empty ones on the next day. By the
+way, this behaviour is so common that it is the default one. 
 
 Note that we did not ask FMS to be verbose here: this is because the output goes
 to the console (we did not put the name of an output file in the configuration),
@@ -564,6 +567,8 @@ the results you need for your research.
 Happy number crunching !
 
 ---------------
+
+.. rubric:: Footnotes
 
 .. [1] A future release of FMS might allow to pass all the parameters as
     options, for people loving long and convoluted command lines...

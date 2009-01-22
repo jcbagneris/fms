@@ -156,6 +156,15 @@ engines
         The number of days the experiment will run, as an integer. See daylength
         below. Days is set to one if missing.
 
+    clearbooksateod
+        Clear books at end of day (optional, boolean)
+
+        Should engine clear order books at the end of every given day. ``True``
+        if missing. Note that if this parameter is set to ``False`` for a given
+        engine, there is no difference between an experiment with ``d`` days
+        and ``t`` daylength, and another one with ``1`` day and ``d*t``
+        daylength.
+
     daylength
         Day length (optional, integer)
 

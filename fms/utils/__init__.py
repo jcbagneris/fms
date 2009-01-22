@@ -217,6 +217,8 @@ class XmlParamsParser(_ParamsParser):
         except AttributeError:
             self['engines'][0]['daylength'] = 1
 
+        self['engines'][0]['clearbooksateod'] = True
+
         market = config.find(".//market")
         try:
             self['engines'][0]['market'] = {}
@@ -369,7 +371,7 @@ class YamlParamsParser(_ParamsParser):
                 if not paramkey in agent:
                     agent[paramkey] = 1
 
-        for paramkey in ('days', 'daylength'):
+        for paramkey in ('days', 'daylength', 'clearbooksateod'):
             for engine in self['engines']:
                 if not paramkey in engine:
                     engine[paramkey] = 1

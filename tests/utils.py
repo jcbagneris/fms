@@ -145,6 +145,22 @@ class YamlParserTests(unittest.TestCase):
         params = YamlParamsParser(ymlparamsfile)
         self.assertEqual(params['engines'][0]['days'], 2)
 
+    def testClearBooksAtEODDefaultValue(self):
+        """
+        Clear books at end of day if this param is missing
+        """
+        ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
+        params = YamlParamsParser(ymlparamsfile)
+        self.assertTrue(params['engines'][0]['clearbooksateod'])
+
+    def testClearBooksAtEODValue(self):
+        """
+        Engine's clearbooksateod param is correctly read
+        """
+        ymlparamsfile = '%s/fullconfig.yml' % self.fixturesdir
+        params = YamlParamsParser(ymlparamsfile)
+        self.assertFalse(params['engines'][0]['clearbooksateod'])
+
     def testDaylengthDefaultValue(self):
         """
         Daylength should be 1 if missing
@@ -403,6 +419,14 @@ class XmlParserTests(unittest.TestCase):
         xmlparamsfile = '%s/fullconfig.xml' % self.fixturesdir
         params = XmlParamsParser(xmlparamsfile)
         self.assertEqual(params['engines'][0]['days'], 2)
+
+    def testClearBooksAtEODDefaultValue(self):
+        """
+        Engines clear books at end of day
+        """
+        xmlparamsfile = '%s/minimalconfig.xml' % self.fixturesdir
+        params = XmlParamsParser(xmlparamsfile)
+        self.assertTrue(params['engines'][0]['clearbooksateod'])
 
     def testDaylengthDefaultValue(self):
         """

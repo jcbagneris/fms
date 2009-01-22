@@ -13,9 +13,13 @@ class Engine:
         if params:
             self.days = params['engines'][offset]['days']
             self.daylength = params['engines'][offset]['daylength']
+            self.csvdelimiter = params['csvdelimiter']
+            self.clearbooksateod = params['engines'][offset]['clearbooksateod']
         else:
             self.days = 1
             self.daylength = 1
+            self.csvdelimiter = ';'
+            self.clearbooksateod = True
 
     def __str__(self):
         return "%s engine %s" % (self.__class__, id(self))
