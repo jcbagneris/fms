@@ -1,0 +1,18 @@
+--- # Experiment
+name: 'synch-fixing.csv experiment'
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: SynchronousRandWReplace
+      daylength: 12
+      market:
+          classname: HighestQtyFixing 
+
+agents:
+    - classname: PlayOrderLogFile
+      number: 1
+      money: 100000
+      stocks: 1000
+      args: ['synch-fixing.log']

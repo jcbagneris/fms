@@ -9,5 +9,4 @@ dist
 build
 .build
 html
-*.csv
-*.log
+dummyoutput.*

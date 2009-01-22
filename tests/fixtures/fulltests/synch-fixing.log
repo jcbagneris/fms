@@ -1,0 +1,15 @@
+# This log file builds the order books used in fixing.xls
+# direction : buy=0, sell=1
+# direction;price;volume
+0;6.00;4
+0;6.00;2
+0;7.00;6
+0;8.00;2
+0;9.00;10
+0;10.00;5
+1;6.00;2
+1;7.00;14
+1;8.00;5
+1;8.00;3
+1;9.00;8
+1;10.00;3
