@@ -34,8 +34,9 @@ class Engine:
         - check desire validity (market.is_valid)
         - accumulate desire
         - market.record_order()
-        - call market.doClearing when needed, in a 
+        - call market.do_clearing when needed, in a 
           synchronous or asynchronous way.
+        - call market.clear_books() at the end of any day if necessary
         """
         raise NotImplementedError
 
