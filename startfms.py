@@ -38,7 +38,7 @@ def main():
     if options.verbose:
         loglevel = 'info'
     if options.loglevel:
-        loggelevel = options.loglevel
+        loglevel = options.loglevel
     logger = fms.set_logger(loglevel)
     logger.info("This is FMS v%s" % version)
 
