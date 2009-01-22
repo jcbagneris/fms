@@ -14,82 +14,6 @@ import logging
 import fms
 from fms.utils import XmlParamsParser, YamlParamsParser, close_files, delete_files
 
-def set_logger(options):
-    """
-    Sets main logger instance.
-    """
-    levels = {'debug': logging.DEBUG,
-              'info': logging.INFO,
-              'warning': logging.WARNING,
-              'error': logging.ERROR,
-              'critical': logging.CRITICAL,}
-
-    logger = logging.getLogger('fms')
-    lhandler = logging.StreamHandler()
-    formatter = logging.Formatter("%(levelname)s - %(name)s - %(message)s")
-    lhandler.setFormatter(formatter)
-    logger.addHandler(lhandler)
-    logger.setLevel(logging.ERROR)
-    if options.verbose:
-        logger.setLevel(logging.INFO)
-    if options.loglevel:
-        logger.setLevel(levels[options.loglevel])
-    return logger
-
-def import_class(modulename, classname):
-    """
-    Try to import classname from modulename.
-    """
-    logger = logging.getLogger('fms')
-    try:
-        exec "from %s import %s as themodule " % \
-                (modulename, classname.lower())
-    except ImportError:
-        logger.critical("Unknown %s class: %s" % (modulename, classname))
-        sys.exit(2)
-    return themodule
-
-def set_world(params):
-    """
-    Import world class and instanciate world
-    """
-    logger = logging.getLogger('fms')
-    worldmodule = import_class('fms.worlds', params['world']['classname'])
-    world = getattr(worldmodule, params['world']['classname'])(params)
-    logger.info("Created world %s" % world)
-    return world
-
-def set_agents(params):
-    """
-    Import agents class and instanciate agents
-    """
-    logger = logging.getLogger('fms')
-    agentslist = []
-    for (offset, a) in enumerate(params['agents']):
-        agentmodule = import_class('fms.agents', a['classname'])
-        for i in range(a['number']):
-            agentslist.append(getattr(agentmodule, a['classname'])(params, offset))
-        logger.info("Created  %d instances of agent %s" % 
-                (a['number'], agentslist[-1].__class__))
-    return agentslist
-
-def set_engines(params):
-    """
-    Import engines and markets classes and instanciate them
-    """
-    logger = logging.getLogger('fms')
-    engineslist = []
-    for (offset, e) in enumerate(params['engines']):
-        marketmodule = import_class('fms.markets', e['market']['classname'])
-        e['market']['instance'] = getattr(marketmodule, 
-                e['market']['classname'])(params)
-        enginemodule = import_class('fms.engines', e['classname'])
-        e['instance'] = getattr(enginemodule, e['classname'])(params, offset)
-        engineslist.append(e)
-        logger.info("Created engine-market  %s - %s" % 
-                (e['instance'], e['market']['instance']))
-    return engineslist
-
 
 def main():
     """
@@ -110,7 +34,12 @@ def main():
         print "FMS v%s" % version
         return 0
 
-    logger = set_logger(options)
+    loglevel = 'error'
+    if options.verbose:
+        loglevel = 'info'
+    if options.loglevel:
+        loggelevel = options.loglevel
+    logger = fms.set_logger(loglevel)
     logger.info("This is FMS v%s" % version)
 
     try:
@@ -138,9 +67,9 @@ def main():
         logger.debug("Calling YamlParamsParser on %s" % simconffile)
         params = YamlParamsParser(simconffile)
 
-    world = set_world(params)
-    engineslist = set_engines(params)
-    agentslist = set_agents(params)
+    world = fms.set_world(params)
+    engineslist = fms.set_engines(params)
+    agentslist = fms.set_agents(params)
             
     if command == 'run':
         logger.info("All is set, running simulation")
