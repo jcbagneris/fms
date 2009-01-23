@@ -174,7 +174,7 @@ def set_classes(params):
     agentslist = set_agents(params)
     return (world, engineslist, agentslist)
             
-def do_check(args):
+def do_check(args, opts):
     """
     Command: check experiment conffile, do not run
     """
@@ -183,7 +183,7 @@ def do_check(args):
     close_files(params)
     delete_files(params)
 
-def do_run(args):
+def do_run(args, opts):
     """
     Command: run experiment
     """
@@ -197,7 +197,7 @@ def do_run(args):
     logger.info("Done.")
     close_files(params)
 
-def do_nothing(args):
+def do_nothing(args, opts):
     """
     Command: dummy command
     """

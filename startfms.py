@@ -36,7 +36,7 @@ def main():
 
     command = fms.get_command(arguments, parser)
 
-    getattr(fms, "do_%s" % command)(arguments)
+    getattr(fms, "do_%s" % command)(arguments, options)
 
 if __name__ == "__main__":
     sys.exit(main())
