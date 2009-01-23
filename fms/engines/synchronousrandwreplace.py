@@ -46,6 +46,8 @@ class SynchronousRandWReplace(Engine):
                     if self.params.orderslogfile:
                         self.output_order(order)
                     market.record_order(agents[agt], order, world.tick)
+                    if self.showbooks:
+                        market.output_books(world.tick)
                     world.lastmarketinfo.update(
                             {'sellbook':market.sellbook, 'buybook':market.buybook})
                 world.tick +=1

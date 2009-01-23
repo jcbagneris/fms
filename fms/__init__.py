@@ -84,6 +84,8 @@ def set_parser():
         help="set logging level to 'info', overrided by --loglevel")
     optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
         help="set logging level to LEVEL: debug, info, warning, error, critical")
+    optp.add_option('--show-books','--show-limits', action='store_true', 
+        dest="showbooks", help="show best limits on each step")
     return optp
 
 def set_logger(options, logname='fms'):
@@ -189,6 +191,9 @@ def do_run(args, opts):
     """
     logger = logging.getLogger('fms')
     params = get_params(args)
+    params.showbooks = opts.showbooks
+    if logger.getEffectiveLevel() < logging.INFO:
+        params.showbooks = True
     (world, engineslist, agentslist) = set_classes(params)
     logger.info("All is set, running simulation")
     for e in engineslist:

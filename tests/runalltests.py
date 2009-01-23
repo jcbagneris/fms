@@ -48,11 +48,10 @@ unittest.TextTestRunner(verbosity=2).run(tests)
 for simconffile in expList():
     logger.info("Running %s" % simconffile)
     params = YamlParamsParser(simconffile)
+    params.showbooks = False
     close_files(params)
     params.outputfile = StringIO()
-    world = fms.set_world(params)
-    engineslist = fms.set_engines(params)
-    agentslist = fms.set_agents(params)
+    (world, engineslist, agentslist) = fms.set_classes(params)
     for e in engineslist:
         e['instance'].run(world, agentslist, e['market']['instance'])
     benchfile = "%s.csv" % simconffile.split('.')[0]
