@@ -102,3 +102,21 @@ class Market:
                                         price, 
                                         quantity)
 
+
+    def output_books(self, time):
+        """
+        Output best limits
+        """
+        sep = "-" * 39
+        print sep
+        print "          Sell orders at %03d" % time
+        print "  Price | Quantity |     Emitter"
+        for limit in self.sellbook[::-1][:5]:
+            print " %6.2f | %8d | %s" % (limit[0], limit[2], limit[3])
+        print sep
+        for limit in self.buybook[::-1][:5]:
+            print " %6.2f | %8d | %s" % (limit[0], limit[2], limit[3])
+        print "  Price | Quantity |     Emitter"
+        print "          Buy orders at %03d" % time
+        print sep
+
