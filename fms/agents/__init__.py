@@ -40,7 +40,10 @@ class Agent:
         self.stocks = int(self.stocks)
 
     def __str__(self):
-        return "<Agent %s - owns $%.2f and %i securities>" % (id(self), 
+        return "<Agent %s>" % id(self)
+
+    def state(self):
+        return "Agent %s - owns $%8.2f and %6i securities" % (id(self), 
                 self.money, self.stocks)
 
     def act(self):
