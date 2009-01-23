@@ -165,7 +165,7 @@ def set_engines(params):
                 (e['instance'], e['market']['instance']))
     return engineslist
 
-def do_prepare(params):
+def set_classes(params):
     """
     Parse conffile and instanciate classes
     """
@@ -179,7 +179,7 @@ def do_check(args):
     Command: check experiment conffile, do not run
     """
     params = get_params(args)
-    (world, engineslist, agentslist) = do_prepare(params)
+    (world, engineslist, agentslist) = set_classes(params)
     close_files(params)
     delete_files(params)
 
@@ -189,7 +189,7 @@ def do_run(args):
     """
     logger = logging.getLogger('fms')
     params = get_params(args)
-    (world, engineslist, agentslist) = do_prepare(params)
+    (world, engineslist, agentslist) = set_classes(params)
     logger.info("All is set, running simulation")
     for e in engineslist:
         logger.info("Running %s" % e['instance'])
