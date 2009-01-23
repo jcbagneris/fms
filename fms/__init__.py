@@ -5,10 +5,14 @@ FMS core module.
 """
 
 import sys
+import os
 import optparse
 import logging
 
+from fms.utils import XmlParamsParser, YamlParamsParser, close_files, delete_files
+
 VERSION = '0.1.3a1'
+COMMANDS = ('nothing', 'run', 'check')
 
 def get_full_version():
     """
@@ -23,6 +27,48 @@ def get_full_version():
     if git_commit:
         version = "%s-%s" % (version, git_commit)
     return version
+
+def get_simconffile(args):
+    """
+    Get experiment config file name from command line
+    """
+    logger = logging.getLogger('fms')
+    try:
+        simconffile = args[1]
+    except IndexError:
+        logger.critical("Missing simulation config file name.")
+        sys.exit(2)
+    return simconffile
+
+def get_params(args):
+    """
+    Get params from conffile
+    """
+    logger = logging.getLogger('fms')
+    simconffile = get_simconffile(args)
+    if os.path.splitext(simconffile)[-1] == '.xml':
+        logger.debug("Calling XmlParamsParser on %s" % simconffile)
+        params = XmlParamsParser(simconffile)
+    else:
+        logger.debug("Calling YamlParamsParser on %s" % simconffile)
+        params = YamlParamsParser(simconffile)
+    return params
+
+def get_command(args, parser):
+    """
+    Get command from command line arguments
+    """
+    logger = logging.getLogger('fms')
+    try:
+        command = args[0]
+    except IndexError:
+        parser.print_help()
+        logger.critical("Missing command name.")
+        sys.exit(2)
+    if command not in COMMANDS:
+        logger.critical("Unknown command: %s" % command)
+        sys.exit(2)
+    return command
 
 def set_parser():
     """
@@ -40,10 +86,18 @@ def set_parser():
         help="set logging level to LEVEL: debug, info, warning, error, critical")
     return optp
 
-def set_logger(level, logname='fms'):
+def set_logger(options, logname='fms'):
     """
     Sets main logger instance.
     """
+    if isinstance(options, str):
+        loglevel = options
+    else:
+        loglevel = 'error'
+        if options.verbose:
+            loglevel = 'info'
+        if options.loglevel:
+            loglevel = options.loglevel
     levels = {'debug': logging.DEBUG,
               'info': logging.INFO,
               'warning': logging.WARNING,
@@ -54,7 +108,7 @@ def set_logger(level, logname='fms'):
     formatter = logging.Formatter("%(levelname)s - %(name)s - %(message)s")
     lhandler.setFormatter(formatter)
     logger.addHandler(lhandler)
-    logger.setLevel(levels[level])
+    logger.setLevel(levels[loglevel])
     return logger
 
 def import_class(modulename, classname):
@@ -111,3 +165,40 @@ def set_engines(params):
                 (e['instance'], e['market']['instance']))
     return engineslist
 
+def do_prepare(params):
+    """
+    Parse conffile and instanciate classes
+    """
+    world = set_world(params)
+    engineslist = set_engines(params)
+    agentslist = set_agents(params)
+    return (world, engineslist, agentslist)
+            
+def do_check(args):
+    """
+    Command: check experiment conffile, do not run
+    """
+    params = get_params(args)
+    (world, engineslist, agentslist) = do_prepare(params)
+    close_files(params)
+    delete_files(params)
+
+def do_run(args):
+    """
+    Command: run experiment
+    """
+    logger = logging.getLogger('fms')
+    params = get_params(args)
+    (world, engineslist, agentslist) = do_prepare(params)
+    logger.info("All is set, running simulation")
+    for e in engineslist:
+        logger.info("Running %s" % e['instance'])
+        e['instance'].run(world, agentslist, e['market']['instance'])
+    logger.info("Done.")
+    close_files(params)
+
+def do_nothing(args):
+    """
+    Command: dummy command
+    """
+    pass
