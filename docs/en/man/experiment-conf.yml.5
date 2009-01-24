@@ -46,6 +46,9 @@ library, which uses the Mersenne Twister as the core
 generator (see http://docs.python.org/library/random.html for more about this).
 As this library accepts an optional seed parameter, you may specify it here.
 .TP
+\fBcsvdelimiter\fP Delimiter used in the comma separated value files (optional)
+The field delimiter in the various csv output files. This is optional, as the default value is semicolon ; and is automatically accepted by most spreadsheets. Accepted values are semicolon ;, comma ,, tab, space, colon :, pipe |, dash -, exclamation mark !, slash /.
+.TP
 \fBworld\fP World class information (required)
 Parameters describing the World class to use in this experiment:
 .RS
@@ -91,6 +94,9 @@ Any arguments required by or optional to the market class.
 The number of days the experiment will run, as an integer. See
 .B daylength
 below. Days is set to one if missing.
+.TP
+\fBclearbooksateod\fP Clear books at end of day (optional, boolean)
+Should engine clear order books at the end of every given day. True if missing. Note that if this parameter is set to False for a given engine, there is no difference between an experiment with d days and t daylength, and another one with 1 day and d*t daylength.
 .TP
 \fBdaylength\fP Day length (optional, integer)
 The number or times the engine will choose an agent
