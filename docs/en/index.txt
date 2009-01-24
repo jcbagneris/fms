@@ -117,6 +117,7 @@ Documentation contents
 
    install
    tutorial
+   startfms
    config
 
 Index, tables and search

@@ -1,0 +1,57 @@
+========
+startfms
+========
+
+--------------------------------
+the startfms.py launching script
+--------------------------------
+
+:Manual section: 1
+:Manual group: FMS - a financial market simulator
+:Date: 2009-01-24
+:Author: Jean-Charles Bagneris
+
+SYNOPSIS
+========
+::
+
+	startfms.py [options] [command] [experiment-config-file]
+
+DESCRIPTION
+===========
+FMS is an agent-based market simulator. The main program, ``startfms.py`` can read
+and validate an "experiment" config file, and/or run it, outputting transactions
+data on ``stdout`` or in a ``.csv`` file.
+
+The experiment configuration file is described in ``experiment-conf.yml(5)`` or
+in the html documentation.
+
+OPTIONS
+=======
+
+-h, --help	Show help message and quit.
+-L LEVEL, --loglevel LEVEL  
+			Set logging level to LEVEL. This overrides the -v option.
+--show-books, --show-limits 
+			Show best limits on each step
+--verbose, -v
+			Set logging level to 'info'. Overrided by -L or --loglevel option.
+
+COMMANDS
+========
+
+check
+	Checks validity of ``experiment-config-file`` by trying to instanciate all
+	classes : world, engines, markets and agents.
+
+run
+	Run experiment from ``experiment-config-file``.
+
+SEE ALSO
+========
+``experiment-conf.yml(5)`` or the html documentation.
+
+BUGS
+====
+Probably many.
+
