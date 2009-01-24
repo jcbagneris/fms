@@ -4,7 +4,9 @@
 Run all test modules in current directory.
 """
 
+import os
 import unittest
+import doctest
 import glob
 import logging
 from StringIO import StringIO
@@ -35,6 +37,7 @@ logger = fms.set_logger('info','fms-tests')
 
 logger.info("Running unittests")
 suite = unittest.TestSuite()
+
 for modtestname in sourceList():
     exec "import %s" % modtestname
     modtest = globals()[modtestname]
@@ -42,8 +45,21 @@ for modtestname in sourceList():
         suite.addTest(modtest.suite())
     else:
         suite.addTest(unittest.defaultTestLoader.loadTestsFromModule(modtest))
-tests = unittest.TestSuite(suite)
-unittest.TextTestRunner(verbosity=2).run(tests)
+
+for root, dir, files in os.walk(os.path.dirname(fms.__file__)):
+    for f in files:
+        if os.path.splitext(f)[1] == '.py':
+            path = os.path.split(root)[1]
+            if path == 'fms':
+                suite.addTest(doctest.DocFileSuite(f, package='fms',
+                    optionflags=+doctest.ELLIPSIS))
+            else:
+                suite.addTest(doctest.DocFileSuite(
+                    os.path.join(os.path.split(root)[1], f),
+                    package='fms',
+                    optionflags=+doctest.ELLIPSIS))
+
+unittest.TextTestRunner(verbosity=2).run(suite)
 
 for simconffile in expList():
     logger.info("Running %s" % simconffile)
