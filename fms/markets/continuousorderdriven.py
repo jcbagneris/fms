@@ -26,6 +26,7 @@ class ContinuousOrderDriven(markets.Market):
     The class inherits at least one parameter from its superclass,
     the file/device where transactions should be output. If no
     filename is given in conf file, then output goes to sys.stdout:
+    >>> from fms.markets.continuousorderdriven import ContinuousOrderDriven
     >>> market = ContinuousOrderDriven()
     >>> market.output_transaction(1, 10.0, 25)
     1;0;10.00;25
@@ -33,8 +34,8 @@ class ContinuousOrderDriven(markets.Market):
     Any agent can place any order : the market itself does not enforce
     any condition on the orders.
     >>> from fms import agents
-    >>> agentbob = agents.Agent({'money':10000, 'stocks':200})
-    >>> agentsmith = agents.Agent({'money':1000, 'stocks':2000})
+    >>> agentbob = agents.Agent({'agents': [{'money':10000, 'stocks':200}]})
+    >>> agentsmith = agents.Agent({'agents': [{'money':1000, 'stocks':2000}]})
     >>> order = (None,)
     >>> market.is_valid(agentbob, order)
     True
@@ -46,6 +47,7 @@ class ContinuousOrderDriven(markets.Market):
     seller.
     Each call to record_order increments the self.time value, 
     and orders are recorded in the books with a timestamp.
+    >>> from fms.utils import BUY, SELL
     >>> market.record_order(agentbob,{'direction':BUY, 'price':2.50, 'quantity':10}, 0)
     >>> market.buybook
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>]]
@@ -90,17 +92,17 @@ class ContinuousOrderDriven(markets.Market):
     Notice that the chosen sell limit is (hopefully) the "older" one.
     Because a transaction occured, the market outputs a line in the
     outputfile. The format is timestamp;transaction number;price;quantity
-    >>> print agentbob
-    <Agent ... - owns $10000.00 and 200 securities>
+    >>> print agentbob.state()
+    Agent ... - owns $10000.00 and    200 securities
     >>> market.record_order(agentbob,{'direction':BUY, 'price':3.60, 'quantity':15}, 4)
     >>> market.do_clearing(4)
     4;1;3.50;15
     >>> agentbob.stocks
     215
-    >>> print agentbob
-    <Agent ... - owns $9947.50 and 215 securities>
-    >>> print agentsmith
-    <Agent ... - owns $1052.50 and 1985 securities>
+    >>> print agentbob.state()
+    Agent ... - owns $ 9947.50 and    215 securities
+    >>> print agentsmith.state()
+    Agent ... - owns $ 1052.50 and   1985 securities
     >>> market.buybook
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>], [3.0, -3, 60, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
@@ -118,10 +120,10 @@ class ContinuousOrderDriven(markets.Market):
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>], [3.0, -3, 60, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
     [[3.5, 2, 28, <fms.agents.Agent instance at ...>]]
-    >>> print agentbob
-    <Agent ... - owns $9888.00 and 232 securities>
-    >>> print agentsmith
-    <Agent ... - owns $1112.00 and 1968 securities>
+    >>> print agentbob.state()
+    Agent ... - owns $ 9888.00 and    232 securities
+    >>> print agentsmith.state()
+    Agent ... - owns $ 1112.00 and   1968 securities
 
     Now, we place a buy order which cannot be fully executed, because
     the asked quantity is greater than the bid quantity. The order
@@ -134,10 +136,10 @@ class ContinuousOrderDriven(markets.Market):
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>], [3.0, -3, 60, <fms.agents.Agent instance at ...>], [3.5..., -6, 22, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
     []
-    >>> print agentbob
-    <Agent ... - owns $9790.00 and 260 securities>
-    >>> print agentsmith
-    <Agent ... - owns $1210.00 and 1940 securities>
+    >>> print agentbob.state()
+    Agent ... - owns $ 9790.00 and    260 securities
+    >>> print agentsmith.state()
+    Agent ... - owns $ 1210.00 and   1940 securities
 
     Same thing with sell orders :
     - order is fully executed on the best limit
@@ -153,10 +155,10 @@ class ContinuousOrderDriven(markets.Market):
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>], [3.0, -3, 60, <fms.agents.Agent instance at ...>], [3.5..., -6, 16, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
     []
-    >>> print agentbob
-    <Agent ... - owns $9768.70 and 266 securities>
-    >>> print agentsmith
-    <Agent ... - owns $1231.30 and 1934 securities>
+    >>> print agentbob.state()
+    Agent ... - owns $ 9768.70 and    266 securities
+    >>> print agentsmith.state()
+    Agent ... - owns $ 1231.30 and   1934 securities
 
     Then a sell order at 2.8 wich is lower than the 2 best buy limits
     >>> market.record_order(agentsmith,{'direction':SELL, 'price':2.80, 'quantity':45}, 8)
@@ -167,10 +169,10 @@ class ContinuousOrderDriven(markets.Market):
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>], [3.0, -3, 31, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
     []
-    >>> print agentbob
-    <Agent ... - owns $9624.90 and 311 securities>
-    >>> print agentsmith
-    <Agent ... - owns $1375.10 and 1889 securities>
+    >>> print agentbob.state()
+    Agent ... - owns $ 9624.90 and    311 securities
+    >>> print agentsmith.state()
+    Agent ... - owns $ 1375.10 and   1889 securities
 
     Then the last order at 2.6, which is lower than the best buy limit
     but will be partially executed
@@ -181,10 +183,10 @@ class ContinuousOrderDriven(markets.Market):
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
     [[2.6..., 9, 11, <fms.agents.Agent instance at ...>]]
-    >>> print agentbob
-    <Agent ... - owns $9531.90 and 342 securities>
-    >>> print agentsmith
-    <Agent ... - owns $1468.10 and 1858 securities>
+    >>> print agentbob.state()
+    Agent ... - owns $ 9531.90 and    342 securities
+    >>> print agentsmith.state()
+    Agent ... - owns $ 1468.10 and   1858 securities
 
     Insert new orders in the books, to check sorting is correct.
     We exchange the agents roles : agentsmith is buyer, agentbob
@@ -221,6 +223,7 @@ class ContinuousOrderDriven(markets.Market):
     [[2.39..., -12, 25, <fms.agents.Agent instance at ...>], [2.45..., -13, 15, <fms.agents.Agent instance at ...>], [2.5, 0, 10, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
     [[2.6..., 9, 11, <fms.agents.Agent instance at ...>], [2.79..., 11, 30, <fms.agents.Agent instance at ...>], [3.0, 10, 20, <fms.agents.Agent instance at ...>]]
+
     """
 
     def __init__(self, parameters=None):

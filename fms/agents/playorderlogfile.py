@@ -18,11 +18,12 @@ class PlayOrderLogFile(agents.Agent):
     - filename : the order logfile name (str)
     If this parameter is missing, a MissingParameter
     exception is raised.
-    >>> params = {'money':10000, 'stocks':200}
-    >>> agent = PlayOrderLogFile(params)
+    >>> from fms.agents import playorderlogfile
+    >>> params = {'agents': [{'money':10000, 'stocks':200}]}
+    >>> agent = playorderlogfile.PlayOrderLogFile(params)
     Traceback (most recent call last):
         ...
-    MissingParameter: orderlogfilename
+    MissingParameter: filename
 
     Note that this agent is a Borg : all instances share the
     same state, such as to read one line of the order logfile

@@ -31,20 +31,22 @@ class HighestQtyFixing(markets.Market):
     The class inherits at least one parameter from its superclass,
     the file/device where transactions should be output. If no
     filename is given in conf file, then output goes to sys.stdout:
-    >>> market = HighestQtyFixing()
+    >>> from fms.markets import highestqtyfixing
+    >>> market = highestqtyfixing.HighestQtyFixing()
     >>> market.output_transaction(1, 10.0, 25)
     1;0;10.00;25
 
     Any agent can place any order : the market itself does not enforce
     any condition on the orders.
     >>> from fms import agents
-    >>> agentbob = agents.Agent({'money':10000, 'stocks':200})
-    >>> agentsmith = agents.Agent({'money':1000, 'stocks':2000})
+    >>> agentbob = agents.Agent({'agents': [{'money':10000, 'stocks':200}]})
+    >>> agentsmith = agents.Agent({'agents': [{'money':1000, 'stocks':2000}]})
     >>> order = (None,)
     >>> market.is_valid(agentbob, order)
     True
     >>> market.is_valid(agentsmith, order)
     True
+
     """
 
     def __init__(self, parameters=None):

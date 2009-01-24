@@ -20,18 +20,19 @@ class ZeroIntelligenceTrader(agents.Agent):
     - maxbuy : maximum quantity to buy (int)
     If any of those parameters is missing, a MissingParameter
     exception is raised.
+    >>> from fms.agents import zerointelligencetrader
     >>> params = {'agents': [{'money':10000, 'stocks':200}]}
-    >>> agent = ZeroIntelligenceTrader(params)
+    >>> agent = zerointelligencetrader.ZeroIntelligenceTrader(params)
     Traceback (most recent call last):
         ...
     MissingParameter: maxprice
     >>> params = {'agents': [{'money':10000, 'stocks':200, 'args':[999]}]}
-    >>> agent = ZeroIntelligenceTrader(params)
+    >>> agent = zerointelligencetrader.ZeroIntelligenceTrader(params)
     Traceback (most recent call last):
         ...
     MissingParameter: maxbuy
     >>> params = {'agents': [{'money':10000, 'stocks':200, 'args':[999, 100]}]}
-    >>> agent = ZeroIntelligenceTrader(params)
+    >>> agent = zerointelligencetrader.ZeroIntelligenceTrader(params)
     >>> print agent.state()
     Agent ... - owns $10000.00 and    200 securities
     >>> print agent.maxprice
