@@ -11,7 +11,7 @@ import logging
 
 from fms.utils import XmlParamsParser, YamlParamsParser, close_files, delete_files
 
-VERSION = '0.1.3a1'
+VERSION = '0.1.3'
 COMMANDS = ('nothing', 'run', 'check')
 
 def get_full_version():
