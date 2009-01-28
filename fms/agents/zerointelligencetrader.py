@@ -67,7 +67,7 @@ class ZeroIntelligenceTrader(agents.Agent):
             raise MissingParameter, 'maxbuy'
         del self.args
 
-    def act(self):
+    def act(self, world, market):
         """
         Return random order as a dict with keys in (direction, price, quantity).
 
