@@ -41,13 +41,19 @@ class Market:
         self.sellbook = []
         self.buybook = []
 
-    def record_order(self, agent, order):
+    def record_order(self, agent, order, time):
         """
-        Records agent's order
-        
-        Should be implemented in subclass.
+        Records agent order in correct order book
         """
-        raise NotImplementedError
+        order = self.sanitize_order(order)
+        if order['direction'] == SELL:
+            self.sellbook.append(
+                    [order['price'], time, order['quantity'], agent])
+            self.sellbook.sort()
+        else:
+            self.buybook.append(
+                    [order['price'], -time, order['quantity'], agent])
+            self.buybook.sort()
 
     def do_clearing(self):
         """
