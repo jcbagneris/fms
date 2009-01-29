@@ -84,7 +84,7 @@ class RandomTrader(agents.Agent):
             raise MissingParameter, 'maxbuy'
         del self.args
 
-    def act(self, world, market):
+    def act(self, world=None, market=None):
         """
         Return random order as a dict with keys in (direction, price, quantity).
         """

@@ -46,7 +46,7 @@ class Agent:
         return "Agent %s - owns $%8.2f and %6i securities" % (id(self), 
                 self.money, self.stocks)
 
-    def act(self):
+    def act(self, world=None, market=None):
         """
         Emit an order on the market.
         Return order as dict, with following keys:

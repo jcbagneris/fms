@@ -42,7 +42,7 @@ class PlayOrderLogFile(agents.Agent):
             del self.args
             self.logfile = open(filename, 'r')
 
-    def act(self):
+    def act(self, world=None, market=None):
         """
         Return order as a dict with keys in (direction, price, quantity).
 
