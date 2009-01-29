@@ -34,14 +34,6 @@ class MarketTests(unittest.TestCase):
         market = SubMarket(None)
         self.assertRaises(NotImplementedError, market.info)
 
-    def test_record_order_not_implemented(self):
-        """
-        Market.record_order() method should be implemented in subclass
-        """
-        market = Market(None)
-        self.assertRaises(NotImplementedError, 
-                market.record_order, None, None)
-
     def test_output_file_default_value(self):
         """
         Outputfile default value is sys.stdout

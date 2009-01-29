@@ -267,20 +267,6 @@ class ContinuousOrderDriven(markets.Market):
                     'lasttransaction': self.transaction}
         return infodict
 
-    def record_order(self, agent, order, time):
-        """
-        Records agent order in correct order book
-        """
-        order = self.sanitize_order(order)
-        if order['direction'] == SELL:
-            self.sellbook.append(
-                    [order['price'], time, order['quantity'], agent])
-            self.sellbook.sort()
-        else:
-            self.buybook.append(
-                    [order['price'], -time, order['quantity'], agent])
-            self.buybook.sort()
-
     def do_clearing(self, time):
         """
         Clears books, executing all possible transactions
