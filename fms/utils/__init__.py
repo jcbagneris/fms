@@ -290,6 +290,8 @@ class YamlParamsParser(_ParamsParser):
     - randomseed: seed for random lib, None if missing
     - outputfilename: 'sys.stdout' if missing
     - orderslogfilename: logs all agents desires, None if missing
+    - csvdelimiter: csv output files delimiter
+    - unique_by_agent: unique order per agent in books
     - world: error if missing
     - engines: list of engines, error if missing (one engine minimum)
     - agents: list of agents classes, error if missing (at least one)
@@ -331,6 +333,9 @@ class YamlParamsParser(_ParamsParser):
 
         if not 'randomseed' in self:
             self['randomseed'] = None
+
+        if not 'unique_by_agent' in self:
+            self['unique_by_agent'] = True
 
         if 'csvdelimiter' in self:
             if not self['csvdelimiter'] in CSVDELIMITERS:

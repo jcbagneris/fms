@@ -44,7 +44,8 @@ class AsynchronousRandWReplace(Engine):
                 if market.is_valid(agents[agt], order):
                     if self.params.orderslogfile:
                         self.output_order(order)
-                    market.record_order(agents[agt], order, world.tick)
+                    market.record_order(agents[agt], order, world.tick,
+                            self.unique_by_agent)
                     if self.showbooks:
                         market.output_books(world.tick)
                     market.do_clearing(world.tick)

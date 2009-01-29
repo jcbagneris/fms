@@ -34,7 +34,15 @@ class YamlParserTests(unittest.TestCase):
         params = YamlParamsParser(ymlparamsfile)
         self.assertEqual(params['name'], 'Test Experiment')
 
-    def testCsvDelimiteriDefaultValue(self):
+    def testUniqueByAgentDefaultValue(self):
+        """
+        unique_by_agent value is True if missing
+        """
+        ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
+        params = YamlParamsParser(ymlparamsfile)
+        self.assertTrue(params['unique_by_agent'])
+
+    def testCsvDelimiterDefaultValue(self):
         """
         csvdelimiter value is ';' if missing
         """
