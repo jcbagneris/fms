@@ -5,10 +5,13 @@ Module defining RandomTrader agent class.
 """
 
 import random
+import logging
 
 from fms import agents
 from fms.utils import BUY, SELL
 from fms.utils.exceptions import MissingParameter
+
+logger = logging.getLogger('fms.agents.randomtrader')
 
 class RandomTrader(agents.Agent):
     """
@@ -36,7 +39,7 @@ class RandomTrader(agents.Agent):
     >>> agent = randomtrader.RandomTrader(params)
     Traceback (most recent call last):
         ...
-    MissingParameter: maxfbuy
+    MissingParameter: maxbuy
     >>> params = {'agents': [{'money':10000, 'stocks':200, 'args':[100, 20, 200]}]}
     >>> agent = randomtrader.RandomTrader(params)
     >>> print agent.state()
@@ -90,13 +93,17 @@ class RandomTrader(agents.Agent):
         else:
             direction = BUY
         if self.avgprice == 0:
-            self.avgprice = market.lastprice
-        price = random.randint(self.avgprice*(100-self.avgfluct), 
-                self.avgprice*(100+self.avgfluct))/100.
+            try:
+                self.avgprice = market.lastprice
+            except AttributeError:
+                self.avgprice = 100
+                logger.warning("No market, no avgprice, avgprice set to 100")
+        price = random.randint(self.avgprice*(100-self.maxfluct), 
+                self.avgprice*(100+self.maxfluct))/100.
         if direction:
             quantity = random.randint(1, self.stocks)
         else:
-            quantity = random.randint(1, min(self.maxbuy, self.money/price))
+            quantity = random.randint(1, min(self.maxbuy, int(self.money/price)))
         return {'direction':direction, 'price':price, 'quantity':quantity}
 
 def _test():
