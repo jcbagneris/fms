@@ -34,6 +34,9 @@ OPTIONS
 			Set logging level to LEVEL. This overrides the -v option.
 --show-books, --show-limits 
 			Show best limits on each step
+--orderslogfile FILENAME, --ordersfile FILENAME
+			Set orders logfile name to FILENAME. This overrides the
+			``orderlogfilename`` parameter in experiment config file.
 --verbose, -v
 			Set logging level to 'info'. Overrided by -L or --loglevel option.
 
