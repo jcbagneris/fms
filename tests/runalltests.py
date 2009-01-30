@@ -12,7 +12,7 @@ import logging
 from StringIO import StringIO
 
 import fms
-from fms.utils import YamlParamsParser, close_files
+from fms.utils import YamlParamsParser
 
 def sourceList():
     """
@@ -65,7 +65,7 @@ for simconffile in expList():
     logger.info("Running %s" % simconffile)
     params = YamlParamsParser(simconffile)
     params.showbooks = False
-    close_files(params)
+    #params.close_files()
     params.outputfile = StringIO()
     (world, engineslist, agentslist) = fms.set_classes(params)
     for e in engineslist:
