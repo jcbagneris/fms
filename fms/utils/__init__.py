@@ -24,7 +24,7 @@ class _ParamsParser(dict):
     Common methods to all param parsers
     """
 
-    def __init__(self, filename):
+    def __init__(self, filename, opts=None):
         """
         Constructor. Sets verbose attribute.
         """
@@ -110,7 +110,7 @@ class XmlParamsParser(_ParamsParser):
     as they give more flexibility.
     """
 
-    def __init__(self, xmlfilename):
+    def __init__(self, xmlfilename, opts=None):
         """
         Constructor. Reads XML config file.
         """
@@ -312,7 +312,7 @@ class YamlParamsParser(_ParamsParser):
     - args: list, None if missing
     """
 
-    def __init__(self, yamlfilename):
+    def __init__(self, yamlfilename, opts=None):
         """
         Constructor. Reads YAML config file.
         Adds sensible defaults for missing values

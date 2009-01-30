@@ -40,7 +40,7 @@ def get_simconffile(args):
         sys.exit(2)
     return simconffile
 
-def get_params(args):
+def get_params(args, opts):
     """
     Get params from conffile
     """
@@ -48,10 +48,10 @@ def get_params(args):
     simconffile = get_simconffile(args)
     if os.path.splitext(simconffile)[-1] == '.xml':
         logger.debug("Calling XmlParamsParser on %s" % simconffile)
-        params = XmlParamsParser(simconffile)
+        params = XmlParamsParser(simconffile, opts)
     else:
         logger.debug("Calling YamlParamsParser on %s" % simconffile)
-        params = YamlParamsParser(simconffile)
+        params = YamlParamsParser(simconffile, opts)
     return params
 
 def get_command(args, parser):
@@ -180,7 +180,7 @@ def do_check(args, opts):
     """
     Command: check experiment conffile, do not run
     """
-    params = get_params(args)
+    params = get_params(args, opts)
     (world, engineslist, agentslist) = set_classes(params)
     close_files(params)
     delete_files(params)
@@ -190,7 +190,7 @@ def do_run(args, opts):
     Command: run experiment
     """
     logger = logging.getLogger('fms')
-    params = get_params(args)
+    params = get_params(args, opts)
     params.showbooks = opts.showbooks
     if logger.getEffectiveLevel() < logging.INFO:
         params.showbooks = True
