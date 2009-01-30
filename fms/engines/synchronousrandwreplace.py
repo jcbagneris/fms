@@ -42,7 +42,7 @@ class SynchronousRandWReplace(Engine):
             for time in range(self.daylength):
                 agt = random.randint(0, len(agents)-1)
                 order = agents[agt].act(world, market)
-                if market.is_valid(agents[agt], order):
+                if order and market.is_valid(agents[agt], order):
                     if self.params.orderslogfile:
                         self.output_order(order)
                     market.record_order(agents[agt], order, world.tick)
