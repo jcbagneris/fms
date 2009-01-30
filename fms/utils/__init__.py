@@ -354,12 +354,16 @@ class YamlParamsParser(_ParamsParser):
             self['outputfilename'] = 'sys.stdout'
             self.outputfile = sys.stdout
 
-        if 'orderslogfilename' in self:
-            self['orderslogfilename'] = os.path.join(self.exp_path,
-                    self['orderslogfilename'])
+        try:
+            self['orderslogfilename'] = opts.orderslogfile
             self.orderslogfile = open(self['orderslogfilename'], 'w')
-        else:
-            self['orderslogfilename'] = None
+        except (AttributeError, TypeError):
+            if 'orderslogfilename' in self:
+                self['orderslogfilename'] = os.path.join(self.exp_path,
+                        self['orderslogfilename'])
+                self.orderslogfile = open(self['orderslogfilename'], 'w')
+            else:
+                self['orderslogfilename'] = None
 
         for paramkey in ('world', 'engines', 'agents'):
             if not paramkey in self:

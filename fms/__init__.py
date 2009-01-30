@@ -86,6 +86,8 @@ def set_parser():
         help="set logging level to LEVEL: debug, info, warning, error, critical")
     optp.add_option('--show-books','--show-limits', action='store_true', 
         dest="showbooks", help="show best limits on each step")
+    optp.add_option('--orderslogfile','--ordersfile', dest='orderslogfile',
+            help='orders logfile name')
     return optp
 
 def set_logger(options, logname='fms'):
