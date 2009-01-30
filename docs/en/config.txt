@@ -101,6 +101,12 @@ csvdelimiter
     spreadsheets. Accepted values are semicolon ``;``, comma ``,``, tab, space,
     colon ``:``, pipe ``|``, dash ``-``, exclamation mark ``!``, slash ``/``.  
 
+unique_by_agent
+    Should orders in books be unique per agent ? (optional, default ``True``)
+
+    If this parameter is ``True`` or missing, any order placed by an agent
+    replaces any previous order from the same agent.
+
 world
     World class information (required)
 

@@ -1,5 +1,6 @@
 --- # Experiment
 name: 'synch-fixing.csv experiment'
+unique_by_agent: False
 
 world:
       classname: NullWorld

@@ -24,7 +24,7 @@ class _ParamsParser(dict):
     Common methods to all param parsers
     """
 
-    def __init__(self, filename):
+    def __init__(self, filename, opts=None):
         """
         Constructor. Sets verbose attribute.
         """
@@ -39,8 +39,10 @@ class _ParamsParser(dict):
         """
         logger.info("== %s ==" % self['name'])
         logger.info("Output file : %s" % self['outputfilename'])
-        if self['randomseed']:
-            logger.info("Random seed : %s" % self['randomseed'])
+        for optional in ('randomseed','csvdelimiter',
+                'orderslogfilename','unique_by_agent'):
+            if optional in self:
+                logger.info("%s : %s" % (optional, self[optional]))
         if 'args' in self['world']:
             logger.info("World : %s %s" % (self['world']['classname'],
                 self['world']['args']))
@@ -108,7 +110,7 @@ class XmlParamsParser(_ParamsParser):
     as they give more flexibility.
     """
 
-    def __init__(self, xmlfilename):
+    def __init__(self, xmlfilename, opts=None):
         """
         Constructor. Reads XML config file.
         """
@@ -290,6 +292,8 @@ class YamlParamsParser(_ParamsParser):
     - randomseed: seed for random lib, None if missing
     - outputfilename: 'sys.stdout' if missing
     - orderslogfilename: logs all agents desires, None if missing
+    - csvdelimiter: csv output files delimiter
+    - unique_by_agent: unique order per agent in books
     - world: error if missing
     - engines: list of engines, error if missing (one engine minimum)
     - agents: list of agents classes, error if missing (at least one)
@@ -308,7 +312,7 @@ class YamlParamsParser(_ParamsParser):
     - args: list, None if missing
     """
 
-    def __init__(self, yamlfilename):
+    def __init__(self, yamlfilename, opts=None):
         """
         Constructor. Reads YAML config file.
         Adds sensible defaults for missing values
@@ -332,6 +336,9 @@ class YamlParamsParser(_ParamsParser):
         if not 'randomseed' in self:
             self['randomseed'] = None
 
+        if not 'unique_by_agent' in self:
+            self['unique_by_agent'] = True
+
         if 'csvdelimiter' in self:
             if not self['csvdelimiter'] in CSVDELIMITERS:
                 self['csvdelimiter'] = ';'
@@ -347,12 +354,16 @@ class YamlParamsParser(_ParamsParser):
             self['outputfilename'] = 'sys.stdout'
             self.outputfile = sys.stdout
 
-        if 'orderslogfilename' in self:
-            self['orderslogfilename'] = os.path.join(self.exp_path,
-                    self['orderslogfilename'])
+        try:
+            self['orderslogfilename'] = opts.orderslogfile
             self.orderslogfile = open(self['orderslogfilename'], 'w')
-        else:
-            self['orderslogfilename'] = None
+        except (AttributeError, TypeError):
+            if 'orderslogfilename' in self:
+                self['orderslogfilename'] = os.path.join(self.exp_path,
+                        self['orderslogfilename'])
+                self.orderslogfile = open(self['orderslogfilename'], 'w')
+            else:
+                self['orderslogfilename'] = None
 
         for paramkey in ('world', 'engines', 'agents'):
             if not paramkey in self:

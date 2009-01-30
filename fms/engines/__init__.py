@@ -16,12 +16,14 @@ class Engine:
             self.csvdelimiter = params['csvdelimiter']
             self.clearbooksateod = params['engines'][offset]['clearbooksateod']
             self.showbooks = params.showbooks
+            self.unique_by_agent = params['unique_by_agent']
         else:
             self.days = 1
             self.daylength = 1
             self.csvdelimiter = ';'
             self.clearbooksateod = True
             self.showbooks = False
+            self.unique_by_agent = True
 
     def __str__(self):
         return "%s engine %s" % (self.__class__, id(self))

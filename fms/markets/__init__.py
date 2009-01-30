@@ -41,10 +41,33 @@ class Market:
         self.sellbook = []
         self.buybook = []
 
-    def record_order(self, agent, order, time):
+    def record_order(self, agent, order, time, unique=True):
         """
-        Records agent order in correct order book
+        Record agent order in correct order book
+
+        If an order from the same agent exists on the same
+        asset and unique is True, delete it.
+
+        >>> from fms.markets import Market
+        >>> market = Market(None)
+        >>> market.record_order('smith', {'direction': 1, 'quantity': 2, 'price': 3}, 1)
+        >>> market.sellbook
+        [[3, 1, 2, 'smith']]
+        >>> market.record_order('smith', {'direction': 1, 'quantity': 3, 'price': 4}, 1)
+        >>> market.sellbook
+        [[4, 1, 3, 'smith']]
+        >>> market.record_order('smith', {'direction': 1, 'quantity': 4, 'price': 5}, 1, False)
+        >>> market.sellbook
+        [[4, 1, 3, 'smith'], [5, 1, 4, 'smith']]
+
         """
+        if unique:
+            for book in (self. sellbook, self.buybook):
+                for line in book:
+                    if agent == line[3]:
+                        book.remove(line)
+                        break
+
         order = self.sanitize_order(order)
         if order['direction'] == SELL:
             self.sellbook.append(
