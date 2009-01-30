@@ -39,8 +39,10 @@ class _ParamsParser(dict):
         """
         logger.info("== %s ==" % self['name'])
         logger.info("Output file : %s" % self['outputfilename'])
-        if self['randomseed']:
-            logger.info("Random seed : %s" % self['randomseed'])
+        for optional in ('randomseed','csvdelimiter',
+                'orderslogfilename','unique_by_agent'):
+            if optional in self:
+                logger.info("%s : %s" % (optional, self[optional]))
         if 'args' in self['world']:
             logger.info("World : %s %s" % (self['world']['classname'],
                 self['world']['args']))
