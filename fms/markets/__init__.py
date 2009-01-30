@@ -67,6 +67,9 @@ class Market:
                     if agent == line[3]:
                         book.remove(line)
                         break
+#            the for loop seems faster, probably because of the break
+#            self.sellbook = filter((lambda x: agent != x[3]), self.sellbook)
+#            self.buybook = filter((lambda x: agent != x[3]), self.buybook)
 
         order = self.sanitize_order(order)
         if order['direction'] == SELL:
