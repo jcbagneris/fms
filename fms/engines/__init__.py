@@ -49,5 +49,5 @@ class Engine:
         Output an order in orderlogfile
         """
         mask = self.csvdelimiter.join(('%(direction)s',
-            '%(price).2f','%(quantity)d'))
+            '%(price).2f','%(quantity)d','"%(agent)s"'))
         print >> self.params.orderslogfile, mask % order

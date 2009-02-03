@@ -126,7 +126,7 @@ class _ParamsParser(dict):
         if self['orderslogfilename']:
             print >> self.orderslogfile, "# %s orders log" % self['name']
             print >> self.orderslogfile, "# direction : buy=0, sell=1"
-            print >> self.orderslogfile, "# direction;price;volume"
+            print >> self.orderslogfile, "# direction;price;volume;agent"
             self.orderslogfile.flush()
 
 

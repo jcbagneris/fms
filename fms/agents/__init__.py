@@ -46,6 +46,14 @@ class Agent:
         return "Agent %s - owns $%8.2f and %6i securities" % (id(self), 
                 self.money, self.stocks)
 
+    def speak(self):
+        """
+        Return order emitted by agent
+        """
+        order = self.act()
+        order['agent'] = order.get('agent', self)
+        return order
+
     def act(self):
         """
         Emit an order on the market.

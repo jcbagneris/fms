@@ -41,7 +41,7 @@ class Market:
         self.sellbook = []
         self.buybook = []
 
-    def record_order(self, agent, order, time, unique=True):
+    def record_order(self, order, time, unique=True):
         """
         Record agent order in correct order book
 
@@ -50,13 +50,13 @@ class Market:
 
         >>> from fms.markets import Market
         >>> market = Market(None)
-        >>> market.record_order('smith', {'direction': 1, 'quantity': 2, 'price': 3}, 1)
+        >>> market.record_order({'direction': 1, 'quantity': 2, 'price': 3, 'agent': 'smith'}, 1)
         >>> market.sellbook
         [[3, 1, 2, 'smith']]
-        >>> market.record_order('smith', {'direction': 1, 'quantity': 3, 'price': 4}, 1)
+        >>> market.record_order({'direction': 1, 'quantity': 3, 'price': 4, 'agent': 'smith'}, 1)
         >>> market.sellbook
         [[4, 1, 3, 'smith']]
-        >>> market.record_order('smith', {'direction': 1, 'quantity': 4, 'price': 5}, 1, False)
+        >>> market.record_order({'direction': 1, 'quantity': 4, 'price': 5, 'agent': 'smith'}, 1, False)
         >>> market.sellbook
         [[4, 1, 3, 'smith'], [5, 1, 4, 'smith']]
 
@@ -64,21 +64,22 @@ class Market:
         if unique:
             for book in (self. sellbook, self.buybook):
                 for line in book:
-                    if agent == line[3]:
+                    if order['agent'] == line[3]:
                         book.remove(line)
                         break
 #            the for loop seems faster, probably because of the break
-#            self.sellbook = filter((lambda x: agent != x[3]), self.sellbook)
-#            self.buybook = filter((lambda x: agent != x[3]), self.buybook)
+#            self.sellbook = filter((lambda x: order['agent'] != x[3]),
+#                        self.sellbook)
+#            self.buybook = filter((lambda x: order['agent'] != x[3]),
+#                        self.buybook)
 
-        order = self.sanitize_order(order)
         if order['direction'] == SELL:
             self.sellbook.append(
-                    [order['price'], time, order['quantity'], agent])
+                    [order['price'], time, order['quantity'], order['agent']])
             self.sellbook.sort()
         else:
             self.buybook.append(
-                    [order['price'], -time, order['quantity'], agent])
+                    [order['price'], -time, order['quantity'], order['agent']])
             self.buybook.sort()
 
     def do_clearing(self):
@@ -120,6 +121,7 @@ class Market:
                 order['price'] = raw_order.get('price', 
                         self.info()['buybook'][-1][0])
             order['quantity'] = raw_order.get('quantity', 1)
+            order['agent'] = raw_order['agent']
             return order
         else:
             raise MissingParameter, 'direction'
