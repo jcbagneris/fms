@@ -75,6 +75,9 @@ for simconffile in expList():
     if not benchmark == testresult:
         logger.error("%s failed" % simconffile)
         print testresult
-    logger.info("%s done." % simconffile)
+    else:
+        logger.info("%s ok" % simconffile)
+    params.close_files()
+    agentslist[0].reset()
             
 
