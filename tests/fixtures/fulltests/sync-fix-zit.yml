@@ -1,5 +1,6 @@
 --- # Experiment
-name: 'synch-fixing.csv experiment'
+#outputfilename: sync-fix-zit.csv
+#orderslogfilename: sync-fix-zit.log
 unique_by_agent: False
 
 world:
@@ -7,13 +8,16 @@ world:
 
 engines:
     - classname: SynchronousRandWReplace
-      daylength: 12
+      daylength: 50
       market:
           classname: HighestQtyFixing 
 
 agents:
+#    - classname: ZeroIntelligenceTrader
+#      number: 10000
     - classname: PlayOrderLogFile
       number: 1
       money: 100000
       stocks: 1000
-      args: ['synch-fixing.log']
+#      args: [1000, 1000]
+      args: ['sync-fix-zit.log']
