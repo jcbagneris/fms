@@ -15,7 +15,7 @@ class Engine:
             self.daylength = params['engines'][offset]['daylength']
             self.csvdelimiter = params['csvdelimiter']
             self.clearbooksateod = params['engines'][offset]['clearbooksateod']
-            self.showbooks = params.showbooks
+            self.showbooks = params['showbooks']
             self.unique_by_agent = params['unique_by_agent']
         else:
             self.days = 1

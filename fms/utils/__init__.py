@@ -42,7 +42,7 @@ class _ParamsParser(dict):
         else:
             self.outputfile = sys.stdout
 
-        if 'orderslogfilename' in self:
+        if self['orderslogfilename']:
             logger.info("Creating %s" % self['orderslogfilename'])
             self.orderslogfile = open(self['orderslogfilename'], 'w')
 

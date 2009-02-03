@@ -13,7 +13,9 @@ from fms.utils import XmlParamsParser, YamlParamsParser
 
 VERSION = '0.1.4'
 COMMANDS = ('nothing', 'run', 'check')
-OPTS_PARAMS = ('orderslogfilename',)
+OPTS_VAL = ('orderslogfilename',)
+OPTS_BOOL = ('showbooks',)
+FILE_PARAMS = ('outputfilename', 'orderslogfilename',)
 
 def get_full_version():
     """
@@ -47,10 +49,16 @@ def apply_opts(params, opts):
 
     Command line options override config file parameters
     """
-    for opt in OPTS_PARAMS:
+    for opt in OPTS_VAL:
         optvalue = getattr(opts, opt)
         if optvalue:
             params[opt] = optvalue
+    for opt in OPTS_BOOL:
+        params[opt] = getattr(opts, opt)
+    for filename in FILE_PARAMS:
+        if params[filename]:
+            params[filename] = os.path.abspath(params[filename])
+
     return params
 
 def get_params(args, opts):
@@ -210,7 +218,6 @@ def do_run(args, opts):
     params = get_params(args, opts)
     params.create_files()
     params.printfileheaders()
-    params.showbooks = opts.showbooks
     if logger.getEffectiveLevel() < logging.INFO:
         params.showbooks = True
     (world, engineslist, agentslist) = set_classes(params)
