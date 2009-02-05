@@ -15,7 +15,7 @@ class Engine:
             self.daylength = params['engines'][offset]['daylength']
             self.csvdelimiter = params['csvdelimiter']
             self.clearbooksateod = params['engines'][offset]['clearbooksateod']
-            self.showbooks = params.showbooks
+            self.showbooks = params['showbooks']
             self.unique_by_agent = params['unique_by_agent']
         else:
             self.days = 1
@@ -49,5 +49,5 @@ class Engine:
         Output an order in orderlogfile
         """
         mask = self.csvdelimiter.join(('%(direction)s',
-            '%(price).2f','%(quantity)d'))
+            '%(price).2f','%(quantity)d','"%(agent)s"'))
         print >> self.params.orderslogfile, mask % order

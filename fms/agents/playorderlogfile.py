@@ -42,7 +42,10 @@ class PlayOrderLogFile(agents.Agent):
             del self.args
             self.logfile = open(filename, 'r')
 
-    def act(self, world=None, market=None):
+    def reset(self):
+        del self.__dict__['logfile']
+
+    def act(self):
         """
         Return order as a dict with keys in (direction, price, quantity).
 
@@ -51,11 +54,12 @@ class PlayOrderLogFile(agents.Agent):
         line = '#'
         while line.startswith('#'):
             line = self.logfile.readline()
-        direction, price, quantity = line.strip().split(';')
+        direction, price, quantity, agent = line.strip().split(';')
         direction = int(direction)
         price = float(price)
         quantity = int(quantity)
-        return {'direction':direction, 'price':price, 'quantity':quantity}
+        return {'direction':direction, 'price':price,
+                'quantity':quantity, 'agent':agent}
 
 def _test():
     """

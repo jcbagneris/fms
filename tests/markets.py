@@ -46,7 +46,8 @@ class MarketTests(unittest.TestCase):
         No direction in order shoud raise MissingParameter
         """
         market = Market(None)
-        self.assertRaises(MissingParameter, market.sanitize_order, {'price':3})
+        self.assertRaises(MissingParameter, market.sanitize_order,
+                {'price':3, 'agent': None})
 
     def test_sanitize_order_default_price(self):
         """
@@ -54,9 +55,9 @@ class MarketTests(unittest.TestCase):
         """
         market = Market(None)
         self.assertEqual(market.sanitize_order(
-            {'direction':BUY})['price'], 'unset sellbook')
+            {'direction':BUY, 'agent': None})['price'], 'unset sellbook')
         self.assertEqual(market.sanitize_order(
-            {'direction':SELL})['price'], 'unset buybook')
+            {'direction':SELL, 'agent': None})['price'], 'unset buybook')
 
     def test_sanitize_order_price(self):
         """
@@ -64,14 +65,15 @@ class MarketTests(unittest.TestCase):
         """
         market = Market(None)
         self.assertAlmostEqual(market.sanitize_order(
-            {'direction':SELL, 'price':3.85})['price'], 3.85, 2)
+            {'direction':SELL, 'price':3.85, 'agent': None})['price'], 3.85, 2)
 
     def test_sanitize_order_default_quantity(self):
         """
         If no quantity is given, quantity is 1
         """
         market = Market(None)
-        self.assertEqual(market.sanitize_order({'direction':BUY})['quantity'], 1)
+        self.assertEqual(market.sanitize_order(
+            {'direction':BUY, 'agent': None})['quantity'], 1)
 
     def test_sanitize_order_quantity(self):
         """
@@ -79,7 +81,7 @@ class MarketTests(unittest.TestCase):
         """
         market = Market(None)
         self.assertEqual(market.sanitize_order(
-            {'direction':SELL, 'quantity':200})['quantity'], 200)
+            {'direction':SELL, 'quantity':200, 'agent': None})['quantity'], 200)
 
 if __name__ == "__main__":
     unittest.main()

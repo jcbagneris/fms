@@ -1,0 +1,23 @@
+--- # Experiment
+#randomseed: '12348765'
+#outputfilename: async-cont-zit.csv
+#orderslogfilename: async-cont-zit.log
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: AsynchronousRandWReplace
+      daylength: 50
+      market:
+          classname: ContinuousOrderDriven
+
+agents:
+#    - classname: ZeroIntelligenceTrader
+#      number: 10000
+    - classname: PlayOrderLogFile        
+      number: 1
+      money: 100000
+      stocks: 1000
+#      args: [1000, 1000]
+      args: ['async-cont-zit.log']

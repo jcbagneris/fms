@@ -72,7 +72,7 @@ class YamlParserTests(unittest.TestCase):
         """
         ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
-        self.assertEqual(params.outputfile, sys.stdout)
+        self.assertEqual(params['outputfilename'], 'sys.stdout')
 
     def testOuputfileValue(self):
         """
@@ -80,10 +80,8 @@ class YamlParserTests(unittest.TestCase):
         """
         ymlparamsfile = '%s/fullconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
-        testfile = open('%s/dummyoutput.csv' % self.fixturesdir, 'r')
-        firstline = testfile.readline()
-        self.assertEqual(firstline, '# Test Experiment\n')
-        testfile.close()
+        self.assertEqual(params['outputfilename'], 
+                '%s/dummyoutput.csv' % self.fixturesdir)
 
     def testOrdersLogFileDefaultValue(self):
         """
@@ -99,10 +97,8 @@ class YamlParserTests(unittest.TestCase):
         """
         ymlparamsfile = '%s/fullconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
-        testfile = open('%s/dummyoutput.log' % self.fixturesdir, 'r')
-        firstline = testfile.readline()
-        self.assertEqual(firstline, '# Test Experiment orders log\n')
-        testfile.close()
+        self.assertEqual(params['orderslogfilename'], 
+            '%s/dummyoutput.log' % self.fixturesdir)
 
     def testWorldMandatory(self):
         """
@@ -135,7 +131,7 @@ class YamlParserTests(unittest.TestCase):
         ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
         self.assertEqual(params['engines'][0]['classname'], 
-                'AsynchronousRandom')
+                'AsynchronousRandWReplace')
 
     def testDaysDefaultValue(self):
         """
@@ -200,7 +196,7 @@ class YamlParserTests(unittest.TestCase):
         ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
         self.assertEqual(params['engines'][0]['market']['classname'], 
-                'DummyMarket')
+                'ContinuousOrderDriven')
 
     def testAgentsMandatory(self):
         """
@@ -347,7 +343,7 @@ class XmlParserTests(unittest.TestCase):
         """
         xmlparamsfile = '%s/minimalconfig.xml' % self.fixturesdir
         params = XmlParamsParser(xmlparamsfile)
-        self.assertEqual(params.outputfile, sys.stdout)
+        self.assertEqual(params['outputfilename'], 'sys.stdout')
 
     def testOuputfileValue(self):
         """
@@ -355,10 +351,8 @@ class XmlParserTests(unittest.TestCase):
         """
         xmlparamsfile = '%s/fullconfig.xml' % self.fixturesdir
         params = XmlParamsParser(xmlparamsfile)
-        testfile = open('dummyoutput.csv', 'r')
-        firstline = testfile.readline()
-        self.assertEqual(firstline, '# Test Experiment\n')
-        testfile.close()
+        self.assertEqual(params['outputfilename'], 
+                '%s/dummyoutput.csv' % self.fixturesdir)
 
     def testOrdersLogFileDefaultValue(self):
         """
@@ -374,10 +368,8 @@ class XmlParserTests(unittest.TestCase):
         """
         xmlparamsfile = '%s/fullconfig.xml' % self.fixturesdir
         params = XmlParamsParser(xmlparamsfile)
-        testfile = open('dummyoutput.log', 'r')
-        firstline = testfile.readline()
-        self.assertEqual(firstline, '# Test Experiment orders log\n')
-        testfile.close()
+        self.assertEqual(params['orderslogfilename'],
+                '%s/dummyoutput.log' % self.fixturesdir)
 
     def testWorldMandatory(self):
         """

@@ -12,7 +12,7 @@ import logging
 from StringIO import StringIO
 
 import fms
-from fms.utils import YamlParamsParser, close_files
+from fms.utils import YamlParamsParser
 
 def sourceList():
     """
@@ -28,9 +28,9 @@ def sourceList():
 
 def expList():
     """
-    Return list of experiments conffiles in fixtures/fulltest dir
+    Return list of experiments conffiles in fixtures/experiments dir
     """
-    return glob.glob("fixtures/fulltests/*.yml")
+    return glob.glob("fixtures/experiments/*.yml")
 
 
 logger = fms.set_logger('info','fms-tests')
@@ -64,8 +64,7 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 for simconffile in expList():
     logger.info("Running %s" % simconffile)
     params = YamlParamsParser(simconffile)
-    params.showbooks = False
-    close_files(params)
+    params['showbooks'] = False
     params.outputfile = StringIO()
     (world, engineslist, agentslist) = fms.set_classes(params)
     for e in engineslist:
@@ -76,6 +75,9 @@ for simconffile in expList():
     if not benchmark == testresult:
         logger.error("%s failed" % simconffile)
         print testresult
-    logger.info("%s done." % simconffile)
+    else:
+        logger.info("%s ok" % simconffile)
+    params.close_files()
+    agentslist[0].reset()
             
 

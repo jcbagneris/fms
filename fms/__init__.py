@@ -9,10 +9,12 @@ import os
 import optparse
 import logging
 
-from fms.utils import XmlParamsParser, YamlParamsParser, close_files, delete_files
+from fms.utils import XmlParamsParser, YamlParamsParser
 
 VERSION = '0.1.4'
 COMMANDS = ('nothing', 'run', 'check')
+OPTS_VAL = ('outputfilename', 'orderslogfilename',)
+OPTS_BOOL = ('showbooks',)
 
 def get_full_version():
     """
@@ -40,6 +42,32 @@ def get_simconffile(args):
         sys.exit(2)
     return simconffile
 
+def apply_opts(params, opts):
+    """
+    Apply opts to params.
+
+    Command line options override config file parameters
+    """
+    for opt in OPTS_VAL:
+        optvalue = getattr(opts, opt)
+        if optvalue:
+            params[opt] = optvalue
+    for opt in OPTS_BOOL:
+        params[opt] = getattr(opts, opt)
+
+    if opts.replay:
+        del params['agents'][1:]
+        if not params['agents'][0]['classname'] == 'PlayOrderLogFile':
+            params['agents'][0]['classname'] = 'PlayOrderLogFile'
+            params['agents'][0]['number'] = 1
+            if not opts.orderslogfilename and not params['orderslogfilename']:
+                params['orderslogfilename'] = '.'.join((
+                        params['simconffile'].rsplit('.',1)[0],'log'))
+            params['agents'][0]['args'] = [os.path.abspath(
+                params['orderslogfilename'])]
+            params['orderslogfilename'] = None
+    return params
+
 def get_params(args, opts):
     """
     Get params from conffile
@@ -48,10 +76,13 @@ def get_params(args, opts):
     simconffile = get_simconffile(args)
     if os.path.splitext(simconffile)[-1] == '.xml':
         logger.debug("Calling XmlParamsParser on %s" % simconffile)
-        params = XmlParamsParser(simconffile, opts)
+        params = XmlParamsParser(simconffile)
     else:
         logger.debug("Calling YamlParamsParser on %s" % simconffile)
-        params = YamlParamsParser(simconffile, opts)
+        params = YamlParamsParser(simconffile)
+    params['simconffile'] = simconffile
+    params = apply_opts(params, opts)
+    params.printparams()
     return params
 
 def get_command(args, parser):
@@ -78,16 +109,24 @@ def set_parser():
         description='run a Financial Market Simulator simulation',
         prog='%s' % sys.argv[0],
         usage="%prog [options] [command] simulationconffile",)
+    # boolean options
     optp.add_option('--version', action='store_true', 
         help="output FMS version and exit")
     optp.add_option('-v', '--verbose', action='store_true', 
         help="set logging level to 'info', overrided by --loglevel")
-    optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
-        help="set logging level to LEVEL: debug, info, warning, error, critical")
     optp.add_option('--show-books','--show-limits', action='store_true', 
         dest="showbooks", help="show best limits on each step")
-    optp.add_option('--orderslogfile','--ordersfile', dest='orderslogfile',
-            help='orders logfile name')
+    optp.add_option('-r', '--replay', action='store_true',
+        help="Replay an orders logfile.")
+    # value options
+    optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
+        help="set logging level to LEVEL: debug, info, warning, error, critical")
+    # options overriding config parameters
+    optp.add_option('--orderslogfilename', dest='orderslogfilename',
+            help='orders log filename')
+    optp.add_option('--outputfilename', '-o', dest='outputfilename',
+            help='output filename')
+
     return optp
 
 def set_logger(options, logname='fms'):
@@ -184,8 +223,6 @@ def do_check(args, opts):
     """
     params = get_params(args, opts)
     (world, engineslist, agentslist) = set_classes(params)
-    close_files(params)
-    delete_files(params)
 
 def do_run(args, opts):
     """
@@ -193,7 +230,8 @@ def do_run(args, opts):
     """
     logger = logging.getLogger('fms')
     params = get_params(args, opts)
-    params.showbooks = opts.showbooks
+    params.create_files()
+    params.printfileheaders()
     if logger.getEffectiveLevel() < logging.INFO:
         params.showbooks = True
     (world, engineslist, agentslist) = set_classes(params)
@@ -202,7 +240,7 @@ def do_run(args, opts):
         logger.info("Running %s" % e['instance'])
         e['instance'].run(world, agentslist, e['market']['instance'])
     logger.info("Done.")
-    close_files(params)
+    params.close_files()
 
 def do_nothing(args, opts):
     """

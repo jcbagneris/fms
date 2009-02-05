@@ -24,13 +24,44 @@ class _ParamsParser(dict):
     Common methods to all param parsers
     """
 
-    def __init__(self, filename, opts=None):
+    def __init__(self, filename):
         """
         Constructor. Sets verbose attribute.
         """
         logger.info("Reading config file %s" % filename)
         self.outputfile = sys.stderr
         self.orderslogfile = None
+
+    def create_files(self):
+        """
+        Create all necessary files
+        """
+        if self['outputfilename'] != 'sys.stdout':
+            logger.info("Creating %s" % self['outputfilename'])
+            self.outputfile = open(self['outputfilename'], 'w')
+        else:
+            self.outputfile = sys.stdout
+
+        if self['orderslogfilename']:
+            logger.info("Creating %s" % self['orderslogfilename'])
+            self.orderslogfile = open(self['orderslogfilename'], 'w')
+
+    def close_files(self):
+        """
+        Close all output files
+        """
+        if self['outputfilename'] != 'sys.stdout':
+            logger.info("Closing %s" % self['outputfilename'])
+            try:
+                self.outputfile.close()
+            except IOError:
+                pass
+        if self['orderslogfilename']:
+            logger.info("Closing %s" % self['orderslogfilename'])
+            try:
+                self.orderslogfile.close()
+            except IOError:
+                pass
 
 
     def printparams(self):
@@ -95,7 +126,7 @@ class _ParamsParser(dict):
         if self['orderslogfilename']:
             print >> self.orderslogfile, "# %s orders log" % self['name']
             print >> self.orderslogfile, "# direction : buy=0, sell=1"
-            print >> self.orderslogfile, "# direction;price;volume"
+            print >> self.orderslogfile, "# direction;price;volume;agent"
             self.orderslogfile.flush()
 
 
@@ -110,7 +141,7 @@ class XmlParamsParser(_ParamsParser):
     as they give more flexibility.
     """
 
-    def __init__(self, xmlfilename, opts=None):
+    def __init__(self, xmlfilename):
         """
         Constructor. Reads XML config file.
         """
@@ -140,16 +171,13 @@ class XmlParamsParser(_ParamsParser):
         try:
             self['outputfilename'] = os.path.join(self.exp_path,
                     outputfilename.text)
-            self.outputfile = open(self['outputfilename'], 'w')
         except AttributeError:
             self['outputfilename'] = "sys.stdout"
-            self.outputfile = sys.stdout
 
         orderslogfilename = config.find(".//ordersLogFilename")
         try:
             self['orderslogfilename'] = os.path.join(self.exp_path,
                     orderslogfilename.text)
-            self.orderslogfile = open(self['orderslogfilename'], 'w')
         except AttributeError:
             self['orderslogfilename'] = None
 
@@ -271,8 +299,6 @@ class XmlParamsParser(_ParamsParser):
         if not self['agents']:
             raise MissingParameter, 'agent'
 
-        self.printparams()
-        self.printfileheaders()
         logger.info("Config file %s parsed." % xmlfilename)
 
 
@@ -312,7 +338,7 @@ class YamlParamsParser(_ParamsParser):
     - args: list, None if missing
     """
 
-    def __init__(self, yamlfilename, opts=None):
+    def __init__(self, yamlfilename):
         """
         Constructor. Reads YAML config file.
         Adds sensible defaults for missing values
@@ -349,21 +375,14 @@ class YamlParamsParser(_ParamsParser):
         if 'outputfilename' in self:
             self['outputfilename'] = os.path.join(self.exp_path, 
                     self['outputfilename'])
-            self.outputfile = open(self['outputfilename'], 'w')
         else:
             self['outputfilename'] = 'sys.stdout'
-            self.outputfile = sys.stdout
 
-        try:
-            self['orderslogfilename'] = opts.orderslogfile
-            self.orderslogfile = open(self['orderslogfilename'], 'w')
-        except (AttributeError, TypeError):
-            if 'orderslogfilename' in self:
-                self['orderslogfilename'] = os.path.join(self.exp_path,
-                        self['orderslogfilename'])
-                self.orderslogfile = open(self['orderslogfilename'], 'w')
-            else:
-                self['orderslogfilename'] = None
+        if 'orderslogfilename' in self:
+            self['orderslogfilename'] = os.path.join(self.exp_path,
+                    self['orderslogfilename'])
+        else:
+            self['orderslogfilename'] = None
 
         for paramkey in ('world', 'engines', 'agents'):
             if not paramkey in self:
@@ -393,8 +412,6 @@ class YamlParamsParser(_ParamsParser):
             if not 'classname' in engine['market']:
                 raise MissingParameter, 'engine[\'market\'][\'classname\']'
 
-        self.printparams()
-        self.printfileheaders()
         logger.info("Config file %s parsed." % yamlfilename)
 
 
@@ -421,36 +438,3 @@ def get_git_commit():
         return None
     return commit[:8]
 
-def close_files(params):
-    """
-    Close all output files
-    """
-    if params['outputfilename'] != 'sys.stdout':
-        logger.info("Closing %s" % params['outputfilename'])
-        try:
-            params.outputfile.close()
-        except IOError:
-            pass
-    if params['orderslogfilename']:
-        logger.info("Closing %s" % params['orderslogfilename'])
-        try:
-            params.orderslogfile.close()
-        except IOError:
-            pass
-
-def delete_files(params):
-    """
-    Delete all outputfiles
-    """
-    if params['outputfilename'] != 'sys.stdout':
-        logger.info("Check only: deleting %s" % params['outputfilename'])
-        try:
-            os.unlink(params['outputfilename'])
-        except IOError:
-            pass
-    if params['orderslogfilename']:
-        logger.info("Check only: deleting %s" % params['orderslogfilename'])
-        try:
-            os.unlink(params['orderslogfilename'])
-        except IOError:
-            pass

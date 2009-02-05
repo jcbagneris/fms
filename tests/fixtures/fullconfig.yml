@@ -8,15 +8,16 @@ world:
       classname: NullWorld
 
 engines:
-    - classname: AsynchronousRandom
+    - classname: AsynchronousRandWReplace
       daylength: 10
       clearbooksateod: False
       days: 2
       market:
-          classname: DummyMarket
+          classname: ContinuousOrderDriven
 
 agents:
-    - classname: StupidTrader
+    - classname: ZeroIntelligenceTrader
       number: 1000
       money: 500000
       stocks: 1000
+      args: [1000, 1000]
