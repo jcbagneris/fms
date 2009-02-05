@@ -138,8 +138,18 @@ class LauncherTests(unittest.TestCase):
         configfile = 'tests/fixtures/fullconfig.yml'
         out, err = self.run_startfms(['-v', '--orderslogfilename', 'afile.log', 
             'check', configfile])
-        self.assert_output(err,
-            'orderslogfilename : /home/jcb/work/recherche/travaux/simul/fms-dev/afile.log')
+        self.assert_output(err, 'afile.log')
+
+    def test_outputfilename_option(self):
+        """
+        -o or --outputfilename overrides config parameter
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        for option in ('-o', '--outputfilename'):
+            out, err = self.run_startfms(['-v', option, 'afile.csv',
+                'check', configfile])
+            self.assert_output(err, 'afile.csv')
+
 
     def test_replay_option(self):
         """

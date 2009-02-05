@@ -13,7 +13,7 @@ from fms.utils import XmlParamsParser, YamlParamsParser
 
 VERSION = '0.1.4'
 COMMANDS = ('nothing', 'run', 'check')
-OPTS_VAL = ('orderslogfilename',)
+OPTS_VAL = ('outputfilename', 'orderslogfilename',)
 OPTS_BOOL = ('showbooks',)
 FILE_PARAMS = ('outputfilename', 'orderslogfilename',)
 
@@ -111,8 +111,9 @@ def set_parser():
         dest="showbooks", help="show best limits on each step")
     optp.add_option('--orderslogfilename', dest='orderslogfilename',
             help='orders log filename')
-#    optp.add_option('-r', '--replay', action='store_true',
-#        help="Replay an orders logfile.")
+    optp.add_option('--outputfilename', '-o', dest='outputfilename',
+            help='output filename')
+
     return optp
 
 def set_logger(options, logname='fms'):
