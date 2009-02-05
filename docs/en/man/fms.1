@@ -22,15 +22,19 @@ The experiment configuration file is described in experiment-conf.yml(5).
 .SH OPTIONS
 .IP "-h, --help"
 Show help message and quit.
-.IP "-L level, --loglevel level"
+.IP "-L LEVEL, --loglevel LEVEL"
 Set logging level to
-.I level.
+.I LEVEL.
 This overrides the -v option.
 .IP "--show-books, --show-limits"
 Show best limits on each step
-.IP "--orderslogfile filename, --ordersfile filename"
-Set orders logfile name. This overrides 
-.I orderslogfile
+.IP "--outputfilename OUTPUTFILE, -o OUTPUTFILE"
+Set output filename. This overrides 
+.I OUTPUTFILENAME
+param in experiment config file.
+.IP "--orderslogfile FILENAME, --ordersfile FILENAME"
+Set orders log filename. This overrides 
+.I ORDERSLOGFILE
 param in experiment config file.
 .IP "-v, --verbose"
 Set logging level to 'info'.
