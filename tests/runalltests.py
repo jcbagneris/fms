@@ -28,9 +28,9 @@ def sourceList():
 
 def expList():
     """
-    Return list of experiments conffiles in fixtures/fulltest dir
+    Return list of experiments conffiles in fixtures/experiments dir
     """
-    return glob.glob("fixtures/fulltests/*.yml")
+    return glob.glob("fixtures/experiments/*.yml")
 
 
 logger = fms.set_logger('info','fms-tests')

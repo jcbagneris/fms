@@ -131,7 +131,7 @@ class YamlParserTests(unittest.TestCase):
         ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
         self.assertEqual(params['engines'][0]['classname'], 
-                'AsynchronousRandom')
+                'AsynchronousRandWReplace')
 
     def testDaysDefaultValue(self):
         """
@@ -196,7 +196,7 @@ class YamlParserTests(unittest.TestCase):
         ymlparamsfile = '%s/minimalconfig.yml' % self.fixturesdir
         params = YamlParamsParser(ymlparamsfile)
         self.assertEqual(params['engines'][0]['market']['classname'], 
-                'DummyMarket')
+                'ContinuousOrderDriven')
 
     def testAgentsMandatory(self):
         """

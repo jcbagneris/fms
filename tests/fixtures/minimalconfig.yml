@@ -4,12 +4,13 @@ world:
       classname: NullWorld
 
 engines:
-    - classname: AsynchronousRandom
+    - classname: AsynchronousRandWReplace
       market:
-          classname: DummyMarket
+          classname: ContinuousOrderDriven
 
 agents:
-    - classname: StupidTrader
+    - classname: ZeroIntelligenceTrader
       number: 1000
       money: 500000
       stocks: 1000
+      args: [1000, 1000]
