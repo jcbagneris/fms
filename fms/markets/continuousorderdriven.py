@@ -283,8 +283,9 @@ class ContinuousOrderDriven(markets.Market):
                 self.transaction += 1
                 buyer = self.buybook[-1][3]
                 seller = self.sellbook[0][3]
-                buyer.record(BUY, executedprice, qty)
-                seller.record(SELL, executedprice, qty)
+                if not self.replay:
+                    buyer.record(BUY, executedprice, qty)
+                    seller.record(SELL, executedprice, qty)
                 self.output_transaction(time, executedprice, qty)
                 if qty == self.buybook[-1][2]:
                     del self.buybook[-1]

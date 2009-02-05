@@ -14,9 +14,12 @@ class Market:
     """
 
     def __init__(self, parameters):
+        self.replay = False
         if parameters:
             self.outputfile = parameters.outputfile
             self.csvdelimiter = parameters['csvdelimiter']
+            if parameters['agents'][0]['classname'] == 'PlayOrderLogFile':
+                self.replay = True
         else:
             self.outputfile = sys.stdout 
             self.csvdelimiter = ';'

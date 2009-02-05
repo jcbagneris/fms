@@ -15,7 +15,6 @@ VERSION = '0.1.4'
 COMMANDS = ('nothing', 'run', 'check')
 OPTS_VAL = ('outputfilename', 'orderslogfilename',)
 OPTS_BOOL = ('showbooks',)
-FILE_PARAMS = ('outputfilename', 'orderslogfilename',)
 
 def get_full_version():
     """
@@ -55,10 +54,18 @@ def apply_opts(params, opts):
             params[opt] = optvalue
     for opt in OPTS_BOOL:
         params[opt] = getattr(opts, opt)
-    for filename in FILE_PARAMS:
-        if params[filename]:
-            params[filename] = os.path.abspath(params[filename])
 
+    if opts.replay:
+        del params['agents'][1:]
+        if not params['agents'][0]['classname'] == 'PlayOrderLogFile':
+            params['agents'][0]['classname'] = 'PlayOrderLogFile'
+            params['agents'][0]['number'] = 1
+            if not opts.orderslogfilename and not params['orderslogfilename']:
+                params['orderslogfilename'] = '.'.join((
+                        params['simconffile'].rsplit('.',1)[0],'log'))
+            params['agents'][0]['args'] = [os.path.abspath(
+                params['orderslogfilename'])]
+            params['orderslogfilename'] = None
     return params
 
 def get_params(args, opts):
@@ -73,6 +80,7 @@ def get_params(args, opts):
     else:
         logger.debug("Calling YamlParamsParser on %s" % simconffile)
         params = YamlParamsParser(simconffile)
+    params['simconffile'] = simconffile
     params = apply_opts(params, opts)
     params.printparams()
     return params
@@ -101,14 +109,19 @@ def set_parser():
         description='run a Financial Market Simulator simulation',
         prog='%s' % sys.argv[0],
         usage="%prog [options] [command] simulationconffile",)
+    # boolean options
     optp.add_option('--version', action='store_true', 
         help="output FMS version and exit")
     optp.add_option('-v', '--verbose', action='store_true', 
         help="set logging level to 'info', overrided by --loglevel")
-    optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
-        help="set logging level to LEVEL: debug, info, warning, error, critical")
     optp.add_option('--show-books','--show-limits', action='store_true', 
         dest="showbooks", help="show best limits on each step")
+    optp.add_option('-r', '--replay', action='store_true',
+        help="Replay an orders logfile.")
+    # value options
+    optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
+        help="set logging level to LEVEL: debug, info, warning, error, critical")
+    # options overriding config parameters
     optp.add_option('--orderslogfilename', dest='orderslogfilename',
             help='orders log filename')
     optp.add_option('--outputfilename', '-o', dest='outputfilename',
