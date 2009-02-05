@@ -7,6 +7,9 @@ FMS download and installation
 Downloading FMS
 ===============
 
+.. note::
+    Latest version of FMS is |release|.
+
 FMS packages are available in various formats, suitable for different operating
 systems. Download links :
 

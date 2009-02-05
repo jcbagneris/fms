@@ -36,7 +36,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = u'FMS'
-copyright = u'2008, Jean-Charles Bagneris'
+copyright = u'2008-2009, Jean-Charles Bagneris'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
