@@ -52,6 +52,8 @@ class AsynchronousRandWReplace(Engine):
                     world.lastmarketinfo.update(
                             {'sellbook':market.sellbook, 'buybook':market.buybook})
                 world.tick +=1
+                if self.params['timer']:
+                    world.show_time(day, time, self.days*self.daylength)
             if self.clearbooksateod:
                 market.clear_books()
         logger.debug("Ending with sellbook %s" % market.sellbook)

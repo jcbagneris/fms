@@ -165,6 +165,16 @@ class LauncherTests(unittest.TestCase):
             self.assert_output(err,
                     '/dummyoutput.log\']')
 
+    def test_timer_option(self):
+        """
+        -t or --timer show timer during run
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        for option in ('-t', '--timer'):
+            out, err = self.run_startfms([option, '-o sys.stdout',
+                '--orderslogfile sys.stdout', 'run', configfile])
+            self.assert_output(err, "0002:00010")
+
 
 if __name__ == "__main__":
     unittest.main()

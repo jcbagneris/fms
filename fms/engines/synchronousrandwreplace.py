@@ -52,6 +52,8 @@ class SynchronousRandWReplace(Engine):
                     world.lastmarketinfo.update(
                             {'sellbook':market.sellbook, 'buybook':market.buybook})
                 world.tick +=1
+                if self.params['timer']:
+                    world.show_time(day, time, self.days*self.daylength)
             market.do_clearing(world.tick)
             if self.clearbooksateod:
                 market.clear_books()

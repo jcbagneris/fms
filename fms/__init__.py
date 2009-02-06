@@ -14,7 +14,7 @@ from fms.utils import XmlParamsParser, YamlParamsParser
 VERSION = '0.1.4'
 COMMANDS = ('nothing', 'run', 'check')
 OPTS_VAL = ('outputfilename', 'orderslogfilename',)
-OPTS_BOOL = ('showbooks',)
+OPTS_BOOL = ('showbooks', 'timer')
 
 def get_full_version():
     """
@@ -118,6 +118,8 @@ def set_parser():
         dest="showbooks", help="show best limits on each step")
     optp.add_option('-r', '--replay', action='store_true',
         help="Replay an orders logfile.")
+    optp.add_option('-t', '--timer', action='store_true',
+        help="Print a timer.")
     # value options
     optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
         help="set logging level to LEVEL: debug, info, warning, error, critical")
