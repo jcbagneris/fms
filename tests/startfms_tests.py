@@ -172,7 +172,7 @@ class LauncherTests(unittest.TestCase):
         configfile = 'tests/fixtures/fullconfig.yml'
         for option in ('-t', '--timer'):
             out, err = self.run_startfms([option, '-o sys.stdout',
-                '--orderslogfile sys.stdout', 'run', configfile])
+                '--orderslogfile None', 'run', configfile])
             self.assert_output(err, "0002:00010")
 
 

@@ -66,6 +66,10 @@ def apply_opts(params, opts):
             params['agents'][0]['args'] = [os.path.abspath(
                 params['orderslogfilename'])]
             params['orderslogfilename'] = None
+
+    if params['orderslogfilename'] in ('None', 'sys.stdout'):
+        params['orderslogfilename'] = None
+
     return params
 
 def get_params(args, opts):
