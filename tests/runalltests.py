@@ -33,6 +33,9 @@ def expList():
     return glob.glob("fixtures/experiments/*.yml")
 
 
+old_dir = os.getcwd()
+os.chdir(os.path.dirname(__file__))
+
 logger = fms.set_logger('info','fms-tests')
 
 logger.info("Running unittests")
@@ -79,5 +82,6 @@ for simconffile in expList():
         logger.info("%s ok" % simconffile)
     params.close_files()
     agentslist[0].reset()
-            
+
+os.chdir(old_dir)
 
