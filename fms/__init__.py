@@ -10,11 +10,9 @@ import optparse
 import logging
 
 from fms.utils import XmlParamsParser, YamlParamsParser
+from fms.utils import COMMANDS, OPTS_VAL, OPTS_BOOL
 
 VERSION = '0.1.4'
-COMMANDS = ('nothing', 'run', 'check')
-OPTS_VAL = ('outputfilename', 'orderslogfilename',)
-OPTS_BOOL = ('showbooks', 'timer')
 
 def get_full_version():
     """
@@ -52,8 +50,14 @@ def apply_opts(params, opts):
         optvalue = getattr(opts, opt)
         if optvalue:
             params[opt] = optvalue
+
     for opt in OPTS_BOOL:
-        params[opt] = getattr(opts, opt)
+        optvalue = getattr(opts, opt)
+        if isinstance(optvalue, bool):
+            params[opt] = optvalue
+        else:
+            if not opt in params:
+                params[opt] = OPTS_BOOL[opt]
 
     if opts.replay:
         del params['agents'][1:]
@@ -112,26 +116,34 @@ def set_parser():
     optp = optparse.OptionParser(
         description='run a Financial Market Simulator simulation',
         prog='%s' % sys.argv[0],
-        usage="%prog [options] [command] simulationconffile",)
-    # boolean options
-    optp.add_option('--version', action='store_true', 
-        help="output FMS version and exit")
-    optp.add_option('-v', '--verbose', action='store_true', 
+        usage="%prog [options] [command] simulationconffile",
+        version = "This is FMS v%s" % get_full_version(),)
+    # general value options
+    optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
+        help="set logging level to LEVEL: debug, info, warning, error, critical")
+    # boolean options overriding config parameters
+    optp.add_option('-v', '--verbose', action='store_true',
         help="set logging level to 'info', overrided by --loglevel")
-    optp.add_option('--show-books','--show-limits', action='store_true', 
-        dest="showbooks", help="show best limits on each step")
+    optp.add_option('--show_books','--show_limits', action='store_true',
+        dest="show_books", help="show best limits on each step")
     optp.add_option('-r', '--replay', action='store_true',
         help="Replay an orders logfile.")
     optp.add_option('-t', '--timer', action='store_true',
         help="Print a timer.")
-    # value options
-    optp.add_option('-L', '--loglevel', metavar='LEVEL', dest='loglevel',
-        help="set logging level to LEVEL: debug, info, warning, error, critical")
-    # options overriding config parameters
+    optp.add_option('--unique_by_agent', action='store_true',
+        help="Only one order by agent in books.")
+    optp.add_option('--no_unique_by_agent', action='store_false',
+        dest='unique_by_agent',
+        help="More than one order by agent allowed in books.")
+    # value options overriding config parameters
     optp.add_option('--orderslogfilename', dest='orderslogfilename',
             help='orders log filename')
     optp.add_option('--outputfilename', '-o', dest='outputfilename',
             help='output filename')
+    optp.add_option('--randomseed',
+            help='random seed')
+    optp.add_option('--csvdelimiter',
+            help='csv delimiter')
 
     return optp
 
@@ -248,8 +260,3 @@ def do_run(args, opts):
     logger.info("Done.")
     params.close_files()
 
-def do_nothing(args, opts):
-    """
-    Command: dummy command
-    """
-    pass

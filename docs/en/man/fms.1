@@ -20,14 +20,31 @@ run it, outputting transactions data on
 or in a .csv file.
 The experiment configuration file is described in experiment-conf.yml(5).
 .SH OPTIONS
+Options override
+.I experiment-config-file
+parameters values.
 .IP "-h, --help"
 Show help message and quit.
 .IP "-L LEVEL, --loglevel LEVEL"
 Set logging level to
 .I LEVEL.
 This overrides the -v option.
+.IP "-v, --verbose"
+Set logging level to 'info'.
+Overrided by -L or --loglevel option.
 .IP "--show-books, --show-limits"
-Show best limits on each step
+Show best limits on each step.
+.IP "--timer"
+Show a day:time timer while experiment is running.
+.IP "--unique_by_agent"
+Orders in books are unique by agent : if the same agent places
+another order, previous one is deleted. This is the default.
+.IP "--no_unique_by_agent"
+Agents may place multiple orders.
+.IP "--csvdelimiter DELIMITER"
+CSV files delimiter value.
+.IP "--randomseed SEED"
+Ramdom seed value.
 .IP "--outputfilename OUTPUTFILE, -o OUTPUTFILE"
 Set output filename. This overrides 
 .I OUTPUTFILENAME
@@ -36,9 +53,6 @@ param in experiment config file.
 Set orders log filename. This overrides 
 .I ORDERSLOGFILE
 param in experiment config file.
-.IP "-v, --verbose"
-Set logging level to 'info'.
-Overrided by -L or --loglevel option.
 .SH COMMANDS
 .IP "check"
 Checks validity of 

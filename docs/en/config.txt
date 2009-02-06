@@ -107,6 +107,19 @@ unique_by_agent
     If this parameter is ``True`` or missing, any order placed by an agent
     replaces any previous order from the same agent.
 
+show_books
+    Should FMS show 5 best limits of order books on each step ? (optional, default
+    ``False``)
+
+    If this parameter is ``False`` or missing, best limits of order books are
+    not printed on each step (tick).
+
+timer
+    Should FMS show a timer while running (optional, default ``False``)
+
+    If this parameter is ``True``, a day:time timer is displayed while the
+    experiment is running.
+
 world
     World class information (required)
 

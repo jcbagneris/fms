@@ -1,8 +1,12 @@
 --- # Experiment
 name: Test Experiment
-randomseed: 12345678
+
 outputfilename: dummyoutput.csv
 orderslogfilename: dummyoutput.log
+randomseed: 12345678
+csvdelimiter: ; # default
+show_books: False # default
+timer: False # default
 
 world:
       classname: NullWorld

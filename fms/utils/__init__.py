@@ -19,6 +19,13 @@ SELL = 1
 # csv delimiters
 CSVDELIMITERS = [';', ',', '\t', ' ', ':', '|', '-', '!', '/']
 
+# args
+COMMANDS = ('nothing', 'run', 'check')
+OPTS_VAL = ('outputfilename', 'orderslogfilename', 'randomseed', 'csvdelimiter')
+OPTS_BOOL = {'show_books': False,
+             'timer': False,
+             'unique_by_agent': True,}
+
 class _ParamsParser(dict):
     """
     Common methods to all param parsers
@@ -69,9 +76,7 @@ class _ParamsParser(dict):
         Prints parameters read from configuration file
         """
         logger.info("== %s ==" % self['name'])
-        logger.info("Output file : %s" % self['outputfilename'])
-        for optional in ('randomseed','csvdelimiter',
-                'orderslogfilename','unique_by_agent'):
+        for optional in OPTS_VAL + tuple(OPTS_BOOL):
             if optional in self:
                 logger.info("%s : %s" % (optional, self[optional]))
         if 'args' in self['world']:

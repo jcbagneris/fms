@@ -21,22 +21,10 @@ def main():
     """
     parser = fms.set_parser()
     options, arguments = parser.parse_args()
-
     logger = fms.set_logger(options)
-    version = fms.get_full_version()
-
-    if options.version:
-        logger.setLevel(logging.INFO)
-        try:
-            arguments[0] = 'nothing'
-        except IndexError:
-            arguments.append('nothing')
-
-    logger.info("This is FMS v%s" % version)
-
     command = fms.get_command(arguments, parser)
-
     getattr(fms, "do_%s" % command)(arguments, options)
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())

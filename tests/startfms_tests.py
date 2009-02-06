@@ -54,6 +54,8 @@ class LauncherTests(unittest.TestCase):
         self.assertEquals(len(stream), 0, 
                 "Stream should be empty: actually contains '%s'" % stream)
 
+    # global args tests
+
     def test_missing_command_name(self):
         """
         Return usage message and error on missing command name.
@@ -91,13 +93,15 @@ class LauncherTests(unittest.TestCase):
         self.assert_output(err,
                 'startfms.py: error: no such option: --badoption')
 
+    # boolean options
+
     def test_version_option(self):
         """
         --version should return version info
         """
         out, err = self.run_startfms(['--version'])
-        self.assert_output(err,
-                'INFO - fms - This is FMS v')
+        self.assert_output(out,
+                'This is FMS v')
 
     def test_verbose_option(self):
         """
@@ -109,47 +113,17 @@ class LauncherTests(unittest.TestCase):
             self.assert_output(err,
             'INFO - fms.utils - Reading config file tests/fixtures/minimalconf')
 
-    def test_loglevel_option(self):
-        """
-        -L or --loglevel set loglevel
-        """
-        configfile = 'tests/fixtures/minimalconfig.yml'
-        for option in ('-L', '--loglevel'):
-            out, err = self.run_startfms([option, 'debug', 'check', configfile])
-            self.assert_output(err,
-                'DEBUG - fms - Calling YamlParamsParser on')
-        
     def test_showbooks_option(self):
         """
-        --show-books or --show-limits show orders books
+        --show_books or --show_limits show orders books
         """
         configfile = 'tests/fixtures/minimalconfig.yml'
-        for option in ('--show-books', '--show-limits'):
+        for option in ('--show_books', '--show_limits'):
             out, err = self.run_startfms([option, 'check', configfile])
             self.assert_no_output(out)
             out, err = self.run_startfms([option, 'run', configfile])
             self.assert_output(out,
                     'Price | Quantity |     Emitter')
-
-    def test_orderslogfilename_option(self):
-        """
-        --orderslogfilename option overrides config parameter
-        """
-        configfile = 'tests/fixtures/fullconfig.yml'
-        out, err = self.run_startfms(['-v', '--orderslogfilename', 'afile.log', 
-            'check', configfile])
-        self.assert_output(err, 'afile.log')
-
-    def test_outputfilename_option(self):
-        """
-        -o or --outputfilename overrides config parameter
-        """
-        configfile = 'tests/fixtures/fullconfig.yml'
-        for option in ('-o', '--outputfilename'):
-            out, err = self.run_startfms(['-v', option, 'afile.csv',
-                'check', configfile])
-            self.assert_output(err, 'afile.csv')
-
 
     def test_replay_option(self):
         """
@@ -175,6 +149,67 @@ class LauncherTests(unittest.TestCase):
                 '--orderslogfile None', 'run', configfile])
             self.assert_output(err, "0002:00010")
 
+    def test_unique_by_agent(self):
+        """
+        --unique_by_agent overrides param
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        out, err = self.run_startfms(['-v', '--unique_by_agent', 'check',
+                configfile])
+        self.assert_output(err, "unique_by_agent : True")
+        out, err = self.run_startfms(['-v', '--no_unique_by_agent', 'check',
+                configfile])
+        self.assert_output(err, "unique_by_agent : False")
+
+
+    # "value" options
+
+    def test_loglevel_option(self):
+        """
+        -L or --loglevel set loglevel
+        """
+        configfile = 'tests/fixtures/minimalconfig.yml'
+        for option in ('-L', '--loglevel'):
+            out, err = self.run_startfms([option, 'debug', 'check', configfile])
+            self.assert_output(err,
+                'DEBUG - fms - Calling YamlParamsParser on')
+
+    def test_orderslogfilename_option(self):
+        """
+        --orderslogfilename option overrides config parameter
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        out, err = self.run_startfms(['-v', '--orderslogfilename', 'afile.log', 
+            'check', configfile])
+        self.assert_output(err, 'afile.log')
+
+    def test_outputfilename_option(self):
+        """
+        -o or --outputfilename overrides config parameter
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        for option in ('-o', '--outputfilename'):
+            out, err = self.run_startfms(['-v', option, 'afile.csv',
+                'check', configfile])
+            self.assert_output(err, 'afile.csv')
+
+    def test_randomseed_option(self):
+        """
+        --randomseed overrides config parameter
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        out, err = self.run_startfms(['-v', '--randomseed', 'fooseed',
+                'check', configfile])
+        self.assert_output(err, 'randomseed : fooseed')
+
+    def test_csvdelimiter_option(self):
+        """
+        --csvdelimiter overrides config parameter
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        out, err = self.run_startfms(['-v', '--csvdelimiter', '"\t"',
+                'check', configfile])
+        self.assert_output(err, 'csvdelimiter : \t')
 
 if __name__ == "__main__":
     unittest.main()

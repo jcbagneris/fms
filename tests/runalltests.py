@@ -67,7 +67,7 @@ unittest.TextTestRunner(verbosity=2).run(suite)
 for simconffile in expList():
     logger.info("Running %s" % simconffile)
     params = YamlParamsParser(simconffile)
-    params['showbooks'] = False
+    params['show_books'] = False
     params['timer'] = False
     params.outputfile = StringIO()
     (world, engineslist, agentslist) = fms.set_classes(params)
