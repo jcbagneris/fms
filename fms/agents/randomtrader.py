@@ -66,6 +66,12 @@ class RandomTrader(agents.Agent):
     But quantity is strictly controlled :
     neither shortselling nor buy position without required cash
     are allowed.
+    >>> order = agent.act()
+    >>> order['price'] >= 80
+    True
+    >>> order['price'] <= 120
+    True
+
     """
     
     def __init__(self, params, offset=0):
