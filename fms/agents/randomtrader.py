@@ -107,9 +107,13 @@ class RandomTrader(agents.Agent):
         price = random.randint(self.avgprice*(100-self.maxfluct), 
                 self.avgprice*(100+self.maxfluct))/100.
         if direction:
-            quantity = random.randint(1, self.stocks)
+            maxq = self.stocks
         else:
-            quantity = random.randint(1, min(self.maxbuy, int(self.money/price)))
+            maxq = min(self.maxbuy, int(self.money/price))
+        try:
+            quantity = random.randint(1, maxq)
+        except ValueError:
+            quantity = 1
         return {'direction':direction, 'price':price, 'quantity':quantity}
 
 def _test():
