@@ -68,6 +68,7 @@ for simconffile in expList():
     logger.info("Running %s" % simconffile)
     params = YamlParamsParser(simconffile)
     params['showbooks'] = False
+    params['timer'] = False
     params.outputfile = StringIO()
     (world, engineslist, agentslist) = fms.set_classes(params)
     for e in engineslist:
