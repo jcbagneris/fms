@@ -83,6 +83,15 @@ orderslogfilename
     will be relative to the experiment configuration file directory. See
     :ref:`outputfilename <outputfilename>` above for an example.
 
+repeat
+    Number of times the experiment should be repeated (optional, default 1)
+
+    If an experiment is repeated, a sequence number is appended to the first
+    part of the the output file names (transactions or orders) as a ``-%03d``
+    string. Thus, if the output filename is `myoutput.csv` and the experiment is
+    repeated twice, it will result in two output files, named `myoutput-001.csv`
+    and `myoutput-002.csv`.
+
 randomseed
     Seed of the pseudo-ramdom numbers generator (optional)
 

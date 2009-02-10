@@ -55,6 +55,8 @@ Options override parameters values.
 --orderslogfile FILENAME, --ordersfile FILENAME
 			Set orders logfile name to FILENAME. This overrides the
 			``orderlogfilename`` parameter in experiment config file.
+--repeat NUM
+			Repeat the experiment NUM times.
 
 COMMANDS
 ========
