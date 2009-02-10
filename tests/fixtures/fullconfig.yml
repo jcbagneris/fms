@@ -1,5 +1,6 @@
 --- # Experiment
 name: Test Experiment
+repeat: 10
 
 outputfilename: dummyoutput.csv
 orderslogfilename: dummyoutput.log

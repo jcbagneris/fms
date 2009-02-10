@@ -59,6 +59,13 @@ def apply_opts(params, opts):
             if not opt in params:
                 params[opt] = OPTS_BOOL[opt]
 
+    if opts.repeat:
+        for key in ('outputfilename', 'orderslogfilename'):
+            if key in params:
+                if params[key] not in ('None', 'sys.stdout'):
+                    parts = params[key].rsplit('.',1)
+                    params[key] = '.'.join((parts[0]+'-%03d', parts[1]))
+
     if opts.replay:
         del params['agents'][1:]
         if not params['agents'][0]['classname'] == 'PlayOrderLogFile':
@@ -144,6 +151,8 @@ def set_parser():
             help='random seed')
     optp.add_option('--csvdelimiter',
             help='csv delimiter')
+    optp.add_option('--repeat',
+            help='repeat experiment N times')
 
     return optp
 
@@ -240,7 +249,8 @@ def do_check(args, opts):
     Command: check experiment conffile, do not run
     """
     params = get_params(args, opts)
-    (world, engineslist, agentslist) = set_classes(params)
+    for turn in xrange(int(params['repeat'])):
+        (world, engineslist, agentslist) = set_classes(params)
 
 def do_run(args, opts):
     """
@@ -248,15 +258,16 @@ def do_run(args, opts):
     """
     logger = logging.getLogger('fms')
     params = get_params(args, opts)
-    params.create_files()
-    params.printfileheaders()
     if logger.getEffectiveLevel() < logging.INFO:
         params.showbooks = True
-    (world, engineslist, agentslist) = set_classes(params)
-    logger.info("All is set, running simulation")
-    for e in engineslist:
-        logger.info("Running %s" % e['instance'])
-        e['instance'].run(world, agentslist, e['market']['instance'])
-    logger.info("Done.")
-    params.close_files()
+    for turn in xrange(int(params['repeat'])):
+        params.create_files(turn)
+        params.printfileheaders()
+        (world, engineslist, agentslist) = set_classes(params)
+        logger.info("All is set, running simulation %03d" % turn)
+        for e in engineslist:
+            logger.info("Running %s" % e['instance'])
+            e['instance'].run(world, agentslist, e['market']['instance'])
+        logger.info("Done.")
+        params.close_files(turn)
 

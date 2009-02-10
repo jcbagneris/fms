@@ -211,5 +211,24 @@ class LauncherTests(unittest.TestCase):
                 'check', configfile])
         self.assert_output(err, 'csvdelimiter : \t')
 
+    def test_repeat_option(self):
+        """
+        --repeat option overrides config parameter
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        out, err = self.run_startfms(['-v', '--repeat 5',
+            'check', configfile])
+        self.assert_output(err, 'repeat : 5')
+
+    def test_repeat_option_outfiles(self):
+        """
+        --repeat option implies seq output filenames
+        """
+        configfile = 'tests/fixtures/fullconfig.yml'
+        out, err = self.run_startfms(['-v', '--repeat 5',
+            'check', configfile])
+        self.assert_output(err, 'dummyoutput-%03d.csv')
+        self.assert_output(err, 'dummyoutput-%03d.log')
+
 if __name__ == "__main__":
     unittest.main()

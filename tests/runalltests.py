@@ -81,7 +81,7 @@ for simconffile in expList():
         print testresult
     else:
         logger.info("%s ok" % simconffile)
-    params.close_files()
+    params.close_files(1)
     agentslist[0].reset()
 
 os.chdir(old_dir)

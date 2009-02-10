@@ -21,7 +21,11 @@ CSVDELIMITERS = [';', ',', '\t', ' ', ':', '|', '-', '!', '/']
 
 # args
 COMMANDS = ('nothing', 'run', 'check')
-OPTS_VAL = ('outputfilename', 'orderslogfilename', 'randomseed', 'csvdelimiter')
+OPTS_VAL = ('outputfilename', 
+        'orderslogfilename', 
+        'randomseed', 
+        'csvdelimiter', 
+        'repeat')
 OPTS_BOOL = {'show_books': False,
              'timer': False,
              'unique_by_agent': True,}
@@ -39,32 +43,48 @@ class _ParamsParser(dict):
         self.outputfile = sys.stderr
         self.orderslogfile = None
 
-    def create_files(self):
+    def create_files(self, turn):
         """
         Create all necessary files
         """
         if self['outputfilename'] != 'sys.stdout':
-            logger.info("Creating %s" % self['outputfilename'])
-            self.outputfile = open(self['outputfilename'], 'w')
+            if '-%03d' in self['outputfilename']:
+                outputfilename = self['outputfilename'] % turn
+            else:
+                outputfilename = self['outputfilename']
+            logger.info("Creating %s" % outputfilename)
+            self.outputfile = open(outputfilename, 'w')
         else:
             self.outputfile = sys.stdout
 
         if self['orderslogfilename']:
-            logger.info("Creating %s" % self['orderslogfilename'])
-            self.orderslogfile = open(self['orderslogfilename'], 'w')
+            if '-%03d' in self['orderslogfilename']:
+                orderslogfilename = self['orderslogfilename'] % turn
+            else:
+                orderslogfilename = self['orderslogfilename']
+            logger.info("Creating %s" % orderslogfilename)
+            self.orderslogfile = open(orderslogfilename, 'w')
 
-    def close_files(self):
+    def close_files(self, turn):
         """
         Close all output files
         """
         if self['outputfilename'] != 'sys.stdout':
-            logger.info("Closing %s" % self['outputfilename'])
+            if '-%03d' in self['outputfilename']:
+                outputfilename = self['outputfilename'] % turn
+            else:
+                outputfilename = self['outputfilename']
+            logger.info("Closing %s" % outputfilename)
             try:
                 self.outputfile.close()
             except IOError:
                 pass
         if self['orderslogfilename']:
-            logger.info("Closing %s" % self['orderslogfilename'])
+            if '-%03d' in self['orderslogfilename']:
+                orderslogfilename = self['orderslogfilename'] % turn
+            else:
+                orderslogfilename = self['orderslogfilename']
+            logger.info("Closing %s" % orderslogfilename)
             try:
                 self.orderslogfile.close()
             except IOError:
@@ -363,6 +383,9 @@ class YamlParamsParser(_ParamsParser):
 
         if not 'name' in self:
             self['name'] = '%s experiment' % yamlfilename
+
+        if not 'repeat' in self:
+            self['repeat'] = 1
 
         if not 'randomseed' in self:
             self['randomseed'] = None
