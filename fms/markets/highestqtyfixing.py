@@ -90,7 +90,7 @@ class HighestQtyFixing(markets.Market):
                     'lasttransaction': self.transaction}
         return infodict
 
-    def do_clearing(self, time):
+    def do_clearing(self, fixingtime):
         """
         Clears books by 'fixing'.
 
@@ -123,7 +123,7 @@ class HighestQtyFixing(markets.Market):
                 if not self.replay:
                     buyer.record(BUY, executedprice, qty)
                     seller.record(SELL, executedprice, qty)
-                self.output_transaction(time, executedprice, qty)
+                self.output_transaction(fixingtime, executedprice, qty)
                 if qty == self.buybook[-1][2]:
                     del self.buybook[-1]
                 else:
