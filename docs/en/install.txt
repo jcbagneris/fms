@@ -13,11 +13,17 @@ Downloading FMS
 FMS packages are available in various formats, suitable for different operating
 systems. Download links :
 
-* ``tar.gz`` package : http://bagneris.net/contents/dld/fms-latest.tar.gz 
+* ``tar.gz`` package : `fms-latest.tar.gz`_
 
-* ``zip`` package : http://bagneris.net/contents/dld/fms-latest.zip
+* ``zip`` package : `fms-latest.zip`_
 
-* Windows installer : http://bagneris.net/contents/dld/fms-latest.win32.exe
+* Windows installer : `fms-latest.win32.exe`_
+
+.. _fms-latest.tar.gz: http://bagneris.net/contents/dld/fms-0.1.5.tar.gz
+.. _fms-latest.zip: http://bagneris.net/contents/dld/fms-0.1.5.zip
+.. _fms-latest.win32.exe: http://bagneris.net/contents/dld/fms-0.1.5.win32.exe
+
+Check the packages once you downloaded it : http://bagneris.net/contents/dld/md5sum-fms-latest.txt
 
 In addition, you may clone the source repository of FMS. As it is managed with
 `the git VCS`_, you need first to install it, then to get the repository run::
