@@ -85,6 +85,21 @@ pygments_style = 'sphinx'
 # given in html_static_path.
 html_style = 'default.css'
 
+html_theme = 'default'
+#html_theme_options = {
+#        'bodyfont': 'Arial, sans-serif',
+#        'headtextcolor': '#666666',
+#        'headbgcolor': '#ffffff',
+#        'headlinkcolor': '#666666',
+#        'sidebarbgcolor': '#ffffff',
+#        'sidebartextcolor': 'black',
+#        'sidebarlinkcolor': '#a02020',
+#        'linkcolor': '#a02020',
+#        'relbarbgcolor': '#dddddd url("_static/bandeau1.jpg") top right repeat-x',
+#        'relbarbgcolor': '#666',
+#        'footerbgcolor': '#8b1a1a',
+#        }
+
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 #html_title = None

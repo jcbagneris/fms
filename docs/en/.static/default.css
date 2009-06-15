@@ -1,0 +1,252 @@
+/**
+ * Sphinx stylesheet -- default theme
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Modified to use bagneris.net website colors
+ * JcB - dimanche 14 juin 2009, 10:59:06 (UTC+0700)
+ */
+
+@import url("basic.css");
+
+/* -- page layout ----------------------------------------------------------- */
+
+body {
+/*    font-family: Arial, sans-serif; */
+	font: 12px/1.6 Arial, Verdana, Helvetica, sans-serif;
+    font-size: 100%;
+    background-color: #ffffff;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+div.document {
+    background-color: #ffffff;
+}
+
+div.bodywrapper {
+	margin: 2% 6% 1% 20em;
+	max-width: 60em;
+	width:expression( 
+	    document.body.clientWidth > (500/12) * 
+	    parseInt(document.body.currentStyle.fontSize)?
+	        "60em":
+	        "auto" );
+}
+
+div.body {
+    background-color: #ffffff;
+    color: #000000;
+/*    padding: 0 20px 30px 20px; */
+}
+
+div.footer {
+    color: #ffffff;
+	background-color: #8b1a1a;
+    width: 100%;
+    padding: 9px 0 9px 0;
+    text-align: center;
+    font-size: 75%;
+}
+
+div.footer a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+div.related {
+    background-color: #666;
+    line-height: 30px;
+    color: #ffffff;
+}
+
+div.related a {
+    color: #ffffff;
+}
+
+div.sphinxsidebar {
+	font-size: 0.90em;
+}
+
+div.sphinxsidebar h3 {
+		margin: 1em 0 0 0;
+		padding: 3px 6px;
+		font-weight: bold;
+		font-size: 1em;
+		border-top: 1px solid black;
+}
+
+div.sphinxsidebar h3 a {
+    color: black;
+}
+
+div.sphinxsidebar h4 {
+		margin: 1em 0 0 0;
+		padding: 3px 6px;
+		font-weight: bold;
+		font-size: 1em;
+}
+
+div.sphinxsidebar p {
+    color: black;
+}
+
+div.sphinxsidebar p.topless {
+    margin: 5px 10px 10px 10px;
+}
+
+div.sphinxsidebar ul {
+    margin: 10px;
+    padding: 0;
+    color: black;
+	line-height: 1.4;
+}
+
+div.sphinxsidebar a {
+    color: #a02020;
+}
+
+div.sphinxsidebar input {
+    border: 1px solid black;
+    font-family: sans-serif;
+}
+
+/* -- body styles ----------------------------------------------------------- */
+
+#haut 	{
+	margin: 0;
+	padding: 3% 3% 1% 0;
+	color: #444;
+	font-size: x-large;
+	font-stretch: expanded;
+	font-weight: bold;
+	text-align: right;
+	background: transparent url(bandeau1.jpg) top right repeat-x;
+	}
+
+#haut span	{
+	color: #A02020;
+	}
+
+a {
+    color: #a02020;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+div.body p, div.body dd, div.body ul {
+	padding: 0.1em 3em;
+    text-align: justify;
+    line-height: 1.8;
+}
+
+div.body li
+		{
+		list-style-type: square;
+		position: relative;
+		left: 1em;
+		}
+
+div.body li p, div.body li pre
+		{
+		margin: 0.5em 0;
+		padding: 0;
+		}
+
+div.body h1,
+div.body h2,
+div.body h3,
+div.body h4,
+div.body h5,
+div.body h6 {
+		margin-top: 4%;
+		font-weight: bold;
+		font-size: 1em;
+		padding: 0 1%;
+		color: #A02020;
+		border-bottom: 2px solid #A02020;
+		background: none;
+		text-align: left;
+}
+
+div.body h1 { 
+		color: #666;
+		padding-top: 1%;
+		font-size: 1.5em;
+		border-bottom: 3px solid #666;
+}
+div.body h2 { font-size: 1em; }
+div.body h3 { font-size: 1em; color: black; border: none; }
+div.body h4 { font-size: 0.8em; }
+div.body h5 { font-size: 0.7em; }
+div.body h6 { font-size: 0.6em; }
+
+a.headerlink {
+    color: #666666;
+    font-size: 0.8em;
+    padding: 0 4px 0 4px;
+    text-decoration: none;
+}
+
+a.headerlink:hover {
+    background-color: #666666;
+    color: white;
+}
+
+div.admonition p.admonition-title + p {
+/*    display: inline;*/
+}
+
+div.note {
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+
+div.seealso {
+    background-color: #ffc;
+    border: 1px solid #ff6;
+}
+
+div.topic {
+    background-color: #eee;
+}
+
+div.warning {
+    background-color: #ffe4e4;
+    border: 1px solid #f66;
+}
+
+p.admonition-title {
+    display: inline;
+}
+
+p.admonition-title:after {
+    content: ":";
+}
+
+pre {
+    /*padding: 5px;*/
+	margin: 0 7em;
+	padding: 0.5em;
+    color: black;
+    line-height: 120%;
+	background: #EEE;
+	border-left: 1px solid red;
+	overflow: auto;
+}
+
+div.highlight {
+	background: #fff;
+}
+
+tt {
+    background-color: #ecf0f3;
+    padding: 0 1px 0 1px;
+    font-size: 0.95em;
+}
+
+span.pre {
+	font-size: 120%;
+}
