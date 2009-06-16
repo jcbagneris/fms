@@ -7,6 +7,8 @@ FMS, an agent based Financial Market Simulator
 FMS is (c) 2008,2009 Jean-Charles Bagneris. See the LICENSE file in the
 distribution bundles for redistribution information and usual disclaimer.
 
+.. index:: about
+
 What is FMS ?
 =============
 
@@ -45,6 +47,8 @@ not be in the foreseeable future):
 
 .. [1] Although FMS intention is not primarily pedagogical, it *might* be useful 
     in classroom environment with PhD students, for an example.
+
+.. index:: history, rationale
 
 Rationale and history
 =====================
@@ -124,6 +128,7 @@ Index, tables and search
 ========================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
+
+.. * :ref:`modindex`
 

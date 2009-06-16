@@ -1,3 +1,5 @@
+.. index:: installation, download
+
 .. _install:
 
 =============================

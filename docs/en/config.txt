@@ -1,3 +1,5 @@
+.. index:: configuration
+
 .. _config:
 
 =============================
@@ -6,6 +8,9 @@ FMS experiments configuration
 
 FMS needs a detailed description of an experiment before being able able to run
 it. The experiment configuration file contains this description.
+
+.. index::
+    pair: configuration file; name of
 
 The experiment configuration file name might be whatever you want (provided your
 operating system allows it) but should have an '.yml' extension for FMS to know
@@ -18,12 +23,18 @@ their required parameters: world, engines/markets, agents.
 
 .. _YAML: http://www.yaml.org/
 
+.. index::
+    pair: configuration file; syntax
+
 Configuration file syntax
 =========================
 
 Configuration files are provided in the ``examples`` directory, which is located
 in the main documentation directory [1]_. It is strongly recommanded to study
 those before writing your own (see `examples provided`_ below).
+
+.. index::
+    pair: configuration file; example
 
 A minimal configuration file might be::
 
@@ -46,6 +57,11 @@ A minimal configuration file might be::
 An FMS YAML configuration file should contain one and only one YAML *document*,
 i.e. only one section delimited by ``---``. The parameters it describes are as
 follows:  
+
+.. index::
+    pair: outputfilename; parameter
+    pair: transaction; filename
+    pair: output; filename
 
 .. _outputfilename:
 
@@ -71,6 +87,10 @@ outputfilename
     Then the resulting transactions will be output to
     ``/home/mydir/fmsdata/myexperiments/exp01output.csv`` 
 
+.. index::
+    pair: orderslogfilename; parameter
+    pair: filename; orders
+
 orderslogfilename
     Name of (and optional path to) order log file (optional)
 
@@ -83,6 +103,10 @@ orderslogfilename
     will be relative to the experiment configuration file directory. See
     :ref:`outputfilename <outputfilename>` above for an example.
 
+.. index:: 
+    pair: repeat; parameter
+    pair: experiment; repeat
+
 repeat
     Number of times the experiment should be repeated (optional, default 1)
 
@@ -91,6 +115,9 @@ repeat
     string. Thus, if the output filename is `myoutput.csv` and the experiment is
     repeated twice, it will result in two output files, named `myoutput-001.csv`
     and `myoutput-002.csv`.
+
+.. index:: 
+    pair: randomseed; parameter
 
 randomseed
     Seed of the pseudo-ramdom numbers generator (optional)
@@ -102,6 +129,11 @@ randomseed
     this).  As this library accepts an optional seed parameter, you may specify
     it here.
 
+.. index:: 
+    single: comma separated value
+    pair: delimiter; csv file
+    pair: csvdelimiter; parameter
+
 csvdelimiter
     Delimiter used in the comma separated value files (optional)
 
@@ -110,11 +142,19 @@ csvdelimiter
     spreadsheets. Accepted values are semicolon ``;``, comma ``,``, tab, space,
     colon ``:``, pipe ``|``, dash ``-``, exclamation mark ``!``, slash ``/``.  
 
+.. index:: 
+    pair: unique_by_agent; parameter
+    pair: agent; order
+
 unique_by_agent
     Should orders in books be unique per agent ? (optional, default ``True``)
 
     If this parameter is ``True`` or missing, any order placed by an agent
     replaces any previous order from the same agent.
+
+.. index:: 
+    pair: show_books; parameter
+    pair: display; books
 
 show_books
     Should FMS show 5 best limits of order books on each step ? (optional, default
@@ -123,11 +163,21 @@ show_books
     If this parameter is ``False`` or missing, best limits of order books are
     not printed on each step (tick).
 
+.. index:: 
+    pair: timer; parameter
+    pair: display; timer
+
 timer
     Should FMS show a timer while running (optional, default ``False``)
 
     If this parameter is ``True``, a day:time timer is displayed while the
     experiment is running.
+
+.. index::
+    pair: world; parameter
+    pair: world; class name
+    pair: world; arguments
+    pair: world; configuration
 
 world
     World class information (required)
@@ -145,6 +195,20 @@ world
         World class arguments (optional)
 
         Any arguments required by or optional to the world class.
+
+.. index::
+    pair: engines; parameter
+    pair: engine; class name
+    pair: engine; arguments
+    pair: engine; configuration
+    pair: market; parameter
+    pair: market; class name
+    pair: market; arguments
+    pair: market; configuration
+    pair: days; parameter
+    pair: parameter; days (number of)
+    pair: clearbooksateod; parameter
+    pair: daylength; parameter
 
 engines
     Engine classes information (required)
@@ -206,6 +270,17 @@ engines
 
         Any arguments required by or optional to the engine class.
 
+.. index::
+    pair: agents; parameter
+    pair: agent; class name
+    pair: agent; arguments
+    pair: agent; configuration
+    pair: parameter; agents (number of)
+    pair: parameter; agents (wealth)
+    pair: parameter; money
+    pair: parameter; agents (stocks)
+    pair: parameter; stocks
+
 agents
     Agents classes information (required)
 
@@ -247,6 +322,9 @@ agents
         Agent class arguments (optional)
 
         Any arguments required by or optional to the agent class.
+
+.. index::
+    pair: configuration file; example
 
 Examples provided
 =================
