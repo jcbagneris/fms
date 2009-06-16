@@ -32,6 +32,8 @@ If you program your own classes, remember these may be of interest for others:
 feel free to drop me an email and to contribute (see `How could I contribute ?`_
 below).
 
+.. index:: game, portfolio management, GUI
+
 What FMS is not
 ===============
 
@@ -87,6 +89,8 @@ value file, depending on the configuration.
 
 .. _YAML: http://www.yaml.org/
 
+.. index:: extending FMS
+
 Extending FMS
 =============
 
@@ -97,6 +101,8 @@ it for you. Of course, your problem has to be interesting enough for us to do
 this, and the resulting classes would be part of FMS next release. By the way,
 if you write yourself an interesting class for FMS, please submit it for
 inclusion (you would of course be credited for your work).
+
+.. index:: contributing
 
 How could I contribute ?
 ========================

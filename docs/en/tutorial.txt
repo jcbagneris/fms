@@ -101,6 +101,9 @@ not a problem) in the newly created "experiments" directory. Remember that
 ``startfms.py`` is located in your Python installation ``Scripts`` directory,
 something like ``C:\Python26\Scripts\``.
 
+.. index::
+    pair: configuration; example
+
 Open your favorite text editor, and copy the text below::
 
     --- # My first experiment
@@ -161,6 +164,9 @@ this object's various attributes. We thus defined exactly three objects, namely
 As the three kind of objects we described here are the bare minimum to get a
 valid experiment, let's get acquainted with any of them.
 
+.. index::
+    pair: world; object
+
 The ``world`` object and its attributes
 ---------------------------------------
 
@@ -185,6 +191,10 @@ and so on. Now ``cd`` to the ``worlds`` directory: you should see a bunch of fil
 
 Then we have a world, time to think about running a market. This is the
 engines' job.
+
+.. index::
+    pair: engines; object
+    pair: market; object
 
 The ``engines`` object and its attributes
 -----------------------------------------
@@ -224,6 +234,9 @@ When an agent "speaks", she may decide to do nothing, or place an order which
 does not necessarily trigger a transaction, depending on the market model.
 Thus, the number of times the engine give speak to the agents is not the number
 of transactions of the experiment.
+
+.. index::
+    pair: agents; object
 
 The ``agents`` object and its attributes
 -----------------------------------------
@@ -271,6 +284,9 @@ Again, cd to the "experiment" directory and run::
     python startfms.py -v check name-of-the-config-file.yml
 
 (Replace ``name-of-the-config-file`` with the name of  your config file).
+
+.. index::
+    pair: output; example
 
 The ``-v`` option stands for "verbose", as we want FMS to tell us everything it
 does. The output should be::

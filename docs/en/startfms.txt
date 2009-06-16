@@ -28,6 +28,8 @@ data on ``stdout`` or in a ``.csv`` file.
 The experiment configuration file is described in ``experiment-conf.yml(5)`` or
 in the html documentation.
 
+.. index:: options
+
 OPTIONS
 =======
 
@@ -59,6 +61,8 @@ Options override parameters values.
 			``orderlogfilename`` parameter in experiment config file.
 --repeat NUM
 			Repeat the experiment NUM times.
+
+.. index:: commands
 
 COMMANDS
 ========

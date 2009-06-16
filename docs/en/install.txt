@@ -27,6 +27,8 @@ systems. Download links :
 
 Check the packages once you downloaded it : http://bagneris.net/contents/dld/md5sum-fms-latest.txt
 
+.. index:: source, git
+
 In addition, you may clone the source repository of FMS. As it is managed with
 `the git VCS`_, you need first to install it, then to get the repository run::
 
@@ -47,6 +49,9 @@ Installing FMS
     `Uninstalling FMS`_ below for detailed instructions about
     uninstallation.
 
+.. index:: 
+    single: requirements, yaml
+
 Requirements
 ------------
 
@@ -55,6 +60,11 @@ Requirements
 
 - The PyYaml library (http://pyyaml.org/) is necessary to read configuration
   files.
+
+.. index::
+    pair: linux; installation
+    pair: unix; installation
+    pair: BSD; installation
 
 Linux and BSD distributions
 ---------------------------
@@ -77,6 +87,9 @@ In addition, you may move the ``startfms.py`` script somewhere on your path.
 To check that anything went well, ``cd`` to the tests directory and run::
 
 	python runalltests.py
+
+.. index::
+    pair: windows; installation
 
 Windows
 -------
@@ -173,6 +186,8 @@ from the Python submenu in the main menu.
 Although it is meant as a development environment, IDLE is able to run scripts
 (passing options and arguments to them). See IDLE documentation for detailed
 information on how to run scripts from IDLE.
+
+.. index:: uninstall
 
 Uninstalling FMS
 ================
