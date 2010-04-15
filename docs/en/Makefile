@@ -29,7 +29,7 @@ html:
 	mkdir -p .build/html .build/doctrees
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) .build/html
 	# Ugly hack - JcB 30/06/09
-	touch .build/html/robots.txt
+	cp robots .build/html/robots.txt
 	@echo
 	@echo "Build finished. The HTML pages are in .build/html."
 
