@@ -21,11 +21,13 @@ systems. Download links :
 
 * Windows installer : `fms-latest.win32.exe`_
 
-.. _fms-latest.tar.gz: http://bagneris.net/contents/dld/fms-0.1.5.tar.gz
-.. _fms-latest.zip: http://bagneris.net/contents/dld/fms-0.1.5.zip
-.. _fms-latest.win32.exe: http://bagneris.net/contents/dld/fms-0.1.5.win32.exe
+.. _fms-latest.tar.gz: /dist/fms-0.1.5.tar.gz
+.. _fms-latest.zip: /dist/fms-0.1.5.zip
+.. _fms-latest.win32.exe: /dist/fms-0.1.5.win32.exe
 
-Check the packages once you downloaded it : http://bagneris.net/contents/dld/md5sum-fms-latest.txt
+Check the packages once you downloaded it : md5sums.txt_
+
+.. _md5sums.txt: /dist/md5sums.txt
 
 .. index:: source, git
 
