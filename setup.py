@@ -4,19 +4,6 @@ from distutils.core import setup
 
 version = __import__('fms').VERSION
 
-long_description = """
-FMS, an agent-based financial market simulator.
-
-FMS produces transaction data from experiments.
-Experiments are defined through classes :
-- world
-- engine and market
-- agents
-
-Basic classes are provided, but you are encouraged
-to write your own and contribute to FMS.
-"""
-
 data_files = []
 
 data_dir = (
@@ -35,12 +22,12 @@ for directory in data_dir:
 
 setup(name='fms',
         version = version,
-        description = 'Financial Market Simulator',
+        description = 'A Financial Market Simulator',
         author = 'Jean-Charles Bagneris',
-        author_email = 'jcb@bagneris.net',
-        url = 'http://fms.bagneris.net',
+        author_email = 'jcbagneris@gmail.com',
+        url = 'http://github.com/jcbagneris/fms',
         license = 'BSD',
-        long_description = long_description,
+        long_description=open('README').read(),
         packages = ['fms',
                     'fms.agents',
                     'fms.engines',
@@ -50,4 +37,13 @@ setup(name='fms',
                     ],
         scripts = ['startfms.py'],
         data_files = data_files,
+        classifiers=[
+            "Development Status :: 4 - Beta",
+            "Environment :: Console",
+            "Intended Audience :: Science/Research",
+            "License :: OSI Approved :: BSD License",
+            "Operating System :: OS Independent",
+            "Programming Language :: Python :: 2",
+            "Topic :: Scientific/Engineering",
+        ],
         )
