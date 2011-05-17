@@ -12,7 +12,7 @@ import logging
 from fms.utils import XmlParamsParser, YamlParamsParser
 from fms.utils import COMMANDS, OPTS_VAL, OPTS_BOOL
 
-VERSION = '0.1.5'
+VERSION = '0.1.6'
 
 def get_full_version():
     """
