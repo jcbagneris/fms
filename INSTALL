@@ -11,10 +11,21 @@ Requirements
 Installing FMS
 ==============
 
-To install it, make sure you have Python 2.4 or greater installed. Then run
-this command (as root) from a command prompt:
+The preferred way to install FMS is to use the pip_ installer::
 
-    python setup.py install
+	$ pip install fms
+
+It should install it, and any required dependancies (that is, PyYaml at the
+moment). You may consider installing in a Virtual environment.
+
+.. _Virtual environment: http://guide.python-distribute.org/virtualenv.html
+.. _pip: http://guide.python-distribute.org/installation.html#pip-info
+
+If you downloaded a source pakage and want to install it, make sure you have
+Python 2.4 or greater installed. Then run this command (as root) from a command
+prompt:
+
+    $ python setup.py install
 
 
 As an alternative, you may just copy or link the fms directory in your
@@ -32,7 +43,11 @@ To check that anything went well, cd to the tests directory and run:
 Uninstalling FMS
 ================
 
-If you need/want to uninstall FMS, cd to your Python's installation
+If you installed FMS with pip_, then simply::
+
+	$ pip uninstall fms
+
+If you installed FMS from source, cd to your Python's installation
 site-packages directory, and remove fms directory and egg-info file :
 
 	rm -r fms*

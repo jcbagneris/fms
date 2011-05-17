@@ -6,47 +6,16 @@
 FMS download and installation
 =============================
 
-Downloading FMS
-===============
-
 .. note::
     Latest version of FMS is |release|.
-
-FMS packages are available in various formats, suitable for different operating
-systems. Download links :
-
-* ``tar.gz`` package : `fms-latest.tar.gz`_
-
-* ``zip`` package : `fms-latest.zip`_
-
-* Windows installer : `fms-latest.win32.exe`_
-
-.. _fms-latest.tar.gz: /dist/fms-0.1.5.tar.gz
-.. _fms-latest.zip: /dist/fms-0.1.5.zip
-.. _fms-latest.win32.exe: /dist/fms-0.1.5.win32.exe
-
-Check the packages once you downloaded it : md5sums.txt_
-
-.. _md5sums.txt: /dist/md5sums.txt
-
-.. index:: source, git
-
-In addition, you may clone the source repository of FMS. As it is managed with
-`the git VCS`_, you need first to install it, then to get the repository run::
-
-    git clone git://github.com/jcbagneris/fms.git
-
-If you develop new classes or squash bugs, consider sending a patch, or asking
-for pull access on the repository.
-
-.. _the git VCS: http://git.or.cz
 
 Installing FMS
 ==============
 
 .. warning:: 
 
-    If a previous version of FMS is installed on your system, *uninstall it*
+    If you installed from source (see below) and a previous version of FMS is 
+    installed on your system, *uninstall it*
     prior to installing the new version. Really. I mean it. See
     `Uninstalling FMS`_ below for detailed instructions about
     uninstallation.
@@ -61,7 +30,8 @@ Requirements
   should be 2.4 or greater.
 
 - The PyYaml library (http://pyyaml.org/) is necessary to read configuration
-  files.
+  files. Note that installing FMS with the pip_ installer would automatically
+  install PyYaml if it is missing on your system.
 
 .. index::
     pair: linux; installation
@@ -71,14 +41,35 @@ Requirements
 Linux and BSD distributions
 ---------------------------
 
-Get the source package (see `downloading FMS`_ above), uncompress it wherever
+Installing with pip
+~~~~~~~~~~~~~~~~~~~
+The preferred way to install FMS is to use pip_ (Pip Installs Python). You may
+even choose to install it in a `Virtual environment`_ to isolate it.
+
+Whichever environment you chose, simply::
+
+    $ pip install fms
+
+And you're done. You may even upgrade an FMS installation::
+
+    $ pip install -U fms
+
+.. _Virtual environment: http://guide.python-distribute.org/virtualenv.html
+
+Installing from source
+~~~~~~~~~~~~~~~~~~~~~~
+
+I cannot imagine any good reason not to benefit of pip_ goodness, unless you want
+to get the source to contribute. Anyway, it is possible to install from source.
+
+Get the source package (see `getting FMS sources`_ below), uncompress it wherever
 you think is a suitable place (``usr/local/src/`` might seem a clever choice,
 though). 
 
 ``cd`` to the newly created directory.  Then run this command (as root) from a
 command prompt::
 
-    python setup.py install
+    $ python setup.py install
 
 
 As an alternative, you may just copy or link the ``fms`` directory in your
@@ -88,17 +79,26 @@ In addition, you may move the ``startfms.py`` script somewhere on your path.
 
 To check that anything went well, ``cd`` to the tests directory and run::
 
-	python runalltests.py
+	$ python runalltests.py
 
 .. index::
     pair: windows; installation
 
+.. _pip: http://guide.python-distribute.org/installation.html#pip-info
+
 Windows
 -------
 
+If you use ActivePython_, your best bet is to install FMS through the PyPM
+installer, as you would do for any other third-party package.
+
+.. _ActivePython: http://www.activestate.com/activepython/downloads
+
+Otherwise, you can install a binary package from the github download section.
+
 First, make sure you installed Python and YAML (see requirements_ above).
 
-Get the Windows FMS installer (see `downloading FMS`_ above) and put it
+Get the Windows FMS installer from `FMS main repository`_ download section and put it
 somewhere on the desktop, then double-click on it. Leave the default answers to
 all the questions (or be prepared to remember what you did, to swear, and to
 cry... That is, unless you really know what you are doing, of course). 
@@ -156,7 +156,7 @@ Do not forget the trailing backslash !
 
 Note that you should adapt to the version of python you installed, and to the path where you installed it. It might as well be::
 
-    C:\Program Files\Python25\;
+    C:\Program Files\Python26\;
 
 Then, start or go to a command prompt, and try::
 
@@ -197,10 +197,16 @@ Uninstalling FMS
 Uninstalling on Linux and BSD
 -----------------------------
 
-If you need/want to uninstall FMS, ``cd`` to your Python's installation
+If you installed FMS with pip_, then simply::
+
+    $ pip uninstall fms
+
+And you're done.
+
+If you installed from source, ``cd`` to your Python's installation
 ``site-packages`` directory, and remove fms directory and egg-info file::
 
-	rm -r fms*
+	$ rm -r fms*
 
 Then remove the ``startfms.py`` script from where it was installed, probably
 ``/usr/bin/`` or ``/usr/local/bin/`` on Unix. 
@@ -208,7 +214,7 @@ Then remove the ``startfms.py`` script from where it was installed, probably
 Uninstalling on Windows
 -----------------------
 
-On Windows, if you used the binary installer, you may uninstall FMS directly
+On Windows, if you used a binary installer, you may uninstall FMS directly
 from the application managing all installed programs. Otherwise, go to your
 Python installation directory (usually ``C:\Python26``), then to the
 ``Site-packages`` directory, and delete anything fms-related in it (probably a
@@ -216,6 +222,24 @@ directory called ``fms``).
 
 You're done. Thanks for giving FMS a try !
 
+Getting FMS sources
+===================
+
+.. index:: source, git
+
+If you need to get packaged sources of FMS, either as a zip file or a tarball,
+then go to `FMS main repository`_ and use the download facilities.
+
+In addition, you may clone the source repository of FMS. As it is managed with
+`the git VCS`_, you need first to install it, then to get the repository run::
+
+    $ git clone git://github.com/jcbagneris/fms.git
+
+If you develop new classes or squash bugs, consider sending a patch, or asking
+for pull access on the repository.
+
+.. _the git VCS: http://git.or.cz
+.. _FMS main repository: https://github.com/jcbagneris/fms
 
 -------------------
 
