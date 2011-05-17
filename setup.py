@@ -36,6 +36,7 @@ setup(name='fms',
                     'fms.worlds',
                     ],
         scripts = ['startfms.py'],
+        install_requires = ['PyYAML'],
         data_files = data_files,
         classifiers=[
             "Development Status :: 4 - Beta",
