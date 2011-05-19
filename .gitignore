@@ -11,3 +11,4 @@ build
 html
 dummyoutput.*
 fmsweb
+fms.egg-info
