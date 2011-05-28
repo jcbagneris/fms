@@ -12,7 +12,7 @@
 
 body {
 /*    font-family: Arial, sans-serif; */
-	font: 12px/1.6 Arial, Verdana, Helvetica, sans-serif;
+	font: 11px/1.5 Arial, Verdana, Helvetica, sans-serif;
     font-size: 100%;
     background-color: #ffffff;
     color: #000;
@@ -140,7 +140,8 @@ a:hover {
 div.body p, div.body dd, div.body ul {
 	padding: 0.1em 3em;
     text-align: justify;
-    line-height: 1.8;
+    line-height: 1.7;
+	font-size: 0.9em;
 }
 
 div.body li
@@ -178,11 +179,11 @@ div.body h1 {
 		font-size: 1.5em;
 		border-bottom: 3px solid #666;
 }
-div.body h2 { font-size: 1em; }
-div.body h3 { font-size: 1em; color: black; border: none; }
-div.body h4 { font-size: 0.8em; }
-div.body h5 { font-size: 0.7em; }
-div.body h6 { font-size: 0.6em; }
+div.body h2 { font-size: 1.2em; }
+div.body h3 { font-size: 1em; }
+div.body h4 { font-size: 0.8em; color:black; border: none; }
+div.body h5 { font-size: 0.7em; color:black; border: none; }
+div.body h6 { font-size: 0.6em; color:black; border: none; }
 
 a.headerlink {
     color: #666666;
@@ -250,4 +251,8 @@ tt {
 
 span.pre {
 	font-size: 120%;
+}
+
+.footnote {
+	font-size: 0.8em;
 }
