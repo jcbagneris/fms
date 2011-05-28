@@ -11,12 +11,12 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys, os
+import sys, os, datetime
 
 # If your extensions are in another directory, add it here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
-#sys.path.append(os.path.abspath('some/directory'))
+sys.path.append(os.path.abspath('../..'))
 
 # General configuration
 # ---------------------
@@ -36,7 +36,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = u'FMS'
-copyright = u'2008-2009, Jean-Charles Bagneris'
+copyright = u'2008-%s, Jean-Charles Bagneris' % datetime.datetime.now().year
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
@@ -102,7 +102,7 @@ html_theme = 'default'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+html_title = "%s %s Documentation" % (project, release)
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -157,7 +157,7 @@ html_use_modindex = False
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'FMSdoc'
+htmlhelp_basename = 'fms-documentation'
 
 
 # Options for LaTeX output
