@@ -1,10 +1,9 @@
 import os
 import os.path
-from distutils.core import setup
+from setuptools import setup
 
 import fms.version
 version = fms.version.TAG
-
 
 setup(name='fms',
         version = version,
@@ -22,8 +21,7 @@ setup(name='fms',
                     'fms.worlds',
                     ],
         scripts = ['startfms.py'],
-        requires = ['PyYAML'],
-        data_files = data_files,
+        install_requires = ['distribute','PyYAML',],
         classifiers=[
             "Development Status :: 4 - Beta",
             "Environment :: Console",
