@@ -30,6 +30,8 @@ html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) .build/html
 	# Ugly hack - JcB 30/06/09
 	cp robots .build/html/robots.txt
+	-rm -rf html
+	cp -R .build/html/ html
 	@echo
 	@echo "Build finished. The HTML pages are in .build/html."
 
