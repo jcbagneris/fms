@@ -7,7 +7,7 @@ FMS download and installation
 =============================
 
 .. note::
-    Latest version of FMS is |release|.
+    Latest stable version of FMS is |release|.
 
 Installing FMS
 ==============
