@@ -11,3 +11,4 @@ html
 dummyoutput.*
 fmsweb
 fms.egg-info
+setup.cfg
