@@ -12,7 +12,7 @@ import logging
 from StringIO import StringIO
 
 import fms
-from fms.utils import YamlParamsParser
+from fms.utils.parsers import YamlParamsParser
 
 def sourceList():
     """

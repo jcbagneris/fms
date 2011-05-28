@@ -7,7 +7,8 @@ Tests for utils module.
 import unittest
 import sys
 from StringIO import StringIO
-from fms.utils import YamlParamsParser, XmlParamsParser, CSVDELIMITERS
+from fms.utils import CSVDELIMITERS
+from fms.utils.parsers import YamlParamsParser, XmlParamsParser
 from fms.utils.exceptions import MissingParameter
 
 class YamlParserTests(unittest.TestCase):
