@@ -10,7 +10,7 @@ __license__ = "BSD"
 import sys
 import logging
 
-import fms
+from fms.core import set_parser, set_logger, get_command
 
 def main():
     """
@@ -19,11 +19,11 @@ def main():
     - read simulation config file
     - run [command]
     """
-    parser = fms.set_parser()
+    parser = set_parser()
     options, arguments = parser.parse_args()
-    logger = fms.set_logger(options)
-    command = fms.get_command(arguments, parser)
-    getattr(fms, "do_%s" % command)(arguments, options)
+    logger = set_logger(options)
+    command = get_command(arguments, parser)
+    getattr(fms.core, "do_%s" % command)(arguments, options)
     return 0
 
 if __name__ == "__main__":

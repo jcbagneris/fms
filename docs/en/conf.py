@@ -42,7 +42,8 @@ copyright = u'2008-2009, Jean-Charles Bagneris'
 # other places throughout the built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = __import__('fms').VERSION
+from fms.version import TAG
+release = TAG
 # The short X.Y version.
 version = release.rsplit('.',1)[0]
 

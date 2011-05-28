@@ -12,6 +12,7 @@ import logging
 from StringIO import StringIO
 
 import fms
+import fms.core
 from fms.utils.parsers import YamlParamsParser
 
 def sourceList():
@@ -36,7 +37,7 @@ def expList():
 old_dir = os.getcwd()
 os.chdir(os.path.dirname(__file__))
 
-logger = fms.set_logger('info','fms-tests')
+logger = fms.core.set_logger('info','fms-tests')
 
 logger.info("Running unittests")
 suite = unittest.TestSuite()
@@ -70,7 +71,7 @@ for simconffile in expList():
     params['show_books'] = False
     params['timer'] = False
     params.outputfile = StringIO()
-    (world, engineslist, agentslist) = fms.set_classes(params)
+    (world, engineslist, agentslist) = fms.core.set_classes(params)
     for e in engineslist:
         e['instance'].run(world, agentslist, e['market']['instance'])
     benchfile = "%s.csv" % simconffile.split('.')[0]
