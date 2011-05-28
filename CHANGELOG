@@ -1,0 +1,51 @@
+2011-05-28 v0.1.7
+      Use distribute instead of distutils in setup
+      Various fixes in doc configuration
+      Refactoring to avoid mass import from setup.py
+
+2011-05-17 v0.1.6
+      Modified setup.py prior to registering on PyPI
+      Added install_requires on PyYaml in setup.py
+      Modified documentation according to FMS availability on PyPI
+
+2009-03-05 v0.1.5
+      Added --repeat option
+      Reorganized options parsing and application
+      Added --timer option
+      Added RandomTrader agent
+
+2009-02-05 v0.1.4
+      Added --replay option
+      Added --outputfilename option
+      Added launcher (startfms.py) tests
+      Order includes emitter (agent) ref
+      Added --orderslogfile option
+      Added unique_by_agent parameter in config
+
+2009-01-25 v0.1.3
+      Added --show-limits option
+      Refactored startfms.py
+      Added full tests: testing experiments with known results
+	  Added clearbooksateod parameter to config file
+      Added csvdelimiter parameter to config file
+      Added warning about upgrading FMS in docs
+      Output files dir is config file dir unless path is absolute
+      Verbose option reports FMS version
+      Added a --version option
+      Set example files format to 'dos' to make those readable by Windows users
+
+2009-01-12 v0.1.2
+      Cleaned the documentation installation under Windows
+      Detailed again Windows installation and setup
+      Excluded .pyc files from source distributions
+      Added wesite url to metadata
+
+2009-01-12 v0.1.1
+      Released v0.1.1
+      Added a CHANGELOG file
+      Added a tutorial to the documentation
+      lxml is no longer compulsory, as it is for backward compatibility only
+      Renamed fms.py in startfms.py and changed doc accordingly
+
+2008-12-18 v0.1.0
+	Initial release
