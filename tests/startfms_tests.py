@@ -111,7 +111,7 @@ class LauncherTests(unittest.TestCase):
         for option in ('-v', '--verbose'):
             out, err = self.run_startfms([option, 'check', configfile])
             self.assert_output(err,
-            'INFO - fms.utils - Reading config file tests/fixtures/minimalconf')
+            'INFO - fms.utils.parsers - Reading config file tests/fixtures/minimalconf')
 
     def test_showbooks_option(self):
         """
@@ -133,7 +133,7 @@ class LauncherTests(unittest.TestCase):
         for option in ('-r', '--replay'):
             out, err = self.run_startfms(['-v', option, 'check', configfile])
             self.assert_output(err,
-                    'INFO - fms.utils - orderslogfilename : None')
+                    'INFO - fms.utils.parsers - orderslogfilename : None')
             self.assert_output(err,
                     '1 PlayOrderLogFile')
             self.assert_output(err,
