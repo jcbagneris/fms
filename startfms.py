@@ -10,6 +10,7 @@ __license__ = "BSD"
 import sys
 import logging
 
+import fms.core
 from fms.core import set_parser, set_logger, get_command
 
 def main():
