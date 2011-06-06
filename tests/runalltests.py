@@ -4,12 +4,19 @@
 Run all test modules in current directory.
 """
 
-import os
+import os, sys
 import unittest
 import doctest
 import glob
 import logging
 from StringIO import StringIO
+
+try:
+    import fms
+except ImportError:
+    # runnning from source, not installed, add fms source path to system path
+    fmspath = os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
+    sys.path.append(fmspath)
 
 import fms
 import fms.core
@@ -35,7 +42,10 @@ def expList():
 
 
 old_dir = os.getcwd()
-os.chdir(os.path.dirname(__file__))
+try:
+    os.chdir(os.path.dirname(__file__))
+except OSError:
+    pass
 
 logger = fms.core.set_logger('info','fms-tests')
 
