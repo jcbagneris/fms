@@ -1,3 +1,7 @@
+2011-06-06 v0.1.8
+      Tests: allow to run tests from source dir if fms is not installed
+      Fix: must import fms.core as this is now the main module after refactoring
+
 2011-05-28 v0.1.7
       Use distribute instead of distutils in setup
       Various fixes in doc configuration

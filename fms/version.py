@@ -6,7 +6,7 @@ FMS version setting and getting.
 
 from fms.utils.git import get_git_commit_hash, get_git_status
 
-TAG = 'v0.1.7'
+TAG = 'v0.1.8'
 
 def get_full_version():
     """
