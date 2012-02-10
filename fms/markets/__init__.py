@@ -65,7 +65,7 @@ class Market:
 
         """
         if unique:
-            for book in (self. sellbook, self.buybook):
+            for book in (self.sellbook, self.buybook):
                 for line in book:
                     if order['agent'] == line[3]:
                         book.remove(line)
