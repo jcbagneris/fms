@@ -185,7 +185,12 @@ def _set_world(params):
     Import world class and instanciate world
     """
     logger = logging.getLogger('fms')
-    worldmodule = _import_class('fms.worlds', params['world']['classname'])
+    if params['world']['modulename']:
+        worldmodule = _import_class(
+                '.'.join(('fms.contrib', params['world']['modulename'], 'worlds')),
+                params['world']['classname'])
+    else:
+        worldmodule = _import_class('fms.worlds', params['world']['classname'])
     world = getattr(worldmodule, params['world']['classname'])(params)
     logger.info("Created world %s" % world)
     return world
@@ -197,11 +202,17 @@ def _set_agents(params):
     logger = logging.getLogger('fms')
     agentslist = []
     for (offset, a) in enumerate(params['agents']):
-        agentmodule = _import_class('fms.agents', a['classname'])
+        if a['modulename']:
+            agentmodule = _import_class(
+                    '.'.join(('fms.contrib',a['modulename'], 'agents')), a['classname'])
+            agentclassname = '.'.join(('fms.agents.contrib', a['modulename'], a['classname']))
+        else:
+            agentmodule = _import_class('fms.agents', a['classname'])
+            agentclassname = '.'.join(('fms.agents', a['classname']))
         for i in range(a['number']):
             agentslist.append(getattr(agentmodule, a['classname'])(params, offset))
         logger.info("Created  %d instances of agent %s" % 
-                (a['number'], agentslist[-1].__class__))
+            (a['number'], agentclassname))
     return agentslist
 
 def _set_engines(params):
@@ -211,14 +222,23 @@ def _set_engines(params):
     logger = logging.getLogger('fms')
     engineslist = []
     for (offset, e) in enumerate(params['engines']):
-        marketmodule = _import_class('fms.markets', e['market']['classname'])
+        if e['market']['modulename']:
+            marketmodule = _import_class(
+                    '.'.join(('fms.contrib', e['market']['modulename'], 'markets')),
+                    e['market']['classname'])
+        else:
+            marketmodule = _import_class('fms.markets', e['market']['classname'])
         e['market']['instance'] = getattr(marketmodule, 
                 e['market']['classname'])(params)
-        enginemodule = _import_class('fms.engines', e['classname'])
+        if e['modulename']:
+            enginemodule = _import_class(
+                    '.'.join(('fms.contrib', e['modulename'], 'engines')), e['classname'])
+        else:
+            enginemodule = _import_class('fms.engines', e['classname'])
         e['instance'] = getattr(enginemodule, e['classname'])(params, offset)
         engineslist.append(e)
-        logger.info("Created engine-market  %s - %s" % 
-                (e['instance'], e['market']['instance']))
+        logger.info("Created engine %s" % e['instance'])
+        logger.info("Created market %s" % e['market']['instance'])
     return engineslist
 
 def set_classes(params):
