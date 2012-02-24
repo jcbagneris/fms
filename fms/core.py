@@ -173,8 +173,8 @@ def _import_class(modulename, classname):
     """
     logger = logging.getLogger('fms')
     try:
-        exec "from %s import %s as themodule " % \
-                (modulename, classname.lower())
+        _temp = __import__(modulename, globals(), locals(), [classname.lower(),], -1)
+        themodule = getattr(_temp, classname.lower())
     except ImportError:
         logger.critical("Unknown %s class: %s" % (modulename, classname))
         sys.exit(2)

@@ -53,8 +53,7 @@ logger.info("Running unittests")
 suite = unittest.TestSuite()
 
 for modtestname in sourceList():
-    exec "import %s" % modtestname
-    modtest = globals()[modtestname]
+    modtest = __import__(modtestname, globals(), locals(), [], -1)
     if hasattr(modtest, 'suite'):
         suite.addTest(modtest.suite())
     else:
