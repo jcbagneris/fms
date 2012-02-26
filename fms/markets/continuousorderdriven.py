@@ -206,23 +206,23 @@ class ContinuousOrderDriven(markets.Market):
     >>> market.buybook
     [[2.5, 0, 10, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
-    [[2.6..., 9, 11, <fms.agents.Agent instance at ...>], [2.79..., 11, 30, <fms.agents.Agent instance at ...>], [3.0, 10, 20, <fms.agents.Agent instance at ...>]]
+    [[2.6..., 9, 11, <fms.agents.Agent instance at ...>], [2.8..., 11, 30, <fms.agents.Agent instance at ...>], [3.0, 10, 20, <fms.agents.Agent instance at ...>]]
 
     Buy order, lower than the best sell limit
     >>> market.record_order({'agent': agentsmith, 'direction':BUY, 'price':2.4, 'quantity':25}, 12, False)
     >>> market.do_clearing(12)
     >>> market.buybook
-    [[2.39..., -12, 25, <fms.agents.Agent instance at ...>], [2.5, 0, 10, <fms.agents.Agent instance at ...>]]
+    [[2.4..., -12, 25, <fms.agents.Agent instance at ...>], [2.5, 0, 10, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
-    [[2.6..., 9, 11, <fms.agents.Agent instance at ...>], [2.79..., 11, 30, <fms.agents.Agent instance at ...>], [3.0, 10, 20, <fms.agents.Agent instance at ...>]]
+    [[2.6..., 9, 11, <fms.agents.Agent instance at ...>], [2.8..., 11, 30, <fms.agents.Agent instance at ...>], [3.0, 10, 20, <fms.agents.Agent instance at ...>]]
 
     Buy order, lower than the best sell limit, but higher than previous one
     >>> market.record_order({'agent': agentsmith, 'direction':BUY, 'price':2.45, 'quantity':15}, 13, False)
     >>> market.do_clearing(13)
     >>> market.buybook
-    [[2.39..., -12, 25, <fms.agents.Agent instance at ...>], [2.45..., -13, 15, <fms.agents.Agent instance at ...>], [2.5, 0, 10, <fms.agents.Agent instance at ...>]]
+    [[2.4..., -12, 25, <fms.agents.Agent instance at ...>], [2.45..., -13, 15, <fms.agents.Agent instance at ...>], [2.5, 0, 10, <fms.agents.Agent instance at ...>]]
     >>> market.sellbook
-    [[2.6..., 9, 11, <fms.agents.Agent instance at ...>], [2.79..., 11, 30, <fms.agents.Agent instance at ...>], [3.0, 10, 20, <fms.agents.Agent instance at ...>]]
+    [[2.6..., 9, 11, <fms.agents.Agent instance at ...>], [2.8..., 11, 30, <fms.agents.Agent instance at ...>], [3.0, 10, 20, <fms.agents.Agent instance at ...>]]
 
     """
 
