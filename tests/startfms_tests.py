@@ -101,7 +101,7 @@ class LauncherTests(unittest.TestCase):
         """
         out, err = self.run_startfms(['--version'])
         self.assert_output(out,
-                'This is FMS v')
+                'This is FMS ')
 
     def test_verbose_option(self):
         """
