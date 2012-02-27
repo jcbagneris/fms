@@ -1,0 +1,10 @@
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: AsynchronousRandWReplace
+      daylength: 10000
+      market:
+          classname: ContinuousOrderDriven
+
