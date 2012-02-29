@@ -63,15 +63,28 @@ for modtestname in sourceList():
 for root, dir, files in os.walk(os.path.dirname(fms.__file__)):
     for f in files:
         if os.path.splitext(f)[1] == '.py':
-            path = os.path.split(root)[1]
-            if path == 'fms':
+            head, tail = os.path.split(root)
+            if tail == 'fms':
                 suite.addTest(doctest.DocFileSuite(f, package='fms',
                     optionflags=+doctest.ELLIPSIS))
             else:
-                suite.addTest(doctest.DocFileSuite(
-                    os.path.join(os.path.split(root)[1], f),
-                    package='fms',
-                    optionflags=+doctest.ELLIPSIS))
+                if 'contrib' in head:
+                    h, t = os.path.split(head)
+                    if t == 'contrib':
+                        suite.addTest(doctest.DocFileSuite(
+                            os.path.join(os.path.split(root)[1], f),
+                            package='fms.contrib',
+                            optionflags=+doctest.ELLIPSIS))
+                    else:
+                        suite.addTest(doctest.DocFileSuite(
+                            os.path.join(os.path.split(root)[1], f),
+                            package='fms.contrib.%s' % t,
+                            optionflags=+doctest.ELLIPSIS))
+                else:
+                    suite.addTest(doctest.DocFileSuite(
+                        os.path.join(os.path.split(root)[1], f),
+                        package='fms',
+                        optionflags=+doctest.ELLIPSIS))
 
 unittest.TextTestRunner(verbosity=2).run(suite)
 

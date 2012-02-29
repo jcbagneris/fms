@@ -14,22 +14,6 @@ from fms.utils.exceptions import MissingParameter
 
 logger = logging.getLogger('fms.utils.parsers')
 
-def _splitclassname(fullclassname):
-    """
-    Split composed classnames in config files, if necessary.
-
-    Returns compound module name and classname in a tuple, i.e.
-    >>> _splitclassname('this.module.classname') == ('this.module', 'classname')
-    True
-    >>> _splitclassname('simpleclassname') == (None, 'simpleclassname')
-    True
-    """
-    classnameaslist = fullclassname.rsplit('.',1)
-    if len(classnameaslist) > 1:
-        return classnameaslist
-    else:
-        return (None, classnameaslist[0])
-
 class _ParamsParser(dict):
     """
     Common methods to all param parsers
@@ -42,6 +26,25 @@ class _ParamsParser(dict):
         logger.info("Reading config file %s" % filename)
         self.outputfile = sys.stderr
         self.orderslogfile = None
+
+    def splitclassname(self, fullclassname):
+        """
+        Split composed classnames in config files, if necessary.
+
+        Returns compound module name and classname in a tuple, i.e.
+        >>> from fms.utils.parsers import _ParamsParser
+        >>> theparser = _ParamsParser({})
+        >>> theparser.splitclassname('this.module.classname') == ['this.module', 'classname']
+        True
+        >>> theparser.splitclassname('simpleclassname') == [None, 'simpleclassname']
+        True
+
+        """
+        classnameaslist = fullclassname.rsplit('.',1)
+        if len(classnameaslist) > 1:
+            return classnameaslist
+        else:
+            return [None, classnameaslist[0]]
 
     def create_files(self, turn):
         """
@@ -423,14 +426,14 @@ class YamlParamsParser(_ParamsParser):
             raise MissingParameter, 'world classname'
 
         self['world']['modulename'], self['world']['classname'] =\
-                _splitclassname(self['world']['classname'])
+                self.splitclassname(self['world']['classname'])
 
         for paramkey in ('engines', 'agents'):
             for item in self[paramkey]:
                 if not 'classname' in item:
                     raise MissingParameter, paramkey+' classname'
                 item['modulename'], item['classname'] =\
-                        _splitclassname(item['classname'])
+                        self.splitclassname(item['classname'])
 
         for paramkey in ('number', 'stocks', 'money'):
             for agent in self['agents']:
@@ -448,7 +451,7 @@ class YamlParamsParser(_ParamsParser):
             if not 'classname' in engine['market']:
                 raise MissingParameter, 'engine[\'market\'][\'classname\']'
             engine['market']['modulename'], engine['market']['classname'] =\
-                    _splitclassname(engine['market']['classname'])
+                    self.splitclassname(engine['market']['classname'])
 
         logger.info("Config file %s parsed." % yamlfilename)
 
