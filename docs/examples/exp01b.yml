@@ -1,0 +1,46 @@
+--- # Experiment 01b
+# This file is part of FMS, a Financial Market Simulator
+#
+# This experiment simulates an asynchronous and continuous market,
+# driven by order books. The agents class is a contributed one, and this
+# is the only difference with the Experiment 01 described in exp01.yml.
+# Experiment steps : 
+# - the engine chooses an agent randomly (with replacement)
+# - the agent places a random order on the market
+# - the order goes in the buy or sellbook, depending on direction
+# - the market clearing is immediately called, outputting any possible
+#   transaction
+# These steps are run 'daylength' times (20 if you use this file unmodified).
+#
+# Run with :
+# $ python startfms.py run exp01b.yml
+# This should produce 1 file :
+# - exp01b.csv, the resulting transactions file 
+#
+# You may try to :
+# - remove the 'randomseed'
+# - remove the outputfilename (output is then directed to stdout)
+# - remove the orderslogfilename (no logfile of the orders)
+#
+randomseed: 'whateveryouwant'
+outputfilename: exp01b.csv
+
+world:
+      classname: NullWorld
+
+engines:
+    - classname: AsynchronousRandWReplace
+      daylength: 20
+      market:
+          classname: ContinuousOrderDriven
+
+agents:
+    - classname: coleman.ZeroIntelligenceTraderNL
+      number: 10000
+      money: 100000
+      stocks: 1000
+      # args are :
+      # - maximum price on an order
+      # - maximum quantity to buy
+      # these args are limits for the random function
+      args: [1000, 1000]
