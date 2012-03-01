@@ -1,3 +1,10 @@
+2012-03-01 v0.1.9
+      Added documentation and examples for the contrib framework
+      Added contributions from P. Coleman and S. Nazif
+	  Created the 'contrib' framework for contributed classes
+      Fixed doctests in markets/continuousorderdriven.py
+      Finally got rid of infamous exec statements
+
 2011-06-06 v0.1.8
       Tests: allow to run tests from source dir if fms is not installed
       Fix: must import fms.core as this is now the main module after refactoring
@@ -53,3 +60,4 @@
 
 2008-12-18 v0.1.0
 	Initial release
+
