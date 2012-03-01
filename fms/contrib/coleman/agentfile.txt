@@ -1,0 +1,27 @@
+#Use the # sign as a comment delimiter to comment out agent
+#classes that you do not wish to run.
+coleman.AvgBuySellTrader
+coleman.AvgBuySellTraderD
+coleman.DefectorTrader
+coleman.DeflationaryTrader
+coleman.InflationaryTrader
+coleman.Mem1Trader
+coleman.Mem3Trader
+coleman.Mem5Trader
+coleman.Mem5TraderD
+coleman.Mem10Trader
+coleman.ProbeAdjustBSTrader
+coleman.ProbeAdjustTrader
+coleman.ProbeSameTrader
+coleman.RandomFixedTrader
+coleman.RandomFixedTraderHalves
+coleman.SmartMem3Trader
+coleman.SmartMem5Trader
+coleman.SmartMem5TraderD
+coleman.SmartMem10Trader
+coleman.SmartProbeBoundedTrader
+coleman.ZeroIntelligenceBoundedTrader
+ZeroIntelligenceTrader
+coleman.ZeroIntelligenceTraderNL
+coleman.ZigFastTrader
+coleman.ZigTrader

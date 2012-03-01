@@ -27,6 +27,25 @@ class _ParamsParser(dict):
         self.outputfile = sys.stderr
         self.orderslogfile = None
 
+    def splitclassname(self, fullclassname):
+        """
+        Split composed classnames in config files, if necessary.
+
+        Returns compound module name and classname in a tuple, i.e.
+        >>> from fms.utils.parsers import _ParamsParser
+        >>> theparser = _ParamsParser({})
+        >>> theparser.splitclassname('this.module.classname') == ['this.module', 'classname']
+        True
+        >>> theparser.splitclassname('simpleclassname') == [None, 'simpleclassname']
+        True
+
+        """
+        classnameaslist = fullclassname.rsplit('.',1)
+        if len(classnameaslist) > 1:
+            return classnameaslist
+        else:
+            return [None, classnameaslist[0]]
+
     def create_files(self, turn):
         """
         Create all necessary files
@@ -345,6 +364,9 @@ class YamlParamsParser(_ParamsParser):
     self['engines'][n]['market] is a dict, with keys:
     - classname: error if missing
     - args: list, None if missing
+
+    All 'classname' params are splitted in 'modulename','classname'
+    if classname contains one or more '.'
     """
 
     def __init__(self, yamlfilename):
@@ -403,10 +425,15 @@ class YamlParamsParser(_ParamsParser):
         if not 'classname' in self['world']:
             raise MissingParameter, 'world classname'
 
+        self['world']['modulename'], self['world']['classname'] =\
+                self.splitclassname(self['world']['classname'])
+
         for paramkey in ('engines', 'agents'):
             for item in self[paramkey]:
                 if not 'classname' in item:
                     raise MissingParameter, paramkey+' classname'
+                item['modulename'], item['classname'] =\
+                        self.splitclassname(item['classname'])
 
         for paramkey in ('number', 'stocks', 'money'):
             for agent in self['agents']:
@@ -423,6 +450,8 @@ class YamlParamsParser(_ParamsParser):
                 raise MissingParameter, 'engine[\'market\']'
             if not 'classname' in engine['market']:
                 raise MissingParameter, 'engine[\'market\'][\'classname\']'
+            engine['market']['modulename'], engine['market']['classname'] =\
+                    self.splitclassname(engine['market']['classname'])
 
         logger.info("Config file %s parsed." % yamlfilename)
 

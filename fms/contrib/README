@@ -1,0 +1,60 @@
+====================
+Contributions to FMS
+====================
+
+FMS is (c) 2008-2012 Jean-Charles Bagneris. See LICENSE for redistribution
+information and usual disclaimer.
+
+Thanks for contributing to FMS !
+
+How to use contributed classes
+==============================
+
+To use contributed classes, simply reference those in your config file with the
+class name prefixed by the contribution directory.
+
+For an example, if you wanted to use the ZeroIntelligenceTraderNL agent class
+available in ``contrib/coleman/agents/zerointelligencetradernl.py``, you would
+reference it as ``coleman.ZeroIntelligenceTraderNL`` in your config file.
+
+The ``exp01b.yml`` config file in the ``examples`` directory located in the
+documentation [1]_ uses a contributed agent class, please have a look at it.
+
+
+How to add your own contributed classes
+=======================================
+
+Create a directory (e.g. under your name) in the ``fms/contrib`` one. This is
+the place which will host your contributed modules/classes. This directory
+should contain a (possibly empty) ``__init__.py`` file as it is actually a
+python package. Please consider adding at least a README file, too.
+
+In *your* directory, create {agents,worlds,engines,markets} directories, depending
+on the type of class you want to write. You don't have to create the four ones,
+only the ones you need. These directories in turn should contain a
+``__init__.py`` file for obvious reasons. At least I hope it is obvious: your
+classes will be defined in modules which are located in
+``<yourpackage>.{agents,worlds,engines,markets}`` and should be found by python
+import mechanism.
+
+Then, write your classes in modules, one module per class, named after the class
+name: the ``MyBeautifulWorld`` class should be defined in
+``mybeautifullworld.py`` module, as FMS certainly will not parse the entire
+contrib directory to discover where your class is hidden. It is surely possible
+and even probably easy, but takes far too much time.
+
+To write your classes, you SHOULD import the abstract classes provided with FMS.
+It is the only requirement, but it is a strong one. Then of course it would be a
+good idea to use the exceptions and logging framework provided. An even better
+idea would be to also provide your class with doctests. Find inspiration
+in the existing FMS and contributed classes.
+
+Have fun!
+
+-----------------------
+
+.. rubric:: Footnotes
+
+.. [1] The main documentation directory is located in the ``docs`` directory of FMS
+    installation under Linux or BSD, and in the ``Doc\fms-documentation`` 
+    directory in the Python installation directory under Windows

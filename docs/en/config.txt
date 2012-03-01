@@ -54,6 +54,13 @@ A minimal configuration file might be::
           money: 5000
           stocks: 1000
 
+Classnames coming from the ``fms/contrib`` directory should be prefixed with the
+name of the directory in which they are grouped (usually the contributor name).
+For an example, an *AgentSmith* agent class contributed by The Matrix would be available 
+in the ``fms/contrib/atrix/agents/agentsmith.py`` module and would be referenced
+as ``matrix.AgentSmith`` in a configuration file. See the ``exp01b.yml`` file in
+the ``examples`` directory for an example of contributed class use.
+
 An FMS YAML configuration file should contain one and only one YAML *document*,
 i.e. only one section delimited by ``---``. The parameters it describes are as
 follows:  
@@ -189,7 +196,8 @@ world
 
         The name of the world class to use. The class source should be in a
         module named after the class, in all lowercase chars, with a '.py'
-        extension, located in the ``fms/worlds/`` directory.
+        extension, located either in the ``fms/worlds/`` or in the
+        ``fms/contrib/<contributor>/worlds/`` directory.
 
         args
         World class arguments (optional)
@@ -223,7 +231,8 @@ engines
 
         The name of the engine class to use. The class source should be in a
         module named after the class, in all lowercase chars, with a '.py'
-        extension, located in the ``fms/engines/`` directory.
+        extension, located either in the ``fms/engines/`` or in the
+        ``fms/contrib/<contributor>/engines/`` directory.
 
     market
         Market class information (required)
@@ -235,7 +244,8 @@ engines
 
             The name of the market class to use. The class source should be in a
             module named after the class, in all lowercase chars, with a '.py'
-            extension, located in the ``fms/markets/`` directory.  .RE
+            extension, located either in the ``fms/markets/`` or in the
+            ``fms/contrib/<contributor>/markets/`` directory. 
 
         args
             Market class arguments (optional)
@@ -294,7 +304,8 @@ agents
 
         The name of the agent class to use. The class source should be in a
         module named after the class, in all lowercase chars, with a '.py'
-        extension, located in the ``fms/agents/`` directory.
+        extension, located either in the ``fms/agents/`` or in the
+        ``fms/contrib/<contributor>/agents/`` directory.
 
     number
         Number of agents instances (required)
@@ -329,7 +340,7 @@ agents
 Examples provided
 =================
 
-The ``examples`` directory in the main documentation directory [1]_ contains three
+The ``examples`` directory in the main documentation directory [1]_ contains
 example configuration files, all of which are heavily commented.
 
 
